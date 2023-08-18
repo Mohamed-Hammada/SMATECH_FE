@@ -31,16 +31,17 @@ export class UserServiceService {
   }
 
   initializeFormGroup(): FormGroup {
-    return new FormGroup({
+    this.form = new FormGroup({
       id: new FormControl(null),
       email: new FormControl('', Validators.required),
       username: new FormControl('', Validators.required),
       phones: new FormControl([], Validators.required),
       password: new FormControl('', Validators.required),
-      type: new FormControl('', Validators.required),
+      // type: new FormControl('', Validators.required),
       enabled: new FormControl('', Validators.required),
       roles: new FormControl(this.storageService.getAllRoles(), Validators.required),
     });
+    return this.form
   }
 
   filterExactRole(all: Role[], val: string): Role[] {
@@ -103,7 +104,7 @@ export class UserServiceService {
       username: row.username || '',
       phones: row.phones || [],
       password: row.password || '',
-      type: row.type || '',
+      // type: row.type || '',
       enabled: row.enabled || false,
       roles: row.roles || []
     });

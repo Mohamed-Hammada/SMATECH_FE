@@ -20,6 +20,10 @@
           <mat-error *ngIf="userForm.get('username')?.hasError('required')">Username is required</mat-error>
         </mat-form-field>
 
+        <mat-checkbox formControlName="enabled">
+          Enabled
+        </mat-checkbox>
+
         <mat-form-field>
           <input formControlName="email" matInput placeholder="Email" />
           <mat-error *ngIf="userForm.get('email')?.hasError('required')">Email is required</mat-error>
@@ -33,7 +37,8 @@
 
         <mat-form-field>
           <mat-label>Select Roles</mat-label>
-          <mat-select formControlName="roles" multiple>
+          <mat-select formControlName="roles" [compareWith]="compareFn"
+          [(ngModel)]="selectedRoles" multiple>
             <mat-option *ngFor="let role of roles" [value]="role">
               {{ transformRoleName(role.name) }}
             </mat-option>

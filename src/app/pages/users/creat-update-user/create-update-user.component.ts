@@ -16,6 +16,7 @@ export class CreateUserComponent implements OnInit {
 
   userForm!: FormGroup;
   roles: Role[] = [];
+  selectedRoles: Role[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<CreateUserComponent>,
@@ -26,31 +27,18 @@ export class CreateUserComponent implements OnInit {
     private storageService: StorageService
   ) {
     this.roles = this.storageService.getAllRoles();
-    this.userForm = this.initializeUserForm();
+    this.userForm = this.userService.form;
   }
 
   ngOnInit(): void {
-    const initialRoles = this.storageService?.getUser()?.roles || [];
-    this.populateForm(initialRoles);
+    this.selectedRoles = this.userService.form.get('roles')?.value || [];
+    this.populateForm();
   }
 
-  private initializeUserForm(): FormGroup {
-    console.log("roles"  , this.roles);
-    return this.fb.group({
-      id: [],
-      email: ['', [Validators.required, Validators.email]],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      phones: this.fb.array(['']),
-      roles: this.roles,
-      type: ['', Validators.required],
-      enabled: ['', Validators.required],
-    });
-  }
-
-  private populateForm(initialRoles: string[]): void {
+  private populateForm(): void {
+    const phones = this.userService.form.get("phones")?.value;
+    debugger
     this.userForm.setControl('phones', this.fb.array([]));
-    const phones = this.userForm.get("phones")?.value;
 
     if (phones && phones.length > 0) {
       console.log(this.phones);
@@ -58,8 +46,6 @@ export class CreateUserComponent implements OnInit {
     } else {
       this.addPhone();
     }
-
-    this.userForm.setControl('roles', this.fb.control(initialRoles));
   }
 
   get phones(): FormArray {
@@ -110,6 +96,12 @@ export class CreateUserComponent implements OnInit {
         this.notificationService.warn(error.message);
       }
     );
+  }
+
+  compareFn(o1: any, o2: any) {
+    if (o1.id == o2.id)
+      return true;
+    return false;
   }
 
   transformRoleName(roleName: string): string {

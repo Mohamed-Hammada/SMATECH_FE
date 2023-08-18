@@ -24,7 +24,7 @@ export class UsersComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = -1;
   pageSize: number = 10;
-  displayedColumns: string[] = ['id', 'username', 'email', 'actions', 'UPDATE',];
+  displayedColumns: string[] = ['id', 'username', 'email', 'UPDATE'];
   searchKey: string = '';
   dataArray: MatTableDataSource<any> = new MatTableDataSource<any>();
 
@@ -97,7 +97,8 @@ export class UsersComponent implements OnInit {
   }
 
   onEdit(row: any): void {
-    this.userService.populateForm(row);
+    this.userService.initializeFormGroup();
+    this.userService.populateForm(this.users.filter(e=>e.id===row.id)[0]);
     this.openUserDialog();
   }
 
@@ -143,9 +144,6 @@ export class UsersComponent implements OnInit {
     this.dataArray.filter = this.searchKey.trim().toLowerCase();
   }
 
-  editUser(id: number): void {
-    this.router.navigate(['/edit-user', id]);
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loadData();

@@ -1,0 +1,15 @@
+.jumbotron {
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: #673ab7;
+  border-color: #673ab7;
+}
+
+@media (max-width: 768px) {
+  .jumbotron {
+    padding: 2rem 1rem;
+  }
+}

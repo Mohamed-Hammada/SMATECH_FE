@@ -7,50 +7,73 @@
 </mat-toolbar>
 
 <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()" class="normal-form">
-  <mat-grid-list cols="3" rowHeight="420px">
+
+  <mat-grid-list cols="2" rowHeight="320px">
+
     <mat-grid-tile>
       <div class="controles-container">
-        <input type="hidden" formControlName="id" />
 
-        <mat-form-field>
-          <input formControlName="email" matInput placeholder="Email" />
-          <mat-error *ngIf="userForm&& userForm.get('email')?.hasError('required')">Email is required</mat-error>
-          <mat-error *ngIf="userForm&&userForm.get('email')?.hasError('email')">Please enter a valid email
-            address</mat-error>
-        </mat-form-field>
+        <input type="hidden" formControlName="id" />
 
         <mat-form-field>
           <input formControlName="username" matInput placeholder="Username" />
           <mat-error *ngIf="userForm.get('username')?.hasError('required')">Username is required</mat-error>
         </mat-form-field>
 
-        <button mat-button (click)="addPhone()">Add Phone</button>
-        <div formArrayName="phones">
-          <div *ngFor="let phone of phones.controls; let i = index">
-            <mat-form-field>
-              <input [formControlName]="i" matInput placeholder="Phone" />
-            </mat-form-field>
-          </div>
-        </div>
+        <mat-form-field>
+          <input formControlName="email" matInput placeholder="Email" />
+          <mat-error *ngIf="userForm.get('email')?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="userForm.get('email')?.hasError('email')">Please enter a valid email address</mat-error>
+        </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Select a Role</mat-label>
-          <mat-select formControlName="roles">
+          <input formControlName="password" matInput placeholder="Password" />
+          <mat-error *ngIf="userForm.get('password')?.hasError('required')">Password is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Select Roles</mat-label>
+          <mat-select formControlName="roles" multiple>
             <mat-option *ngFor="let role of roles" [value]="role">
-              {{ role.name }}
+              {{ transformRoleName(role.name) }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="controles-container">
+
+        <div formArrayName="phones">
+
+          <!-- Phone rows -->
+          <div *ngFor="let phone of phones.controls; let i = index" class="phone-input">
+            <mat-form-field>
+              <input [formControlName]="i" matInput placeholder="Phone" />
+              <button mat-icon-button matSuffix (click)="removePhone(i)">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+
+          <button mat-icon-button (click)="addPhone()" class="add-phone-button">
+            <mat-icon class="add-icon">add_circle</mat-icon>
+          </button>
+
+        </div>
 
       </div>
     </mat-grid-tile>
 
-
     <!-- More fields here... -->
+
   </mat-grid-list>
+
   <div class="button-row">
     <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">Save</button>
     <button mat-raised-button color="warn" type="reset">Clear</button>
   </div>
+
 </form>

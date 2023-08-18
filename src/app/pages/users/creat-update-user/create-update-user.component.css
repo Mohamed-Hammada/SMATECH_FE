@@ -1,0 +1,53 @@
+/* Add your existing styles */
+
+.controles-container {
+  /* Adjust spacing and alignment as needed */
+  margin: 20px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  /* margin-top: 20px; */
+}
+
+.phone-input {
+  display: flex;
+  align-items: center;
+  /* margin-bottom: 10px; */
+}
+
+.phone-input mat-form-field {
+  flex: 1;
+  /* margin-right: 10px; */
+  font-size: 12px;
+}
+
+/* Normalizing the input field height */
+.phone-input mat-form-field input.mat-input-element {
+  line-height: inherit; /* Let it take the default line height */
+  height: inherit;      /* Let it take the default height */
+}
+
+.phone-input mat-icon {
+  font-size: 14px;
+}
+
+.add-phone-button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 10px; /* Add some margin below the plus button */
+}
+
+.add-phone-button .add-icon {
+  color: green;
+}
+
+.add-phone-button .phone-icon {
+  margin-left: 4px;
+  font-size: 14px;
+  color: blue;
+}

@@ -3,11 +3,9 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/_helpers/notification.service';
+import { StorageService } from 'src/app/_services/storage.service';
 import { Role, User } from 'src/app/models/all.model';
-import { RulesService } from 'src/app/services/rules.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
-
-
 
 @Component({
   selector: 'app-create-update-user',
@@ -19,34 +17,71 @@ export class CreateUserComponent implements OnInit {
   userForm!: FormGroup;
   roles: Role[] = [];
 
-  constructor(public dialogRef: MatDialogRef<CreateUserComponent>,
-    private notificationService: NotificationService,private fb: FormBuilder
-    , private userService: UserServiceService,private snackBar: MatSnackBar,private rolesService: RulesService) {
-
+  constructor(
+    public dialogRef: MatDialogRef<CreateUserComponent>,
+    private notificationService: NotificationService,
+    private fb: FormBuilder,
+    private userService: UserServiceService,
+    private snackBar: MatSnackBar,
+    private storageService: StorageService
+  ) {
+    this.roles = this.storageService.getAllRoles();
+    this.userForm = this.initializeUserForm();
   }
 
   ngOnInit(): void {
-
-}
-
-  loadRoles(): void {
-    this.rolesService.getRoles().subscribe(
-      data => {
-        this.roles = data;
-      }
-    );
+    const initialRoles = this.storageService?.getUser()?.roles || [];
+    this.populateForm(initialRoles);
   }
 
-  get phones() {
-    return (this.userForm.get('phones') as FormArray);
+  private initializeUserForm(): FormGroup {
+    console.log("roles"  , this.roles);
+    return this.fb.group({
+      id: [],
+      email: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      phones: this.fb.array(['']),
+      roles: this.roles,
+      type: ['', Validators.required],
+      enabled: ['', Validators.required],
+    });
   }
 
-  get rolesFormArray() {
-    return (this.userForm.get('roles') as FormArray);
+  private populateForm(initialRoles: string[]): void {
+    this.userForm.setControl('phones', this.fb.array([]));
+    const phones = this.userForm.get("phones")?.value;
+
+    if (phones && phones.length > 0) {
+      console.log(this.phones);
+      this.addPhoneList(phones);
+    } else {
+      this.addPhone();
+    }
+
+    this.userForm.setControl('roles', this.fb.control(initialRoles));
+  }
+
+  get phones(): FormArray {
+    return this.userForm.get('phones') as FormArray;
+  }
+
+  get rolesFormArray(): FormArray {
+    return this.userForm.get('roles') as FormArray;
+  }
+
+  addPhoneList(phones: string[]): void {
+    for (const phone of phones) {
+      this.phones.push(this.fb.control(phone));
+    }
   }
 
   addPhone(): void {
     this.phones.push(this.fb.control(''));
+  }
+
+  removePhone(index: number): void {
+    this.phones.removeAt(index);
   }
 
   addRole(): void {
@@ -56,35 +91,32 @@ export class CreateUserComponent implements OnInit {
     }));
   }
 
-  onFormSubmit() {
+  onFormSubmit(): void {
     if (!this.userForm.valid) {
       this.snackBar.open('Form is not valid. Please check the errors.', 'Dismiss', {
-        duration: 5000, // Adjust as needed
-        panelClass: ['error-snackbar'], // Define your CSS class for styling
+        duration: 5000,
+        panelClass: ['error-snackbar'],
       });
-      return
+      return;
     }
+
     const user: User = this.userForm.value;
-    console.log(user);
     this.userService.createUser(user).subscribe(
       (data) => {
-        console.log(data)
         this.notificationService.success('Saved Successfully');
-
-        // @TODO show errors if it's exists
-        // this.notificationService.warn(data.errorMessage);
-
         this.onClose();
       },
       error => {
-        console.log(error)
         this.notificationService.warn(error.message);
-        // Handle error
       }
     );
   }
 
-  onClose() {
+  transformRoleName(roleName: string): string {
+    return roleName.replace('ROLE_', '');
+  }
+
+  onClose(): void {
     this.userForm.reset();
     this.dialogRef.close();
   }

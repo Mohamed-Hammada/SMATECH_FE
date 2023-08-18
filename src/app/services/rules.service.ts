@@ -11,7 +11,6 @@ import { Role } from '../models/all.model';
 export class RulesService {
 
   private apiUrl = `${environment.baseUrl}/api/roles`;
-  private roles: Role[] = [];
 
   // Create a BehaviorSubject with an empty array as the initial value
   private rolesSubject = new BehaviorSubject<Role[]>([]);
@@ -21,20 +20,14 @@ export class RulesService {
 
   constructor(private http: HttpClient) { }
 
-  getRoles(): Observable<Role[]> {
-    return this.http.get<Role[]>(this.apiUrl).pipe(
-      tap(roles => {
-        // Store the roles in our private variable
-        this.roles = roles;
 
-        // Emit the new roles to all subscribers through the BehaviorSubject
-        this.rolesSubject.next(this.roles);
-      }),
+  getRoles(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}`).pipe(
       catchError(error => {
         // Handle the error here
         console.error('Error Message: ', error);
         return throwError(error);
       })
-    );
+    );;
   }
 }

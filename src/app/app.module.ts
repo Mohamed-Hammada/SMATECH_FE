@@ -48,6 +48,9 @@ import { httpInterceptorProviders } from './_helpers/http.interceptor.service';
 import { CustomToolbarComponent } from './pages/helper/custom-toolbar/custom-toolbar.component';
 import { CompaniesComponent } from './pages/company/company.component';
 import { CreateUpdateCompanyComponent } from './pages/company/create-update-company/create-update-company.component';
+import { ComponentsComponent } from './pages/components/components.component';
+import { CreateUpdateComponentsComponent } from './pages/components/create-update-components/create-update-components.component';
+import { ImageDialogComponent } from './_helpers/image-dialog/image-dialog.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +64,10 @@ import { CreateUpdateCompanyComponent } from './pages/company/create-update-comp
     LoginComponent,
     CustomToolbarComponent,
     CompaniesComponent,
-    CreateUpdateCompanyComponent
+    CreateUpdateCompanyComponent,
+    ComponentsComponent,
+    CreateUpdateComponentsComponent,
+    ImageDialogComponent
   ],
   imports: [
     BrowserModule,

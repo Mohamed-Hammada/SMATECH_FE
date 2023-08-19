@@ -1,0 +1,66 @@
+<mat-toolbar>
+  <span>{{ form.controls["id"].value !== null ? "Edit" : "Create" }} Component</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+<form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="normal-form">
+
+  <mat-grid-list cols="2" rowHeight="350px">
+
+    <mat-grid-tile>
+      <div class="controles-container">
+
+        <input type="hidden" formControlName="id" />
+
+        <mat-form-field>
+          <input formControlName="name" matInput placeholder="Name" />
+          <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="description" matInput placeholder="Description" />
+          <mat-error *ngIf="form.get('description')?.hasError('required')">Description is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="current_exist_quantity" matInput type="number" placeholder="Current Exist Quantity"
+            pattern="^[0-9]*$" />
+          <mat-error *ngIf="form.get('current_exist_quantity')?.hasError('required')">Quantity is required</mat-error>
+          <mat-error *ngIf="form.get('current_exist_quantity')?.hasError('pattern')">Please enter a valid
+            number</mat-error>
+
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="controles-container">
+
+        <mat-form-field>
+          <input formControlName="last_price_of_unit" matInput type="number" placeholder="Last Price of Unit"
+            pattern="^[0-9]*$" />
+          <mat-error *ngIf="form.get('last_price_of_unit')?.hasError('required')">Price is required</mat-error>
+          <mat-error *ngIf="form.get('last_price_of_unit')?.hasError('pattern')">Please enter a valid number</mat-error>
+        </mat-form-field>
+
+
+        <span *ngIf="fileName">{{ fileName }}</span>
+        <input type="file" accept="image/*"
+        (change)="onFileChange($event)" [hidden]="true" #fileInput>
+        <button mat-raised-button type="button" (click)="chooseFile($event, fileInput)">Choose File</button>
+
+
+
+      </div>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+
+  <div class="button-row">
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Save</button>
+    <button mat-raised-button color="warn" type="reset">Clear</button>
+  </div>
+
+</form>

@@ -1,0 +1,10 @@
+.controles-container {
+  /* Adjust spacing and alignment as needed */
+  margin: 20px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  /* margin-top: 20px; */
+}

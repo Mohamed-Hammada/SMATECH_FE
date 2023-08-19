@@ -16,11 +16,20 @@
             Users Manager
           </a>
         </div>
+
         <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN')">
           <a mat-list-item routerLink="/companies" routerLinkActive="active" (click)="drawer.toggle()">
             Customers Manager
           </a>
         </div>
+
+        <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN')">
+          <a mat-list-item routerLink="/components" routerLinkActive="active" (click)="drawer.toggle()">
+            Components Manager
+          </a>
+        </div>
+
+
         <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="logOut(drawer)">Logout</a>
       </mat-nav-list>
     </div>

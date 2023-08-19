@@ -6,13 +6,14 @@ export class Company {
   updated_at: string = ''; // Use appropriate date format
 }
 
-export class Component {
+export class Components {
   id: number = -1;
   name: string = '';
   description: string = '';
   current_exist_quantity: number = 0;
   last_price_of_unit: number = 0;
   component_image: string = '';
+  component_image_file_name: string = '';
   transactions: ComponentTransaction[] = [];
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
@@ -20,7 +21,7 @@ export class Component {
 
 export class ComponentTransaction {
   id: number = -1;
-  component: Component = new Component();
+  component: Components = new Components();
   transaction_date: string = ''; // Use appropriate date format
   transaction_type: string = '';
   quantity: number = 0;
@@ -57,7 +58,7 @@ export class UserRepairAction {
   action_needed: string = '';
   card_status_life_cycle: string = '';
   note: string = '';
-  needed_components: Component[] = [];
+  needed_components: Components[] = [];
   assign_to: User = new User();
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
@@ -68,7 +69,7 @@ export class Card {
   serial_no: string = ''; // You can set the appropriate default value here
   issue_description: string = '';
   company: Company = new Company();
-  components_of_card: Component[] = [];
+  components_of_card: Components[] = [];
   repair_cost: number = 0;
   user_actions: UserRepairAction[] = [];
   logged_in_user: User = new User();

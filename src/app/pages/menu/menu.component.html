@@ -1,8 +1,8 @@
 <mat-sidenav-container class="sidenav-container">
 
-  <mat-sidenav #drawer class="sidenav" fixedInViewport="false"
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [mode]="(isHandset$ | async) ? 'over' : 'over'"
     [opened]="false"
     *ngIf="storageService.isLoggedIn()">
 
@@ -13,7 +13,12 @@
 
         <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN')">
           <a mat-list-item routerLink="/users" routerLinkActive="active" (click)="drawer.toggle()">
-            Smart Technology
+            Users Manager
+          </a>
+        </div>
+        <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN')">
+          <a mat-list-item routerLink="/companies" routerLinkActive="active" (click)="drawer.toggle()">
+            Customers Manager
           </a>
         </div>
         <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="logOut(drawer)">Logout</a>

@@ -46,6 +46,8 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { LoginComponent } from './pages/login/login.component';
 import { httpInterceptorProviders } from './_helpers/http.interceptor.service';
 import { CustomToolbarComponent } from './pages/helper/custom-toolbar/custom-toolbar.component';
+import { CompaniesComponent } from './pages/company/company.component';
+import { CreateUpdateCompanyComponent } from './pages/company/create-update-company/create-update-company.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { CustomToolbarComponent } from './pages/helper/custom-toolbar/custom-too
     CreateUserComponent,
     WelcomeComponent,
     LoginComponent,
-    CustomToolbarComponent
+    CustomToolbarComponent,
+    CompaniesComponent,
+    CreateUpdateCompanyComponent
   ],
   imports: [
     BrowserModule,

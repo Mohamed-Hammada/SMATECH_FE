@@ -1,0 +1,42 @@
+<mat-toolbar>
+  <span>{{ form.controls["id"].value ? "Edit" : "Create" }} Company</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+<form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="normal-form">
+
+  <mat-grid-list cols="2" rowHeight="350px">
+
+    <mat-grid-tile>
+      <div class="controles-container">
+
+        <input type="hidden" formControlName="id" />
+
+
+
+        <mat-form-field>
+          <input formControlName="name" matInput placeholder="name" />
+          <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
+        </mat-form-field>
+
+
+
+        <mat-form-field>
+          <input formControlName="area" matInput placeholder="Area" />
+          <mat-error *ngIf="form.get('area')?.hasError('required')">Area is required</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+
+
+  </mat-grid-list>
+
+  <div class="button-row">
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Save</button>
+    <button mat-raised-button color="warn" type="reset">Clear</button>
+  </div>
+
+</form>

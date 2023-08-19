@@ -7,9 +7,15 @@
   border-radius: 15px;
   position: fixed; /* Use fixed positioning to make it float */
   top: 0; /* Position from the top */
-  left: 10px; /* Adjust the distance from the left */
+  left: 10px; /* Adjust the distance from the left*/
   margin-left: 10px !important;
   margin-top: 60px !important;
+}
+
+@media (min-width: 768px) {
+  .sidenav {
+    display: flex;
+  }
 }
 
 .mat-toolbar.mat-primary {

@@ -10,19 +10,19 @@ import { CompaniesComponent } from './pages/company/company.component';
 import { CreateUpdateCompanyComponent } from './pages/company/create-update-company/create-update-company.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ComponentsComponent } from './pages/components/components.component';
+import { ComponentsTransactionsComponent } from './pages/components-transactions/components-transactions.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'components', pathMatch: 'full' },
-  { path: 'login', redirectTo: 'components', pathMatch: 'full' },
+  { path: '', redirectTo: 'components-transaction', pathMatch: 'full' },
+  { path: 'login', redirectTo: 'components-transaction', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
 
   { path: 'users', component: UsersComponent, canActivate: [AuthGuardService], data: { requiredRole: 'ROLE_ADMIN' } },
   { path: 'companies', component: CompaniesComponent, canActivate: [AuthGuardService], data: { requiredRole: 'ROLE_ADMIN' } },
   { path: 'components', component: ComponentsComponent, canActivate: [AuthGuardService], data: { requiredRole: 'ROLE_ADMIN' } },
-
-
+  { path: 'components-transaction', component: ComponentsTransactionsComponent, canActivate: [AuthGuardService], data: { requiredRole: 'ROLE_ADMIN' } },
   { path: 'pageNotFound', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
 ];

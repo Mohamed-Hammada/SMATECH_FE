@@ -51,6 +51,8 @@ import { CreateUpdateCompanyComponent } from './pages/company/create-update-comp
 import { ComponentsComponent } from './pages/components/components.component';
 import { CreateUpdateComponentsComponent } from './pages/components/create-update-components/create-update-components.component';
 import { ImageDialogComponent } from './_helpers/image-dialog/image-dialog.component';
+import { ComponentsTransactionsComponent } from './pages/components-transactions/components-transactions.component';
+import { CreateUpdateComponentTransactionComponent } from './pages/components-transactions/create-update-component-transaction/create-update-component-transaction.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import { ImageDialogComponent } from './_helpers/image-dialog/image-dialog.compo
     CreateUpdateCompanyComponent,
     ComponentsComponent,
     CreateUpdateComponentsComponent,
-    ImageDialogComponent
+    ImageDialogComponent,
+    ComponentsTransactionsComponent,
+    CreateUpdateComponentTransactionComponent
   ],
   imports: [
     BrowserModule,

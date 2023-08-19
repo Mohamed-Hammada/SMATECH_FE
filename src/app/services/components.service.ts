@@ -33,6 +33,16 @@ export class ComponentService {
     return this.form
   }
 
+  searchComponents(query: string): Observable<Components[]> {
+    const params = new HttpParams().set('query', query);
+    return this.http.get<Components[]>(`${this.apiUrl}/search`, { params }).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
+
 
   getComponents(page: number, pageSize: number): Observable<any> {
     const params = new HttpParams()
@@ -88,8 +98,8 @@ export class ComponentService {
       id: row.id,
       name: row.name || '',
       description: row.description || '',
-      current_exist_quantity: row.current_exist_quantity || '',
-      last_price_of_unit: row.last_price_of_unit || '',
+      current_exist_quantity: row.current_exist_quantity || 0,
+      last_price_of_unit: row.last_price_of_unit || 0,
       component_image: row.component_image || '',
       component_image_file_name: row.component_image_file_name || ''
     });

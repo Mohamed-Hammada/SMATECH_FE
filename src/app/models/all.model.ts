@@ -14,7 +14,6 @@ export class Components {
   last_price_of_unit: number = 0;
   component_image: string = '';
   component_image_file_name: string = '';
-  transactions: ComponentTransaction[] = [];
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
 }
@@ -23,12 +22,19 @@ export class ComponentTransaction {
   id: number = -1;
   component: Components = new Components();
   transaction_date: string = ''; // Use appropriate date format
-  transaction_type: string = '';
+  transaction_type: TransactionType = TransactionType.ADD;
   quantity: number = 0;
   price_unit: number = 0;
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
 }
+
+export enum TransactionType {
+  ADD = 'ADD',
+  USE = 'USE',
+  RETURN = 'RETURN'
+}
+
 
 export class Role {
   id: number = -1;

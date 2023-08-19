@@ -1,0 +1,80 @@
+<mat-toolbar>
+  <span>{{ form.controls["id"].value !== null ? "Edit" : "Create" }} Component Transaction</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+<form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="normal-form">
+
+  <mat-grid-list cols="2" rowHeight="350px">
+
+    <mat-grid-tile>
+      <div class="controles-container">
+
+        <input type="hidden" formControlName="id" />
+
+
+
+        <mat-form-field>
+          <mat-label>Product Name</mat-label>
+          <input type="text" formControlName="component" matInput [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let component of filteredComponents | async" [value]="component">
+              {{component.name}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="productNameCtrl.hasError('required')">Product Name is required</mat-error>
+        </mat-form-field>
+
+
+
+        <mat-form-field>
+          <input formControlName="transaction_date" matInput [matDatepicker]="picker" placeholder="Transaction Date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="form.get('transaction_date')?.hasError('required')">Transaction Date is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Transaction Type</mat-label>
+          <mat-select formControlName="transaction_type">
+            <mat-option *ngFor="let type of transactionTypes" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('transaction_type')?.hasError('required')">Transaction Type is required</mat-error>
+        </mat-form-field>
+
+
+
+
+        <mat-form-field>
+          <input formControlName="quantity" matInput type="number" placeholder="Quantity" pattern="^[0-9]*$" />
+          <mat-error *ngIf="form.get('quantity')?.hasError('required')">Quantity is required</mat-error>
+          <mat-error *ngIf="form.get('quantity')?.hasError('pattern')">Please enter a valid number</mat-error>
+        </mat-form-field>
+
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="controles-container">
+
+        <mat-form-field>
+          <input formControlName="price_unit" matInput type="number" placeholder="Price per Unit" pattern="^[0-9]*(\.\d{1,2})?$" />
+          <mat-error *ngIf="form.get('price_unit')?.hasError('required')">Price is required</mat-error>
+          <mat-error *ngIf="form.get('price_unit')?.hasError('pattern')">Please enter a valid number</mat-error>
+        </mat-form-field>
+
+      </div>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+
+  <div class="button-row">
+    <button mat-raised-button color="primary" type="submit" >Save</button>
+    <button mat-raised-button color="warn" type="reset">Clear</button>
+  </div>
+
+</form>

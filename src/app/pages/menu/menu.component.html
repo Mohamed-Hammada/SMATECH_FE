@@ -29,6 +29,11 @@
           </a>
         </div>
 
+        <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN')">
+          <a mat-list-item routerLink="/components-transaction" routerLinkActive="active" (click)="drawer.toggle()">
+            Components Transaction Manager
+          </a>
+        </div>
 
         <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="logOut(drawer)">Logout</a>
       </mat-nav-list>

@@ -14,8 +14,8 @@ import { ComponentsTransactionsComponent } from './pages/components-transactions
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'components-transaction', pathMatch: 'full' },
-  { path: 'login', redirectTo: 'components-transaction', pathMatch: 'full' },
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+  { path: 'login', redirectTo: 'welcome', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
 

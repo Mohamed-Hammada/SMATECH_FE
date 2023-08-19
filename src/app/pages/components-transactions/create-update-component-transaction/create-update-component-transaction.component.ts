@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/_helpers/notification.service';
 import { Components, TransactionType } from 'src/app/models/all.model';
 import { ComponentTransactionService } from 'src/app/services/component-transactions.service';
+import { debounceTime, distinctUntilChanged,catchError, map, startWith, switchMap } from 'rxjs/operators';
 
+import { Observable, of } from 'rxjs';
 
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 import { ComponentService } from 'src/app/services/components.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { ComponentService } from 'src/app/services/components.service';
   templateUrl: './create-update-component-transaction.component.html',
   styleUrls: ['./create-update-component-transaction.component.css']
 })
-export class CreateUpdateComponentTransactionComponent {
+export class CreateUpdateComponentTransactionComponent implements OnInit {
   form: FormGroup;
   transactionTypes = Object.values(TransactionType);
   productNameCtrl = new FormControl(null, Validators.required);
@@ -34,29 +34,38 @@ export class CreateUpdateComponentTransactionComponent {
     this.setupProductNameField();
 
   }
+  ngOnInit(): void {
+
+  }
 
   setupProductNameField(): void {
     this.filteredComponents = this.productNameCtrl.valueChanges.pipe(
       startWith(''),
+      // Wait for a 300ms pause in events
+      debounceTime(300),
+      // Only pass through if the value is different than the last
+      distinctUntilChanged(),
       map(value => typeof value === 'string' ? value : value?.['name']),
-      map(name => name ? this.filterComponents(name) : [])
+      // Call the filter function (which might be calling a service)
+      switchMap(name => name ? this.filterComponents(name) : of([]))
     );
   }
 
-  private filterComponents(name: string): any[] {
-    // Call the service method to get the filtered components.
-    this.componentService.searchComponents(name).subscribe(
-      components => {
-        return components;
-      },
-      error => {
-        // Handle the error appropriately.
+
+
+
+  private filterComponents(name: string): Observable<Components[]> {
+    debugger
+    console.log("Filtering for: ", name);
+    return this.componentService.searchComponents(name).pipe(
+      map(components => components),
+      catchError(error => {
         console.error('Error while filtering components:', error);
-        return [];
-      }
+        return of([]); // returns an empty array on error
+      })
     );
-    return [];
   }
+
   onFormSubmit(): void {
 
     if (this.form.valid) {
@@ -102,6 +111,7 @@ export class CreateUpdateComponentTransactionComponent {
   }
 
   displayFn(component?: Components): string {
+    debugger
     return component ? component.name : '';
   }
 

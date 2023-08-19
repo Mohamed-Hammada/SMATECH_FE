@@ -21,7 +21,7 @@ export class ComponentTransactionService {
   initializeFormGroup(): FormGroup {
     this.form = new FormGroup({
       id: new FormControl(null),
-      component: new FormControl('', Validators.required),
+      productName: new FormControl('', Validators.required),
       transaction_date: new FormControl(new Date(), Validators.required),
       transaction_type: new FormControl(TransactionType.ADD, Validators.required),
       quantity: new FormControl(0, Validators.required),
@@ -44,6 +44,7 @@ export class ComponentTransactionService {
   }
 
   createComponentTransaction(componentTransaction: ComponentTransaction): Observable<ComponentTransaction> {
+    console.log("Searching components for name: ", name);
     return this.http.post<ComponentTransaction>(this.apiUrl, componentTransaction).pipe(
       catchError(error => {
         console.error('Error Message: ', error);

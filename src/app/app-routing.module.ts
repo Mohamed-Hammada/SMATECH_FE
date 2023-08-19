@@ -8,6 +8,7 @@ import { CreateUserComponent } from './pages/users/creat-update-user/create-upda
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { CompaniesComponent } from './pages/company/company.component';
 import { CreateUpdateCompanyComponent } from './pages/company/create-update-company/create-update-company.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
 const routes: Routes = [
@@ -27,11 +28,11 @@ const routes: Routes = [
 
 
 @NgModule({
-  // imports: [RouterModule.forRoot(routes, { useHash: true })],
-  // exports: [RouterModule],
-  // providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}]
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}]
+  // imports: [RouterModule.forRoot(routes)],
+  // exports: [RouterModule],
 })
 export class AppRoutingModule { }
 export const routingComponents = [LoginComponent, WelcomeComponent, UsersComponent,

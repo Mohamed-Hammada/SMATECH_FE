@@ -8,12 +8,12 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class AppComponent {
   title = 'SmartTech';
-  // constructor(private router: Router) {
-  //   this.router.events.subscribe(event => {
-  //     if (event instanceof NavigationEnd) {
-  //       window.history.replaceState({}, '', '/');
-  //     }
-  //   });
-  // }
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        window.history.replaceState({}, '', '/');
+      }
+    });
+  }
 
 }

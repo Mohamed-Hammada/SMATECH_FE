@@ -56,6 +56,9 @@ export class UsersComponent implements OnInit {
           this.totalPages = data['total_pages'];
           this.initializeTable(data.data);
         }
+      },
+      error => {
+        this.notificationService.warn(error.message);
       }
     );
   }

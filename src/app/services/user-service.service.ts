@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { RulesService } from './rules.service';
 import { StorageService } from '../_services/storage.service';
+import { NotificationService } from 'src/app/_helpers/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class UserServiceService {
   constructor(
     private http: HttpClient,
     private rulesService: RulesService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private notificationService: NotificationService
   ) {
     this.loadRoles();
   }
@@ -27,6 +29,9 @@ export class UserServiceService {
   private loadRoles(): void {
     this.rulesService.getRoles().subscribe(data => {
       this.storageService.saveAllRoles(data.data);
+    },
+    error => {
+      this.notificationService.warn(error.message);
     });
   }
 

@@ -59,9 +59,9 @@ div.container{
     width: 100%;
     }
 
-    .add-bottom-padding{
+    /* .add-bottom-padding{
         padding-bottom: 10px;
-    }
+    } */
     /* radio group */
 mat-radio-group mat-radio-button{
     margin-left: 5px;
@@ -128,12 +128,13 @@ vertical-align: middle;
         }
 
         /* for dialog pop-up */
-  .btn-dialog-close{
-    width: 45px;
-    min-width: 0px !important;
-    height: 40px;
-    padding: 0px !important;
-  }
+        .btn-dialog-close {
+          width: 45px;
+          min-width: 0px !important;
+          height: 30px;
+          padding: 5px !important; /* Adjusted padding */
+          margin: 0 5px; /* Removed margin-bottom, added horizontal margin */
+        }
 
    /* mat-confirm-dialog (customised dialog) */
    .confirm-dialog-container .mat-dialog-container {

@@ -1,34 +1,39 @@
-
-
 export class Company {
   id: number = -1;
   name: string = '';
   area: string = '';
+  created_at: string = ''; // Use appropriate date format
+  updated_at: string = ''; // Use appropriate date format
 }
 
 export class Component {
   id: number = -1;
   name: string = '';
   description: string = '';
-  currentExistQuantity: number = 0;
-  lastPriceOfUnit: number = 0;
-  componentImage: string = '';
+  current_exist_quantity: number = 0;
+  last_price_of_unit: number = 0;
+  component_image: string = '';
   transactions: ComponentTransaction[] = [];
+  created_at: string = ''; // Use appropriate date format
+  updated_at: string = ''; // Use appropriate date format
 }
 
 export class ComponentTransaction {
   id: number = -1;
   component: Component = new Component();
-  transactionDate: string = ''; // Use appropriate date format
-  transactionType: string = '';
+  transaction_date: string = ''; // Use appropriate date format
+  transaction_type: string = '';
   quantity: number = 0;
-  priceUnit: number = 0;
+  price_unit: number = 0;
+  created_at: string = ''; // Use appropriate date format
+  updated_at: string = ''; // Use appropriate date format
 }
-
 
 export class Role {
   id: number = -1;
   name: string = '';
+  created_at: string = ''; // Use appropriate date format
+  updated_at: string = ''; // Use appropriate date format
 }
 
 export class User {
@@ -39,29 +44,34 @@ export class User {
   password: string = '';
   type: string = '';
   enabled: boolean = true;
-  tokenExpired: boolean = false;
+  token_expired: boolean = false;
   roles: Role[] = [];
+  created_at: string = ''; // Use appropriate date format
+  updated_at: string = ''; // Use appropriate date format
 }
 
 export class UserRepairAction {
   id: number = -1;
   user: User = new User();
   card: Card = new Card();
-  actionNeeded: string = '';
-  cardStatusLifeCycle: string = '';
+  action_needed: string = '';
+  card_status_life_cycle: string = '';
   note: string = '';
-  neededComponents: Component[] = [];
-  assignTo: User = new User();
+  needed_components: Component[] = [];
+  assign_to: User = new User();
+  created_at: string = ''; // Use appropriate date format
+  updated_at: string = ''; // Use appropriate date format
 }
-
 
 export class Card {
   id: number = -1;
-  serialNo: string = ''; // You can set the appropriate default value here
-  issueDescription: string = '';
+  serial_no: string = ''; // You can set the appropriate default value here
+  issue_description: string = '';
   company: Company = new Company();
-  componentsOfCard: Component[] = [];
-  repairCost: number = 0;
-  userActions: UserRepairAction[] = [];
-  loggedInUser: User = new User();
+  components_of_card: Component[] = [];
+  repair_cost: number = 0;
+  user_actions: UserRepairAction[] = [];
+  logged_in_user: User = new User();
+  created_at: string = ''; // Use appropriate date format
+  updated_at: string = ''; // Use appropriate date format
 }

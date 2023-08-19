@@ -24,7 +24,7 @@ export class UsersComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = -1;
   pageSize: number = 10;
-  displayedColumns: string[] = ['id', 'username', 'email', 'UPDATE'];
+  displayedColumns: string[] = ['id', 'username', 'email' , 'createdAt' , 'updatedAt' , 'UPDATE'];
   searchKey: string = '';
   dataArray: MatTableDataSource<any> = new MatTableDataSource<any>();
 

@@ -8,12 +8,12 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-  <button mat-raised-button (click)="onCreate()">
+  <button mat-raised-button (click)="onCreate()" style="height: 55px;width: 70%;">
     <mat-icon>add</mat-icon>Create
   </button>
-  <button matSuffix mat-icon-button (click)="exportAsXLSX()">
+  <!-- <button matSuffix mat-icon-button (click)="exportAsXLSX()">
     <div class="icons8-microsoft-excel"></div>
-  </button>
+  </button> -->
   <span class="fill-remaining-space"></span>
 </div>
 
@@ -56,6 +56,16 @@
     <mat-footer-cell *matFooterCellDef colspan="6">
       No data.
     </mat-footer-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="createdAt">
+    <mat-header-cell *matHeaderCellDef>Last Modified Date</mat-header-cell>
+    <mat-cell *matCellDef="let user">{{ user.created_at }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="updatedAt">
+    <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+    <mat-cell *matCellDef="let user">{{ user.updated_at }}</mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

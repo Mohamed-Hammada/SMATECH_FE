@@ -89,7 +89,7 @@ export class UserServiceService {
   }
 
   deleteById(id: any): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/deleteById/${id}`).pipe(
+    return this.http.delete(`${this.apiUrl}/${id}`).pipe(
       catchError(error => {
         console.error('Error Message: ', error);
         return throwError(error);

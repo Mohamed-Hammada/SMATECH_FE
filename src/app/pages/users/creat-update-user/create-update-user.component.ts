@@ -31,7 +31,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedRoles = this.userService.form.get('roles')?.value || [];
+    this.selectedRoles = this.userService.form.get('id')?.value!=null ? this.userService.form.get('roles')?.value || [] : [];
     this.populateForm();
   }
 

@@ -25,6 +25,7 @@
         </mat-form-field>
 
         <mat-form-field>
+          <mat-label formControlName="current_exist_quantity">Current Exist Quantity</mat-label>
           <input formControlName="current_exist_quantity" matInput type="number" placeholder="Current Exist Quantity"
             pattern="^[0-9]*$" />
           <mat-error *ngIf="form.get('current_exist_quantity')?.hasError('required')">Quantity is required</mat-error>
@@ -39,6 +40,7 @@
       <div class="controles-container">
 
         <mat-form-field>
+          <mat-label formControlName="last_price_of_unit">Price</mat-label>
           <input formControlName="last_price_of_unit" matInput type="number" placeholder="Last Price of Unit"
             pattern="^[0-9]*$" />
           <mat-error *ngIf="form.get('last_price_of_unit')?.hasError('required')">Price is required</mat-error>

@@ -19,7 +19,7 @@ import { ComponentService } from 'src/app/services/components.service';
 export class CreateUpdateComponentTransactionComponent implements OnInit {
   form: FormGroup;
   transactionTypes = Object.values(TransactionType);
-  productNameCtrl = new FormControl(null, Validators.required);
+  // productNameCtrl = new FormControl('', Validators.required);
   filteredComponents!: Observable<any[]>;
 
   constructor(
@@ -30,7 +30,7 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.form = this.service.form;
-    this.form.addControl('productName', this.productNameCtrl);
+    // this.form.addControl('productName', this.productNameCtrl);
     this.setupProductNameField();
 
   }
@@ -39,15 +39,11 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
   }
 
   setupProductNameField(): void {
-    this.filteredComponents = this.productNameCtrl.valueChanges.pipe(
+    this.filteredComponents = this.form.controls?.['productName'].valueChanges.pipe(
       startWith(''),
-      // Wait for a 300ms pause in events
       debounceTime(300),
-      // Only pass through if the value is different than the last
       distinctUntilChanged(),
-      map(value => typeof value === 'string' ? value : value?.['name']),
-      // Call the filter function (which might be calling a service)
-      switchMap(name => name ? this.filterComponents(name) : of([]))
+      switchMap(value => this.filterComponents(value))
     );
   }
 
@@ -67,7 +63,7 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
   }
 
   onFormSubmit(): void {
-
+    debugger
     if (this.form.valid) {
       console.log('Form Submitted!');
       // ... handle the submit action ...
@@ -112,7 +108,7 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
 
   displayFn(component?: Components): string {
     debugger
-    return component ? component.name : '';
+    return  component?.name ?? '';
   }
 
   onClose(): void {

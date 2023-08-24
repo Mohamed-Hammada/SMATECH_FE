@@ -34,18 +34,18 @@
 
   <ng-container matColumnDef="TransactionUnitPrice">
     <mat-header-cell *matHeaderCellDef>Transaction Unit Price</mat-header-cell>
-    <mat-cell *matCellDef="let row">{{ row.priceUnit }}</mat-cell>
+    <mat-cell *matCellDef="let row">{{ row.price_unit }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="LatestUnitPrice">
     <mat-header-cell *matHeaderCellDef>Latest Unit Price</mat-header-cell>
-    <mat-cell *matCellDef="let row">{{ row?.component?.priceUnit }}</mat-cell>
+    <mat-cell *matCellDef="let row">{{ row?.component?.price_unit }}</mat-cell>
   </ng-container>
 
 
   <ng-container matColumnDef="transactionDate">
     <mat-header-cell *matHeaderCellDef>Transaction Date</mat-header-cell>
-    <mat-cell *matCellDef="let row">{{ row.transactionDate }}</mat-cell>
+    <mat-cell *matCellDef="let row">{{ row.transaction_date }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="transactionType">

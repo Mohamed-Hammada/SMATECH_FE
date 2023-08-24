@@ -19,7 +19,7 @@
         <mat-form-field>
           <mat-label>Product Name</mat-label>
           <!-- Input field for the product name. It is bound to the form control named 'productName' -->
-          <input type="text" formControlName="productNameCtrl" matInput [matAutocomplete]="auto">
+          <input type="text" formControlName="productName" matInput [matAutocomplete]="auto">
           <!-- MatAutocomplete directive that controls the behavior of the options panel associated with the input -->
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
             <!-- Loop through the filtered components, which is an observable containing the filtered results -->
@@ -29,7 +29,7 @@
             </mat-option>
           </mat-autocomplete>
           <!-- Error message that appears when the 'productName' form control is required but not filled -->
-          <mat-error *ngIf="productNameCtrl.hasError('required')">Product Name is required</mat-error>
+          <mat-error *ngIf="form.get('productName')?.hasError('required')">Product Name is required</mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -53,6 +53,7 @@
 
 
         <mat-form-field>
+          <mat-label formControlName="quantity">Quantity</mat-label>
           <input formControlName="quantity" matInput type="number" placeholder="Quantity" pattern="^[0-9]*$" />
           <mat-error *ngIf="form.get('quantity')?.hasError('required')">Quantity is required</mat-error>
           <mat-error *ngIf="form.get('quantity')?.hasError('pattern')">Please enter a valid number</mat-error>
@@ -65,6 +66,7 @@
       <div class="controles-container">
 
         <mat-form-field>
+          <mat-label formControlName="price_unit">Price per Unit</mat-label>
           <input formControlName="price_unit" matInput type="number" placeholder="Price per Unit"
             pattern="^[0-9]*(\.\d{1,2})?$" />
           <mat-error *ngIf="form.get('price_unit')?.hasError('required')">Price is required</mat-error>

@@ -15,8 +15,13 @@
         <input type="hidden" formControlName="id" />
 
         <mat-form-field>
-          <input formControlName="name" matInput placeholder="Name" />
+          <input formControlName="name" matInput placeholder="Name" pattern="^(?! )(?!.* {2,})(?!.* $)[A-Z0-9_\- ]+$"/>
           <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
+          <mat-error *ngIf="form.get('name')?.hasError('pattern')">
+            Name must only contain letters, numbers, underscores, dashes, and spaces;
+            no consecutive spaces allowed;
+            cannot start or end with space
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field>

@@ -38,7 +38,7 @@ export class UserServiceService {
   initializeFormGroup(): FormGroup {
     this.form = new FormGroup({
       id: new FormControl(null),
-      email: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
       username: new FormControl('', Validators.required),
       phones: new FormControl([], Validators.required),
       password: new FormControl('', Validators.required),

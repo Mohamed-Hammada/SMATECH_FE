@@ -34,7 +34,7 @@
           <input formControlName="current_exist_quantity" matInput type="number" placeholder="Current Exist Quantity"
             pattern="^[0-9]*$" />
           <mat-error *ngIf="form.get('current_exist_quantity')?.hasError('required')">Quantity is required</mat-error>
-          <mat-error *ngIf="form.get('current_exist_quantity')?.hasError('pattern')">Please enter a valid
+          <mat-error *ngIf="form.get('current_exist_quantity')?.hasError('pattern')">Please enter a valid Positive
             number</mat-error>
 
         </mat-form-field>
@@ -49,7 +49,7 @@
           <input formControlName="last_price_of_unit" matInput type="number" placeholder="Last Price of Unit"
             pattern="^[0-9]*$" />
           <mat-error *ngIf="form.get('last_price_of_unit')?.hasError('required')">Price is required</mat-error>
-          <mat-error *ngIf="form.get('last_price_of_unit')?.hasError('pattern')">Please enter a valid number</mat-error>
+          <mat-error *ngIf="form.get('last_price_of_unit')?.hasError('pattern')">Please enter a valid Positive number</mat-error>
         </mat-form-field>
 
 

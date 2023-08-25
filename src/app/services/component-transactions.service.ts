@@ -24,8 +24,8 @@ export class ComponentTransactionService {
       productName: new FormControl('', Validators.required),
       transaction_date: new FormControl(new Date(), Validators.required),
       transaction_type: new FormControl(TransactionType.ADD, Validators.required),
-      quantity: new FormControl(0, Validators.required),
-      price_unit: new FormControl(0, Validators.required)
+      quantity: new FormControl(0, [Validators.required,Validators.min(0)]),
+      price_unit: new FormControl(0, [Validators.required,Validators.min(0)])
     });
     return this.form;
   }

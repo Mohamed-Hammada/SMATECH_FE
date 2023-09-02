@@ -21,7 +21,7 @@ export class ComponentsTransactionsComponent {
   currentPage: number = 1;
   totalPages: number = -1;
   pageSize: number = 10;
-  displayedColumns: string[] = [ 'ProductName',
+  displayedColumns: string[] = [ 'component',
    'TransactionQuantity', 'TransactionUnitPrice', 'LatestUnitPrice' , "transactionDate", 'actions'];
   searchKey: string = '';
   dataArray: MatTableDataSource<any> = new MatTableDataSource<any>();

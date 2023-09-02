@@ -21,7 +21,7 @@
     <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="ProductName">
+  <ng-container matColumnDef="component">
     <mat-header-cell *matHeaderCellDef>Product Name</mat-header-cell>
     <mat-cell *matCellDef="let row">{{ row.component?.name }}</mat-cell>
   </ng-container>
@@ -39,7 +39,7 @@
 
   <ng-container matColumnDef="LatestUnitPrice">
     <mat-header-cell *matHeaderCellDef>Latest Unit Price</mat-header-cell>
-    <mat-cell *matCellDef="let row">{{ row?.component?.price_unit }}</mat-cell>
+    <mat-cell *matCellDef="let row">{{ row?.component?.last_price_of_unit }}</mat-cell>
   </ng-container>
 
 

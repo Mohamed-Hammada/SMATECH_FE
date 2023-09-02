@@ -18,7 +18,7 @@
           <input formControlName="name" matInput placeholder="Name" pattern="^(?! )(?!.* {2,})(?!.* $)[A-Z0-9_\- ]+$"/>
           <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
           <mat-error *ngIf="form.get('name')?.hasError('pattern')">
-            Name must only contain letters, numbers, underscores, dashes, and spaces; <br>
+            Name must only contain Capital letters, numbers, underscores, dashes, and spaces; <br>
             no consecutive spaces allowed;<br>
             cannot start or end with space<br>
           </mat-error>

@@ -19,7 +19,7 @@
         <mat-form-field>
           <mat-label>Product Name</mat-label>
           <!-- Input field for the product name. It is bound to the form control named 'productName' -->
-          <input type="text" formControlName="productName" matInput [matAutocomplete]="auto">
+          <input type="text" formControlName="component" matInput [matAutocomplete]="auto">
           <!-- MatAutocomplete directive that controls the behavior of the options panel associated with the input -->
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
             <!-- Loop through the filtered components, which is an observable containing the filtered results -->
@@ -29,7 +29,7 @@
             </mat-option>
           </mat-autocomplete>
           <!-- Error message that appears when the 'productName' form control is required but not filled -->
-          <mat-error *ngIf="form.get('productName')?.hasError('required')">Product Name is required</mat-error>
+          <mat-error *ngIf="form.get('component')?.hasError('required')">Product Name is required</mat-error>
         </mat-form-field>
 
         <mat-form-field>

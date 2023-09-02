@@ -29,17 +29,22 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
     private componentService: ComponentService,
     private snackBar: MatSnackBar
   ) {
-    this.form = this.service.form;
+   
     // this.form.addControl('productName', this.productNameCtrl);
+    this.form = this.service.form;
     this.setupProductNameField();
-
+    debugger
   }
   ngOnInit(): void {
-
+    debugger
+   const componentServiceControl =  this.service.form.controls?.['component'];
+    if(componentServiceControl?.value){
+      this.filteredComponents = of([componentServiceControl?.value])
+    }
   }
 
   setupProductNameField(): void {
-    this.filteredComponents = this.form.controls?.['productName'].valueChanges.pipe(
+    this.filteredComponents = this.form.controls?.['component'].valueChanges.pipe(
       startWith(''),
       debounceTime(300),
       distinctUntilChanged(),

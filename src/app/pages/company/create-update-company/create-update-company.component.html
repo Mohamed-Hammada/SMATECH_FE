@@ -22,6 +22,11 @@
         </mat-form-field>
 
 
+        <mat-form-field>
+          <input formControlName="customer_name" matInput placeholder="customer_name" />
+          <mat-error *ngIf="form.get('customer_name')?.hasError('required')">Customer Name is required</mat-error>
+        </mat-form-field>
+
 
         <mat-form-field>
           <input formControlName="area" matInput placeholder="Area" />

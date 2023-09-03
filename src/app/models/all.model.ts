@@ -2,6 +2,7 @@ export class Company {
   id: number = -1;
   name: string = '';
   area: string = '';
+  customer_name: string = '';
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
 }
@@ -25,6 +26,7 @@ export class ComponentTransaction {
   transaction_type: TransactionType = TransactionType.ADD;
   quantity: number = 0;
   price_unit: number = 0;
+  component_image: string = '';
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
 }
@@ -33,6 +35,20 @@ export enum TransactionType {
   ADD = 'ADD',
   USE = 'USE',
   RETURN = 'RETURN'
+}
+
+export enum CardState {
+  ENTERED,
+  PRICE_OFFER,
+  REJECTED_OFFER,
+  UNDER_REPAIR,
+  READY,
+  WAIT_SPARE_PARTS,
+  REJECTED_TECH,
+  UNDER_TEST,
+  OK_WORKING_FINE,
+  OUT_OF_GUARANTEE,
+  RETURN_HAVE_ISSUE
 }
 
 
@@ -75,10 +91,15 @@ export class Card {
   serial_no: string = ''; // You can set the appropriate default value here
   issue_description: string = '';
   company: Company = new Company();
-  components_of_card: Components[] = [];
+  important_components_of_card: Components[] = [];
+  suggested_offer_repair_cost: number = 0;
   repair_cost: number = 0;
+  amount_paid: number = 0;
   user_actions: UserRepairAction[] = [];
+  card_state: CardState = CardState.ENTERED;
+  noOfCardPieces:number = 0;
   logged_in_user: User = new User();
+  deliver_card_user: User = new User();
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
 }

@@ -10,6 +10,7 @@ import { DialogService } from 'src/app/_helpers/dialog.service';
 
 import { CreateUpdateComponentTransactionComponent } from './create-update-component-transaction/create-update-component-transaction.component';
 import { ComponentTransactionService } from 'src/app/services/component-transactions.service';
+import { ImageDialogComponent } from 'src/app/_helpers/image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-components-transactions',
@@ -22,7 +23,7 @@ export class ComponentsTransactionsComponent {
   totalPages: number = -1;
   pageSize: number = 10;
   displayedColumns: string[] = [ 'component',
-   'TransactionQuantity', 'TransactionUnitPrice', 'LatestUnitPrice' , "transactionDate", 'actions'];
+   'TransactionQuantity', 'TransactionUnitPrice' , 'LatestUnitPrice' , "transactionDate", "component_image", 'actions'];
   searchKey: string = '';
   dataArray: MatTableDataSource<any> = new MatTableDataSource<any>();
 
@@ -141,6 +142,16 @@ export class ComponentsTransactionsComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loadData();
+  }
+
+  onViewImage(imageBase64: string) {
+    // Create a new window and set its content to the base64 image
+    // const imageWindow = window.open();
+    // imageWindow?.document.write('<img src="' + imageBase64 + '" />');
+    // imageWindow?.document.close();
+    this.dialog.open(ImageDialogComponent, {
+      data: { imageBase64: imageBase64 }
+    });
   }
 
   exportAsXLSX(): void {

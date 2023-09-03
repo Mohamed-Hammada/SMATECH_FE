@@ -21,7 +21,7 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
   transactionTypes = Object.values(TransactionType);
   // productNameCtrl = new FormControl('', Validators.required);
   filteredComponents!: Observable<any[]>;
-
+  fileName: string = '';
   constructor(
     public dialogRef: MatDialogRef<CreateUpdateComponentTransactionComponent>,
     private notificationService: NotificationService,
@@ -116,6 +116,33 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
     return  component?.name ?? '';
   }
 
+  chooseFile(event: Event, fileInput: any) {
+    event.preventDefault();
+    fileInput.click();
+  }
+  
+  
+  onFileChange(event: any) {
+  debugger
+  const reader = new FileReader();
+
+  if (event.target.files && event.target.files.length > 0) {
+    const file = event.target.files[0];
+    this.fileName = file.name;
+
+
+    // Set the file name in the form control
+    this.form.get('component_image_file_name')?.setValue(this.fileName);
+
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const base64String = reader.result as string;
+      this.form.get('component_image')?.setValue(base64String);
+      // console.log('Form Control Value:', this.form.get('component_image')?.value); // <-- Add this line
+    };
+  }
+}
   onClose(): void {
     this.form.reset();
     this.dialogRef.close();

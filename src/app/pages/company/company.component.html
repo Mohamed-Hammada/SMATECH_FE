@@ -38,6 +38,11 @@
     <mat-cell *matCellDef="let company">{{ company.name }}</mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="customer_name">
+    <mat-header-cell *matHeaderCellDef>Customer Name</mat-header-cell>
+    <mat-cell *matCellDef="let company">{{ company.customer_name }}</mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="area">
     <mat-header-cell *matHeaderCellDef>Area</mat-header-cell>
     <mat-cell *matCellDef="let company">{{ company.area }}</mat-cell>

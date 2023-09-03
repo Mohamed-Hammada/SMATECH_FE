@@ -25,7 +25,9 @@ export class ComponentTransactionService {
       transaction_date: new FormControl(new Date(), Validators.required),
       transaction_type: new FormControl(TransactionType.ADD, Validators.required),
       quantity: new FormControl(0, [Validators.required,Validators.min(0)]),
-      price_unit: new FormControl(0, [Validators.required,Validators.min(0)])
+      price_unit: new FormControl(0, [Validators.required,Validators.min(0)]),
+      component_image: new FormControl(''),
+      component_image_file_name: new FormControl('')
     });
     return this.form;
   }
@@ -88,7 +90,9 @@ export class ComponentTransactionService {
       transaction_date: row.transaction_date || new Date(),
       transaction_type: row.transaction_type || TransactionType.ADD,
       quantity: row.quantity || 0,
-      price_unit: row.price_unit || 0
+      price_unit: row.price_unit || 0,
+      component_image: row.component_image || '',
+      component_image_file_name: row.component_image_file_name || ''
     });
   }
 }

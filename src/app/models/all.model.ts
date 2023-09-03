@@ -97,7 +97,7 @@ export class Card {
   amount_paid: number = 0;
   user_actions: UserRepairAction[] = [];
   card_state: CardState = CardState.ENTERED;
-  noOfCardPieces:number = 0;
+  no_of_card_pieces:number = 0;
   logged_in_user: User = new User();
   deliver_card_user: User = new User();
   created_at: string = ''; // Use appropriate date format

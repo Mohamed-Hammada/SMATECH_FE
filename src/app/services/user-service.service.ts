@@ -102,6 +102,17 @@ export class UserServiceService {
     );
   }
 
+  searchUsers(query: string): Observable<User[]> {
+    debugger
+    const params = new HttpParams().set('query', query);
+    return this.http.get<User[]>(`${this.apiUrl}/search`, { params }).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
+
   populateForm(row: any): void {
     this.form.setValue({
       id: row.id,

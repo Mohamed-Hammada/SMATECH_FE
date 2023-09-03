@@ -79,10 +79,22 @@ export class CompanyService {
     );
   }
 
+  searchCompanies(query: string): Observable<Company[]> {
+    debugger
+    const params = new HttpParams().set('query', query);
+    return this.http.get<Company[]>(`${this.apiUrl}/search`, { params }).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
+
   populateForm(row: any): void {
     this.form.setValue({
       id: row.id,
       name: row.name || '',
+      customer_name: row.customer_name || '',
       area: row.area || ''
     });
   }

@@ -29,7 +29,7 @@ export class CardService {
       amount_paid: new FormControl(0, [Validators.required, Validators.min(0)]),
       user_actions: new FormControl([]),
       card_state: new FormControl(CardState.ENTERED, Validators.required),
-      noOfCardPieces: new FormControl(0, [Validators.required, Validators.min(0)]),
+      no_of_card_pieces: new FormControl(0, [Validators.required, Validators.min(0)]),
       logged_in_user: new FormControl(''),
       deliver_card_user: new FormControl('')
     });

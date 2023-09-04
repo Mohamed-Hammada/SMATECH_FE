@@ -28,17 +28,15 @@ export class CardComponent {
     'serial_no',
     'issue_description',
     'company',
-    'important_components_of_card',
     'suggested_offer_repair_cost',
     'repair_cost',
     'amount_paid',
-    'user_actions',
     'card_state',
     'no_of_card_pieces',
     'logged_in_user',
     'deliver_card_user',
-    'created_at',
-    'updated_at'
+    'createdAt',
+    'updatedAt'
     , 'actions'
   ];
 

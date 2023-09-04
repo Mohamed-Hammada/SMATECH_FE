@@ -16,7 +16,7 @@
 
 <mat-table [dataSource]="cards">
 
-  <ng-container matColumnDef="UPDATE">
+  <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let row">
       <button mat-button (click)="onViewImage(row.component_image)">

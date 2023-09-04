@@ -11,14 +11,15 @@ import { CreateUpdateCompanyComponent } from './pages/company/create-update-comp
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ComponentsComponent } from './pages/components/components.component';
 import { ComponentsTransactionsComponent } from './pages/components-transactions/components-transactions.component';
+import { CardComponent } from './pages/card/card.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-  { path: 'login', redirectTo: 'welcome', pathMatch: 'full' },
+  { path: '', redirectTo: 'card', pathMatch: 'full' },
+  { path: 'login', redirectTo: 'card', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
-
+  { path: 'card', component: CardComponent,canActivate: [AuthGuardService], data: { requiredRole: 'ROLE_ADMIN' } },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuardService], data: { requiredRole: 'ROLE_ADMIN' } },
   { path: 'companies', component: CompaniesComponent, canActivate: [AuthGuardService], data: { requiredRole: 'ROLE_ADMIN' } },
   { path: 'components', component: ComponentsComponent, canActivate: [AuthGuardService], data: { requiredRole: 'ROLE_ADMIN' } },

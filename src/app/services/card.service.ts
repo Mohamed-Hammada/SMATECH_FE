@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Card, CardState } from '../models/all.model';
+import { Card, CardState, User } from '../models/all.model';
 import { environment } from 'src/environments/environment';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { StorageService } from '../_services/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,24 +15,25 @@ export class CardService {
   form: FormGroup = this.initializeFormGroup();
   private apiUrl = `${environment.baseUrl}/api/cards`;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private storageService: StorageService) {
   }
 
   initializeFormGroup(): FormGroup {
     this.form = new FormGroup({
       id: new FormControl(null),
-      serial_no: new FormControl('', Validators.required),
+      serial_no: new FormControl(''),
       issue_description: new FormControl(''),
-      company: new FormControl('', Validators.required),
+      company: new FormControl(null, Validators.required),
       important_components_of_card: new FormControl([]),
       suggested_offer_repair_cost: new FormControl(0, [Validators.required, Validators.min(0)]),
       repair_cost: new FormControl(0, [Validators.required, Validators.min(0)]),
       amount_paid: new FormControl(0, [Validators.required, Validators.min(0)]),
-      user_actions: new FormControl([]),
+      // user_actions: new FormControl([]),
       card_state: new FormControl(CardState.ENTERED, Validators.required),
       no_of_card_pieces: new FormControl(0, [Validators.required, Validators.min(0)]),
-      logged_in_user: new FormControl(''),
-      deliver_card_user: new FormControl('')
+      logged_in_user: new FormControl(this.storageService.getUser()),
+      deliver_card_user: new FormControl(null)
     });
     return this.form;
   }
@@ -95,9 +97,9 @@ export class CardService {
       suggested_offer_repair_cost: row.suggested_offer_repair_cost || 0,
       repair_cost: row.repair_cost || 0,
       amount_paid: row.amount_paid || 0,
-      user_actions: row.user_actions || [],
+      // user_actions: row.user_actions || [],
       card_state: row.card_state || CardState.ENTERED,
-      noOfCardPieces: row.noOfCardPieces || 0,
+      no_of_card_pieces: row.noOfCardPieces || 0,
       logged_in_user: row.logged_in_user || '',
       deliver_card_user: row.deliver_card_user || ''
     });

@@ -89,13 +89,13 @@
   <!-- logged_in_user Column -->
   <ng-container matColumnDef="logged_in_user">
     <mat-header-cell *matHeaderCellDef>Logged In User</mat-header-cell>
-    <mat-cell *matCellDef="let card">{{ card.logged_in_user.name }}</mat-cell>
+    <mat-cell *matCellDef="let card">{{ card.logged_in_user.username }}</mat-cell>
   </ng-container>
   
   <!-- deliver_card_user Column -->
   <ng-container matColumnDef="deliver_card_user">
     <mat-header-cell *matHeaderCellDef>Deliver Card User</mat-header-cell>
-    <mat-cell *matCellDef="let card">{{ card.deliver_card_user.name }}</mat-cell>
+    <mat-cell *matCellDef="let card">{{ card.deliver_card_user.username }}</mat-cell>
   </ng-container>
   
 

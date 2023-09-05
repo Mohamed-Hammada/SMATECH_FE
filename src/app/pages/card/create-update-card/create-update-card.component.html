@@ -16,28 +16,25 @@
 
             <input type="hidden" formControlName="serial_no" placeholder="Serial No" />
             <input type="hidden" formControlName="logged_in_user" placeholder="Logged In User" />
-            <mat-form-field>
-              <input formControlName="issue_description" matInput placeholder="Issue Description" />
-              <mat-error *ngIf="form.get('issue_description')?.hasError('required')">Issue Description is required</mat-error>
-            </mat-form-field>
+         
             
-            
+<!--             
             <mat-form-field>
                 <mat-label>Product Name</mat-label>
-                 <input type="text" formControlName="important_components_of_card" matInput [matAutocomplete]="auto">
-                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                 <input type="text" formControlName="important_components_of_card" matInput [matAutocomplete]="autoprod">
+                 <mat-autocomplete #autoprod="matAutocomplete" [displayWith]="displayFn">
                    <mat-option *ngFor="let component of filteredComponents | async" [value]="component">
                      {{component.name}}
                   </mat-option>
                 </mat-autocomplete>
                  <mat-error *ngIf="form.get('component')?.hasError('required')">Product Name is required</mat-error>
-              </mat-form-field>
+              </mat-form-field> -->
             
             
               <mat-form-field>
                 <mat-label>Company</mat-label>
-                 <input type="text" formControlName="company" matInput [matAutocomplete]="auto">
-                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                 <input type="text" formControlName="company" matInput [matAutocomplete]="autocomp">
+                 <mat-autocomplete #autocomp="matAutocomplete" [displayWith]="displayFn">
                    <mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
                      {{company.name}}
                   </mat-option>
@@ -47,17 +44,24 @@
             
             
               <mat-form-field>
-                <!-- <mat-label formControlName="suggested_offer_repair_cost">Suggested Offer Repair Cost</mat-label> -->
+                <mat-label >Suggested Offer Repair Cost</mat-label>
                 <input formControlName="suggested_offer_repair_cost" matInput type="number" placeholder="Suggested Offer Repair Cost" pattern="^[0-9]*$" />
                 <mat-error *ngIf="form.get('suggested_offer_repair_cost')?.hasError('required')">Suggested Offer Repair Cost is required</mat-error>
                 <mat-error *ngIf="form.get('suggested_offer_repair_cost')?.hasError('pattern')">Please enter a valid number</mat-error>
               </mat-form-field>
 
               <mat-form-field>
-                <!-- <mat-label formControlName="repair_cost">Repair Cost</mat-label> -->
+                <mat-label >Repair Cost</mat-label>
                 <input formControlName="repair_cost" matInput type="number" placeholder="Repair Cost" pattern="^[0-9]*$" />
                 <mat-error *ngIf="form.get('repair_cost')?.hasError('required')">Repair Cost is required</mat-error>
                 <mat-error *ngIf="form.get('repair_cost')?.hasError('pattern')">Please enter a valid number</mat-error>
+              </mat-form-field>
+
+                <mat-form-field>
+                <mat-label >Amount Paid</mat-label>
+                <input formControlName="amount_paid" matInput type="number" placeholder="Amount Paid" pattern="^[0-9]*$" />
+                <mat-error *ngIf="form.get('amount_paid')?.hasError('required')">Amount Paid is required</mat-error>
+                <mat-error *ngIf="form.get('amount_paid')?.hasError('pattern')">Please enter a valid number</mat-error>
               </mat-form-field>
         </div>
             </mat-grid-tile>
@@ -65,12 +69,7 @@
             <div class="controles-container">
           
               
-              <mat-form-field>
-                <!-- <mat-label formControlName="amount_paid">Amount Paid</mat-label> -->
-                <input formControlName="amount_paid" matInput type="number" placeholder="Amount Paid" pattern="^[0-9]*$" />
-                <mat-error *ngIf="form.get('amount_paid')?.hasError('required')">Amount Paid is required</mat-error>
-                <mat-error *ngIf="form.get('amount_paid')?.hasError('pattern')">Please enter a valid number</mat-error>
-              </mat-form-field>
+            
               
             
             
@@ -95,7 +94,7 @@
             
             
             <mat-form-field>
-                <!-- <mat-label formControlName="no_of_card_pieces">No. Of Card Pieces</mat-label> -->
+                <mat-label>No. Of Card Pieces</mat-label>
                 <input formControlName="no_of_card_pieces" matInput type="number" placeholder="Number Of Card Pices" pattern="^[0-9]*$" />
                 <mat-error *ngIf="form.get('no_of_card_pieces')?.hasError('required')">Number Of Card Pices is required</mat-error>
                 <mat-error *ngIf="form.get('no_of_card_pieces')?.hasError('pattern')">Please enter a valid number</mat-error>
@@ -103,24 +102,22 @@
              
             
             
-
-            
-            <mat-form-field>
-              <input formControlName="deliver_card_user" matInput placeholder="Deliver Card User" />
-            </mat-form-field>
-            
-            
             <mat-form-field>
                 <mat-label>User Deleiverd the card</mat-label>
-                 <input type="text" formControlName="deliver_card_user" matInput [matAutocomplete]="auto">
-                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                 <input type="text" formControlName="deliver_card_user" matInput [matAutocomplete]="autoudelv">
+                 <mat-autocomplete #autoudelv="matAutocomplete" [displayWith]="displayFnDeliverUser">
                    <mat-option *ngFor="let deliveredUser of filteredDeliveredUsers | async" [value]="deliveredUser">
-                     {{deliveredUser.name}}
+                     {{deliveredUser.username}}
                   </mat-option>
                 </mat-autocomplete>
                  <mat-error *ngIf="form.get('deliver_card_user')?.hasError('required')">Delivery User is required</mat-error>
               </mat-form-field>
   
+              <mat-form-field>
+                <textarea formControlName="issue_description" matInput placeholder="Issue Description" ></textarea>
+                <mat-error *ngIf="form.get('issue_description')?.hasError('required')">Issue Description is required</mat-error>
+              </mat-form-field>
+              
         </div>
       </mat-grid-tile>
   

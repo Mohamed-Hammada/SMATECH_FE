@@ -15,8 +15,8 @@ import { CardComponent } from './pages/card/card.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'card', pathMatch: 'full' },
-  { path: 'login', redirectTo: 'card', pathMatch: 'full' },
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+  { path: 'login', redirectTo: 'welcome', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'card', component: CardComponent,canActivate: [AuthGuardService], data: { requiredRole: 'ROLE_ADMIN' } },

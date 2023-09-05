@@ -13,6 +13,7 @@ import { ComponentService } from 'src/app/services/components.service';
 import { CardService } from 'src/app/services/card.service';
 import { CompanyService } from 'src/app/services/company.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
+import { StorageService } from 'src/app/_services/storage.service';
 
 @Component({
   selector: 'app-create-update-card',
@@ -23,7 +24,7 @@ export class CreateUpdateCardComponent implements OnInit {
   form: FormGroup;
   transactionTypes = Object.values(TransactionType);
   // productNameCtrl = new FormControl('', Validators.required);
-  filteredComponents!: Observable<any[]>;
+  // filteredComponents!: Observable<any[]>;
   filteredCompanies!: Observable<any[]>;
   filteredDeliveredUsers!: Observable<any[]>;
 
@@ -40,17 +41,17 @@ export class CreateUpdateCardComponent implements OnInit {
    
     // this.form.addControl('productName', this.productNameCtrl);
     this.form = this.service.form;
-    this.setupProductNameField();
+    // this.setupProductNameField();
     this.setupCompaniesField();
     this.setupDeliveredUsers();
     debugger
   }
   ngOnInit(): void {
     debugger
-   const componentServiceControl =  this.service.form.controls?.['important_components_of_card'];
-    if(componentServiceControl?.value){
-      this.filteredComponents = of([componentServiceControl?.value])
-    }
+  //  const componentServiceControl =  this.service.form.controls?.['important_components_of_card'];
+  //   if(componentServiceControl?.value){
+  //     this.filteredComponents = of([componentServiceControl?.value])
+  //   }
 
     const companyServiceControl =  this.service.form.controls?.['company'];
     if(companyServiceControl?.value){
@@ -65,6 +66,7 @@ export class CreateUpdateCardComponent implements OnInit {
 
   
   setupDeliveredUsers(): void {
+    debugger
     this.filteredDeliveredUsers = this.form.controls?.['deliver_card_user'].valueChanges.pipe(
       startWith(''),
       debounceTime(300),
@@ -74,6 +76,7 @@ export class CreateUpdateCardComponent implements OnInit {
   }
 
   setupCompaniesField(): void {
+    debugger
     this.filteredCompanies = this.form.controls?.['company'].valueChanges.pipe(
       startWith(''),
       debounceTime(300),
@@ -83,14 +86,14 @@ export class CreateUpdateCardComponent implements OnInit {
   }
 
 
-  setupProductNameField(): void {
-    this.filteredComponents = this.form.controls?.['important_components_of_card'].valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap(value => this.filterComponents(value))
-    );
-  }
+  // setupProductNameField(): void {
+  //   this.filteredComponents = this.form.controls?.['important_components_of_card'].valueChanges.pipe(
+  //     startWith(''),
+  //     debounceTime(300),
+  //     distinctUntilChanged(),
+  //     switchMap(value => this.filterComponents(value))
+  //   );
+  // }
 
   private filterDeliverUser(name: string): Observable<User[]> {
     debugger
@@ -175,6 +178,12 @@ export class CreateUpdateCardComponent implements OnInit {
   displayFn(component?: Components): string {
     debugger
     return  component?.name ?? '';
+  }
+
+  
+  displayFnDeliverUser(user?: User): string {
+    debugger
+    return  user?.username ?? '';
   }
 
   chooseFile(event: Event, fileInput: any) {

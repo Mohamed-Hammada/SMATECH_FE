@@ -31,7 +31,7 @@ export class CardService {
       amount_paid: new FormControl(0, [Validators.required, Validators.min(0)]),
       // user_actions: new FormControl([]),
       card_state: new FormControl(CardState.ENTERED, Validators.required),
-      no_of_card_pieces: new FormControl(0, [Validators.required, Validators.min(0)]),
+      no_of_card_pieces: new FormControl(1, [Validators.required, Validators.min(1)]),
       logged_in_user: new FormControl(this.storageService.getUser()),
       deliver_card_user: new FormControl(null)
     });
@@ -99,7 +99,7 @@ export class CardService {
       amount_paid: row.amount_paid || 0,
       // user_actions: row.user_actions || [],
       card_state: row.card_state || CardState.ENTERED,
-      no_of_card_pieces: row.noOfCardPieces || 0,
+      no_of_card_pieces: row.no_of_card_pieces || 0,
       logged_in_user: row.logged_in_user || '',
       deliver_card_user: row.deliver_card_user || ''
     });

@@ -14,14 +14,22 @@ export class AuthGuardService implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ):  Observable<boolean> | Promise<boolean> | UrlTree | boolean {
-    const requiredRole = route.data['requiredRole'];
-
+  ): Observable<boolean> | Promise<boolean> | UrlTree | boolean {
+    const requiredRoles = route.data['requiredRoles']; // Note the plural 'requiredRoles'
+  
+    if (!Array.isArray(requiredRoles)) {
+      console.error("requiredRoles should be an array.");
+      return false;
+    }
+  
     if (this.storageService.isLoggedIn()) {
-      if (this.storageService.hasRole(requiredRole)) {
+      const userRoles = this.storageService.getAllRoles();
+  
+      // Check if the user has at least one of the required roles
+      if (requiredRoles.some(role => userRoles.map(e=>e.name).includes(role))) {
         return true;
       } else {
-        console.error("unauthorized");
+        console.error("Unauthorized");
         this.router.navigate(['unauthorized']);
         return false;
       }
@@ -30,5 +38,6 @@ export class AuthGuardService implements CanActivate {
       return false;
     }
   }
+  
 
 }

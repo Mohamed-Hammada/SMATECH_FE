@@ -55,6 +55,8 @@ import { ComponentsTransactionsComponent } from './pages/components-transactions
 import { CreateUpdateComponentTransactionComponent } from './pages/components-transactions/create-update-component-transaction/create-update-component-transaction.component';
 import { CardComponent } from './pages/card/card.component';
 import { CreateUpdateCardComponent } from './pages/card/create-update-card/create-update-card.component';
+import { OfferStateComponent } from './pages/offer-state/offer-state.component';
+import { CreateUpdateCardOfferStateComponent } from './pages/offer-state/create-update-card-offer-state/create-update-card-offer-state.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { CreateUpdateCardComponent } from './pages/card/create-update-card/creat
     ComponentsTransactionsComponent,
     CreateUpdateComponentTransactionComponent,
     CardComponent,
-    CreateUpdateCardComponent
+    CreateUpdateCardComponent,
+    OfferStateComponent,
+    CreateUpdateCardOfferStateComponent
   ],
   imports: [
     BrowserModule,

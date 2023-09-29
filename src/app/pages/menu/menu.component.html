@@ -41,6 +41,13 @@
           </a>
         </div>
 
+        
+        <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN') || storageService.hasRole('ROLE_ACCOUNTANT_HEAD')">
+          <a mat-list-item routerLink="/app-offer-state" routerLinkActive="active" (click)="drawer.toggle()">
+            Offer State
+          </a>
+        </div>
+
         <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="logOut(drawer)">Logout</a>
       </mat-nav-list>
     </div>

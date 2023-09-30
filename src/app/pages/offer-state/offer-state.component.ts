@@ -68,7 +68,7 @@ export class OfferStateComponent {
     this.selectedCardStatuses = event.value;
   }
 
-  private loadData(): void {
+  loadData(): void {
     this.userRepairActionService.getUserRepairActionsByCardStatusAndUser(this.currentPage, this.pageSize,this.selectedCardStatuses).subscribe(
       (data: any) => {
         if (data) {

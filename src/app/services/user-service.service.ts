@@ -43,7 +43,7 @@ export class UserServiceService {
       phones: new FormControl([], Validators.required),
       password: new FormControl('', Validators.required),
       // type: new FormControl('', Validators.required),
-      enabled: new FormControl('', Validators.required),
+      enabled: new FormControl(true, Validators.required),
       roles: new FormControl(this.storageService.getAllRoles(), Validators.required),
     });
     return this.form

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 const AUTH_API = `${environment.baseUrl}/api/auth/`
@@ -23,8 +24,14 @@ export class AuthService {
         password,
       },
       httpOptions
+    ).pipe(
+      catchError((err) => {
+        // Throw an error if the HTTP request fails
+        return throwError(err);
+      })
     );
   }
+  
 
   register(username: string, email: string, password: string): Observable<any> {
     return this.http.post(
@@ -35,14 +42,29 @@ export class AuthService {
         password,
       },
       httpOptions
+    ).pipe(
+      catchError((err) => {
+        // Throw an error if the HTTP request fails
+        return throwError(err);
+      })
     );
   }
 
   logout(): Observable<any> {
-    return this.http.post(AUTH_API + 'signout', { }, httpOptions);
+    return this.http.post(AUTH_API + 'signout', { }, httpOptions).pipe(
+      catchError((err) => {
+        // Throw an error if the HTTP request fails
+        return throwError(err);
+      })
+    );
   }
 
   refreshToken() {
-    return this.http.post(AUTH_API + 'refreshtoken', { }, httpOptions);
+    return this.http.post(AUTH_API + 'refreshtoken', { }, httpOptions).pipe(
+      catchError((err) => {
+        // Throw an error if the HTTP request fails
+        return throwError(err);
+      })
+    );
   }
 }

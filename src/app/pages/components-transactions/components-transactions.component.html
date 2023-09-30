@@ -48,10 +48,10 @@
     <mat-cell *matCellDef="let row">{{ row.transaction_date }}</mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="transactionType">
+  <!-- <ng-container matColumnDef="transactionType">
     <mat-header-cell *matHeaderCellDef>Transaction Type</mat-header-cell>
     <mat-cell *matCellDef="let transaction">{{ transaction.transaction_type }}</mat-cell>
-  </ng-container>
+  </ng-container> -->
   <ng-container matColumnDef="component_image">
     <mat-header-cell *matHeaderCellDef>Component Image</mat-header-cell>
     <mat-cell *matCellDef="let row">{{ row.component_image_file_name }}</mat-cell>

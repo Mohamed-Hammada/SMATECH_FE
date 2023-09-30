@@ -17,22 +17,25 @@
 
 
         <mat-form-field>
-          <input formControlName="name" matInput placeholder="Name" />
           <mat-label>Name</mat-label>
+          <input formControlName="name" matInput placeholder="Name" />
+         
           <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
         </mat-form-field>
 
 
         <mat-form-field>
-          <input formControlName="customer_name" matInput placeholder="Customer Name" />
           <mat-label>Customer Name</mat-label>
+          <input formControlName="customer_name" matInput placeholder="Customer Name" />
+         
           <mat-error *ngIf="form.get('customer_name')?.hasError('required')">Customer Name is required</mat-error>
         </mat-form-field>
 
 
         <mat-form-field>
-          <input formControlName="area" matInput placeholder="Area Code" />
           <mat-label>Area Code</mat-label>
+          <input formControlName="area" matInput placeholder="Area Code" />
+        
           <mat-error *ngIf="form.get('area')?.hasError('required')">Area Code is required</mat-error>
         </mat-form-field>
       </div>

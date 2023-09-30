@@ -15,7 +15,9 @@
         <input type="hidden" formControlName="id" />
 
         <mat-form-field>
+          <mat-label>Name</mat-label>
           <input formControlName="name" matInput placeholder="Name" pattern="^(?! )(?!.* {2,})(?!.* $)[A-Z0-9_\- ]+$"/>
+        
           <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
           <mat-error *ngIf="form.get('name')?.hasError('pattern')">
             Name must only contain Capital letters, numbers, underscores, dashes, and spaces; <br>
@@ -25,12 +27,15 @@
         </mat-form-field>
 
         <mat-form-field>
+          <mat-label>Description</mat-label>
           <input formControlName="description" matInput placeholder="Description" />
+      
           <mat-error *ngIf="form.get('description')?.hasError('required')">Description is required</mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label formControlName="current_exist_quantity">Current Exist Quantity</mat-label>
+
           <input formControlName="current_exist_quantity" matInput type="number" placeholder="Current Exist Quantity"
             pattern="^[0-9]*$" />
           <mat-error *ngIf="form.get('current_exist_quantity')?.hasError('required')">Quantity is required</mat-error>
@@ -56,7 +61,7 @@
         <span *ngIf="fileName">{{ fileName }}</span>
         <input type="file" accept="image/*"
         (change)="onFileChange($event)" [hidden]="true" #fileInput>
-        <button mat-raised-button type="button" (click)="chooseFile($event, fileInput)">Choose File</button>
+        <button mat-raised-button type="button" (click)="chooseFile($event, fileInput)">Choose Image</button>
 
 
 

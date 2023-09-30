@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Role } from '../models/all.model';
+import { Role, User } from '../models/all.model';
 
 const USER_KEY = 'auth-user';
 const ROLES_KEY = 'all-roles';
 
-export interface User {
-  roles?: string[];
-  // other properties you expect on the user object
-}
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +43,7 @@ export class StorageService {
 
   getRoles(): string[] {
     const user = this.getUser();
-    return user?.roles ?? [];
+    return user?.roles.map(e=>e.name) ?? [];
   }
 
   hasRole(role: string): boolean {

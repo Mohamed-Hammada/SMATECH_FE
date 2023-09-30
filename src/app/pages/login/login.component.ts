@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.roles = this.storageService.getUser()?.roles ?? [];
+      this.roles = this.storageService.getRoles() ?? [];
     }
   }
 
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
         this.storageService.saveUser(data);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.roles = this.storageService.getUser()?.roles ?? [];
+        this.roles = this.storageService.getRoles() ?? [];
       },
       error: err => {
         this.errorMessage = err.error.message;

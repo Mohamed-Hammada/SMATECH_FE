@@ -80,12 +80,29 @@ export class UserRepairAction {
   user: User = new User();
   card: Card = new Card();
   action_needed: string = '';
-  card_status_life_cycle: string = '';
+  card_status_life_cycle: CardStatusLifeCycle = CardStatusLifeCycle.PENDING_OFFER_SETUP;
   note: string = '';
   needed_components: Components[] = [];
   assign_to: User = new User();
+  logged_in_user: User = new User();
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
+}
+
+export enum CardStatusLifeCycle {
+  PENDING_OFFER_SETUP,
+  OFFER_PRICE,
+  REJECT_OFFER,
+  UNDER_REPAIR_PENDING_ASSIGNMENT,
+  UNDER_REPAIR,
+  READY_FOR_DELIVERY,
+  WAITING_SPARE_PARTS,
+  TECHNICALLY_REJECTED,
+  DELIVERY_PENDING,
+  UNDER_TEST,
+  RETURN_NEEDS_FIX,
+  OUT_OF_WARRANTY,
+  UNDER_WARRANTY_PERIOD,
 }
 
 export class Card {

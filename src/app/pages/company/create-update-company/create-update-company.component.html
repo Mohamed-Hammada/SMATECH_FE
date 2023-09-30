@@ -17,25 +17,52 @@
 
 
         <mat-form-field>
-          <input formControlName="name" matInput placeholder="name" />
+          <input formControlName="name" matInput placeholder="Name" />
+          <mat-label>Name</mat-label>
           <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
         </mat-form-field>
 
 
         <mat-form-field>
-          <input formControlName="customer_name" matInput placeholder="customer_name" />
+          <input formControlName="customer_name" matInput placeholder="Customer Name" />
+          <mat-label>Customer Name</mat-label>
           <mat-error *ngIf="form.get('customer_name')?.hasError('required')">Customer Name is required</mat-error>
         </mat-form-field>
 
 
         <mat-form-field>
-          <input formControlName="area" matInput placeholder="Area" />
-          <mat-error *ngIf="form.get('area')?.hasError('required')">Area is required</mat-error>
+          <input formControlName="area" matInput placeholder="Area Code" />
+          <mat-label>Area Code</mat-label>
+          <mat-error *ngIf="form.get('area')?.hasError('required')">Area Code is required</mat-error>
         </mat-form-field>
       </div>
     </mat-grid-tile>
 
+    <mat-grid-tile>
+      <div class="controles-container">
 
+        <div formArrayName="phones">
+
+          <!-- Phone rows -->
+          <div *ngFor="let phone of phones.controls; let i = index" class="phone-input">
+            <mat-form-field>
+              <input [formControlName]="i" matInput placeholder="Phone" />
+              <button mat-icon-button matSuffix (click)="removePhone(i)">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+
+          <button mat-icon-button (click)="addPhone()" class="add-phone-button">
+            <mat-icon class="add-icon">add_circle</mat-icon>
+          </button>
+
+        </div>
+
+      </div>
+    </mat-grid-tile>
+
+    <!-- More fields here... -->
 
   </mat-grid-list>
 

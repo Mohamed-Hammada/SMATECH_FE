@@ -24,7 +24,9 @@ export class CompanyService {
     this.form = new FormGroup({
       id: new FormControl(null),
       name: new FormControl('', Validators.required),
-      area: new FormControl('', Validators.required)
+      customer_name: new FormControl(''),
+      area: new FormControl('', Validators.required),
+      phones: new FormControl([], Validators.required)
     });
     return this.form
   }
@@ -95,6 +97,7 @@ export class CompanyService {
       id: row.id,
       name: row.name || '',
       customer_name: row.customer_name || '',
+      phones: row.phones || [],
       area: row.area || ''
     });
   }

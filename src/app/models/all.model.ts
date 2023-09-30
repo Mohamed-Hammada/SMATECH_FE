@@ -2,6 +2,7 @@ export class Company {
   id: number = -1;
   name: string = '';
   area: string = '';
+  phones: string[] = [];
   customer_name: string = '';
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format

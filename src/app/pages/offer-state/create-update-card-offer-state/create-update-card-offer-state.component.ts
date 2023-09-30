@@ -44,10 +44,10 @@ export class CreateUpdateCardOfferStateComponent {
     // this.setupProductNameField();
     this.setupCompaniesField();
     this.setupDeliveredUsers();
-    debugger
+    // debugger
   }
   ngOnInit(): void {
-    debugger
+    // debugger
   //  const componentServiceControl =  this.service.form.controls?.['important_components_of_card'];
   //   if(componentServiceControl?.value){
   //     this.filteredComponents = of([componentServiceControl?.value])
@@ -66,7 +66,7 @@ export class CreateUpdateCardOfferStateComponent {
 
   
   setupDeliveredUsers(): void {
-    debugger
+    // debugger
     this.filteredDeliveredUsers = this.form.controls?.['deliver_card_user'].valueChanges.pipe(
       startWith(''),
       debounceTime(300),
@@ -76,7 +76,7 @@ export class CreateUpdateCardOfferStateComponent {
   }
 
   setupCompaniesField(): void {
-    debugger
+    // debugger
     this.filteredCompanies = this.form.controls?.['company'].valueChanges.pipe(
       startWith(''),
       debounceTime(300),
@@ -96,7 +96,7 @@ export class CreateUpdateCardOfferStateComponent {
   // }
 
   private filterDeliverUser(name: string): Observable<User[]> {
-    debugger
+    // debugger
     console.log("Filtering for: ", name);
     return this.userService.searchUsers(name).pipe(
       map(users => users),
@@ -109,7 +109,7 @@ export class CreateUpdateCardOfferStateComponent {
 
   
   private filterCompanies(name: string): Observable<Company[]> {
-    debugger
+    // debugger
     console.log("Filtering for: ", name);
     return this.companyService.searchCompanies(name).pipe(
       map(companies => companies),
@@ -121,7 +121,7 @@ export class CreateUpdateCardOfferStateComponent {
   }
 
   private filterComponents(name: string): Observable<Components[]> {
-    debugger
+    // debugger
     console.log("Filtering for: ", name);
     return this.componentService.searchComponents(name).pipe(
       map(components => components),
@@ -133,7 +133,7 @@ export class CreateUpdateCardOfferStateComponent {
   }
 
   onFormSubmit(): void {
-    debugger
+    // debugger
     if (this.form.valid) {
       console.log('Form Submitted!');
       // ... handle the submit action ...
@@ -176,13 +176,13 @@ export class CreateUpdateCardOfferStateComponent {
   }
 
   displayFn(component?: Components): string {
-    debugger
+    // debugger
     return  component?.name ?? '';
   }
 
   
   displayFnDeliverUser(user?: User): string {
-    debugger
+    // debugger
     return  user?.username ?? '';
   }
 
@@ -193,7 +193,7 @@ export class CreateUpdateCardOfferStateComponent {
   
   
   onFileChange(event: any) {
-  debugger
+  // debugger
   const reader = new FileReader();
 
   if (event.target.files && event.target.files.length > 0) {

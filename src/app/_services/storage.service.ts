@@ -43,7 +43,7 @@ export class StorageService {
 
   getRoles(): string[] {
     const user = this.getUser();
-    return user?.roles.map(e=>e.name) ?? [];
+    return user?.roles.map(role => role.name) ?? [];
   }
 
   hasRole(role: string): boolean {

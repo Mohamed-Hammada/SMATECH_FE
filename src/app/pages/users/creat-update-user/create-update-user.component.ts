@@ -37,7 +37,7 @@ export class CreateUserComponent implements OnInit {
 
   private populateForm(): void {
     const phones = this.userService.form.get("phones")?.value;
-    debugger
+    // debugger
     this.userForm.setControl('phones', this.fb.array([]));
 
     if (phones && phones.length > 0) {

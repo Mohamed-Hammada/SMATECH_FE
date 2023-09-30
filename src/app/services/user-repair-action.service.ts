@@ -13,7 +13,7 @@ import { StorageService } from '../_services/storage.service';
 export class UserRepairActionService {
 
   form: FormGroup = this.initializeFormGroup();
-  private apiUrl = `${environment.baseUrl}/api/userRepairActions`;
+  private apiUrl = `${environment.baseUrl}/api/user-repair-actions`;
 
   constructor(private http: HttpClient,
     private storageService: StorageService) {
@@ -34,14 +34,16 @@ export class UserRepairActionService {
   }
 
 
-  findUserRepairActionsByCardStatusAndUser(page: number, pageSize: number, card_status_life_cycle:CardStatusLifeCycle): Observable<any> {
+  getUserRepairActionsByCardStatusAndUser(page: number, pageSize: number, card_status_life_cycle:CardStatusLifeCycle[]): Observable<any> {
+    const cardStatusLifeCycleValues = card_status_life_cycle.map(value => CardStatusLifeCycle[value]);
+
     const params = new HttpParams()
       .set('page', page.toString())
       .set('size', pageSize.toString())
-      .set('card_status_life_cycle', card_status_life_cycle)
+      .set('card_status_life_cycle', JSON.stringify(cardStatusLifeCycleValues))
       .set('logged_in_user_id', this.storageService.getUser()?.id.toString() || '');
 
-    return this.http.get<any>(this.apiUrl, { params }).pipe(
+    return this.http.get<any>(this.apiUrl + "/ByCardStatusAndUser", {params}).pipe(
       catchError(error => {
         console.error('Error Message: ', error);
         return throwError(error);
@@ -63,7 +65,7 @@ export class UserRepairActionService {
   }
 
   createUserRepairAction(userRepairAction: UserRepairAction): Observable<UserRepairAction> {
-    debugger
+    // debugger
     return this.http.post<UserRepairAction>(this.apiUrl, userRepairAction).pipe(
       catchError(error => {
         console.error('Error Message: ', error);

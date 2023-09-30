@@ -33,10 +33,10 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
     // this.form.addControl('productName', this.productNameCtrl);
     this.form = this.service.form;
     this.setupProductNameField();
-    debugger
+    // debugger
   }
   ngOnInit(): void {
-    debugger
+    // debugger
    const componentServiceControl =  this.service.form.controls?.['component'];
     if(componentServiceControl?.value){
       this.filteredComponents = of([componentServiceControl?.value])
@@ -56,7 +56,7 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
 
 
   private filterComponents(name: string): Observable<Components[]> {
-    debugger
+    // debugger
     console.log("Filtering for: ", name);
     return this.componentService.searchComponents(name).pipe(
       map(components => components),
@@ -68,7 +68,7 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
   }
 
   onFormSubmit(): void {
-    debugger
+    // debugger
     if (this.form.valid) {
       console.log('Form Submitted!');
       // ... handle the submit action ...
@@ -112,7 +112,7 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
   }
 
   displayFn(component?: Components): string {
-    debugger
+    // debugger
     return  component?.name ?? '';
   }
 
@@ -123,7 +123,7 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
   
   
   onFileChange(event: any) {
-  debugger
+  // debugger
   const reader = new FileReader();
 
   if (event.target.files && event.target.files.length > 0) {

@@ -31,7 +31,7 @@ export class CreateUpdateComponentsComponent {
       });
       return;
     }
-    debugger
+    // debugger
     this.service.createComponent(this.form.value).subscribe(
       (data) => {
         this.notificationService.success('Saved Successfully');
@@ -50,7 +50,7 @@ export class CreateUpdateComponentsComponent {
 
 
 onFileChange(event: any) {
-  debugger
+  // debugger
   const reader = new FileReader();
 
   if (event.target.files && event.target.files.length > 0) {

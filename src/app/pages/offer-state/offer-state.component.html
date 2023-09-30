@@ -10,7 +10,11 @@
     <button mat-raised-button (click)="onCreate()" style="height: 55px;width: 70%;">
         <mat-icon>add</mat-icon>Set Prices
     </button>
-
+    <mat-form-field appearance="outline" class="multi-select">
+    <mat-select multiple [(value)]="selectedCardStatuses" placeholder="Select Offer States" [(ngModel)]="selectedCardStatuses">
+        <mat-option *ngFor="let cardStatus of cardStatuses" [value]="cardStatus">{{ cardStatus }}</mat-option>
+      </mat-select>
+    </mat-form-field>
     <span class="fill-remaining-space"></span>
 </div>
 

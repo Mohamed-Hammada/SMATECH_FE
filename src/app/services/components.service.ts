@@ -34,7 +34,7 @@ export class ComponentService {
   }
 
   searchComponents(query: string): Observable<Components[]> {
-    debugger
+    // debugger
     const params = new HttpParams().set('query', query);
     return this.http.get<Components[]>(`${this.apiUrl}/search`, { params }).pipe(
       catchError(error => {

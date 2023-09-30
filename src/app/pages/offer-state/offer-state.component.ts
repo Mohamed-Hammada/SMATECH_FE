@@ -4,14 +4,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
-import { Components, Card, TransactionType } from 'src/app/models/all.model';
+import { Components, Card, TransactionType, CardStatusLifeCycle } from 'src/app/models/all.model';
 import { NotificationService } from 'src/app/_helpers/notification.service';
 import { DialogService } from 'src/app/_helpers/dialog.service';
 
 
 import { ImageDialogComponent } from 'src/app/_helpers/image-dialog/image-dialog.component';
-import { CardService } from 'src/app/services/card.service';
 import { CreateUpdateCardOfferStateComponent } from './create-update-card-offer-state/create-update-card-offer-state.component';
+import { UserRepairActionService } from 'src/app/services/user-repair-action.service';
+import { MatSelectChange } from '@angular/material/select';
 
 
 @Component({
@@ -24,6 +25,10 @@ export class OfferStateComponent {
   currentPage: number = 1;
   totalPages: number = -1;
   pageSize: number = 10;
+  cardStatuses = Object.values(CardStatusLifeCycle);
+  selectedCardStatuses: CardStatusLifeCycle[] = [];
+
+
   displayedColumns: string[] = [
     'id',
     'serial_no',
@@ -51,15 +56,20 @@ export class OfferStateComponent {
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private dialogService: DialogService,
-    private cardService: CardService
+    private userRepairActionService: UserRepairActionService
   ) { }
 
   ngOnInit(): void {
+    debugger
+    this.selectedCardStatuses.push(CardStatusLifeCycle.PENDING_OFFER_SETUP);
     this.loadData();
+  }
+  onCardStatusChange(event: MatSelectChange) {
+    this.selectedCardStatuses = event.value;
   }
 
   private loadData(): void {
-    this.cardService.getCards(this.currentPage, this.pageSize).subscribe(
+    this.userRepairActionService.getUserRepairActionsByCardStatusAndUser(this.currentPage, this.pageSize,this.selectedCardStatuses).subscribe(
       (data: any) => {
         if (data) {
           this.cards = data.data;
@@ -105,13 +115,13 @@ export class OfferStateComponent {
   }
 
   onCreate(): void {
-    this.cardService.initializeFormGroup();
+    this.userRepairActionService.initializeFormGroup();
     this.openTransactionDialog();
   }
 
   onEdit(row: any): void {
-    this.cardService.initializeFormGroup();
-    this.cardService.populateForm(this.cards.filter(e => e.id === row.id)[0]);
+    this.userRepairActionService.initializeFormGroup();
+    this.userRepairActionService.populateForm(this.cards.filter(e => e.id === row.id)[0]);
     this.openTransactionDialog();
   }
 
@@ -135,7 +145,7 @@ export class OfferStateComponent {
     this.dialogService.openConfirmDialog('Are You Sure?')
       .afterClosed().subscribe((res: any) => {
         if (res) {
-          this.cardService.deleteById($key).subscribe(
+          this.userRepairActionService.deleteById($key).subscribe(
             () => {
               this.notificationService.success('Successfully Deleted');
               this.loadData();

@@ -30,7 +30,7 @@ export class CreateUpdateCompanyComponent {
   }
   private populateForm(): void {
     const phones = this.service.form.get("phones")?.value;
-    debugger
+    // debugger
     this.form.setControl('phones', this.fb.array([]));
 
     if (phones && phones.length > 0) {
@@ -77,7 +77,7 @@ export class CreateUpdateCompanyComponent {
   removePhone(index: number): void {
     this.phones.removeAt(index);
   }
-  
+
   onClose(): void {
     this.form.reset();
     this.dialogRef.close();

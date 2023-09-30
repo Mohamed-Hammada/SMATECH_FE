@@ -82,7 +82,7 @@ export class CompanyService {
   }
 
   searchCompanies(query: string): Observable<Company[]> {
-    debugger
+    // debugger
     const params = new HttpParams().set('query', query);
     return this.http.get<Company[]>(`${this.apiUrl}/search`, { params }).pipe(
       catchError(error => {

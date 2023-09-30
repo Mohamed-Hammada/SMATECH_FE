@@ -46,7 +46,7 @@ export class ComponentTransactionService {
   }
 
   createComponentTransaction(componentTransaction: ComponentTransaction): Observable<ComponentTransaction> {
-    debugger
+    // debugger
     console.log("Searching components for name: ", name);
     return this.http.post<ComponentTransaction>(this.apiUrl, componentTransaction).pipe(
       catchError(error => {

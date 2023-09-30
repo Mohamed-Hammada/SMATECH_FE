@@ -34,7 +34,7 @@ export class UserRepairActionService {
   }
 
 
-  getUserRepairActionsByCardStatusAndLoggedInUser(page: number, pageSize: number, card_status_life_cycle:CardStatusLifeCycle): Observable<any> {
+  findUserRepairActionsByCardStatusAndUser(page: number, pageSize: number, card_status_life_cycle:CardStatusLifeCycle): Observable<any> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('size', pageSize.toString())

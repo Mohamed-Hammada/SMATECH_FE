@@ -28,6 +28,7 @@ export class ComponentTransaction {
   quantity: number = 0;
   price_unit: number = 0;
   component_image: string = '';
+  component_image_file_name: string = '';
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
 }
@@ -98,6 +99,8 @@ export class Card {
   amount_paid: number = 0;
   user_actions: UserRepairAction[] = [];
   card_state: CardState = CardState.ENTERED;
+  component_image: string = '';
+  component_image_file_name: string = '';
   no_of_card_pieces:number = 0;
   logged_in_user: User = new User();
   deliver_card_user: User = new User();

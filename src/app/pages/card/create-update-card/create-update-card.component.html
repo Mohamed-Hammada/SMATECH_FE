@@ -48,7 +48,16 @@
                 </mat-autocomplete>
                  <mat-error *ngIf="form.get('component')?.hasError('required')">Company is required</mat-error>
               </mat-form-field>
-            
+              <mat-form-field>
+                <mat-label>User Deleiverd the card</mat-label>
+                 <input type="text" formControlName="deliver_card_user" matInput [matAutocomplete]="autoudelv">
+                 <mat-autocomplete #autoudelv="matAutocomplete" [displayWith]="displayFnDeliverUser">
+                   <mat-option *ngFor="let deliveredUser of filteredDeliveredUsers | async" [value]="deliveredUser">
+                     {{deliveredUser.username}}
+                  </mat-option>
+                </mat-autocomplete>
+                 <mat-error *ngIf="form.get('deliver_card_user')?.hasError('required')">Delivery User is required</mat-error>
+              </mat-form-field>
             
               <!-- <mat-form-field>
                 <mat-select formControlName="card_state" placeholder="Card State">
@@ -92,26 +101,24 @@
           <mat-grid-tile>
             <div class="controles-container">
           
-              <mat-form-field>
-                <mat-label>User Deleiverd the card</mat-label>
-                 <input type="text" formControlName="deliver_card_user" matInput [matAutocomplete]="autoudelv">
-                 <mat-autocomplete #autoudelv="matAutocomplete" [displayWith]="displayFnDeliverUser">
-                   <mat-option *ngFor="let deliveredUser of filteredDeliveredUsers | async" [value]="deliveredUser">
-                     {{deliveredUser.username}}
-                  </mat-option>
-                </mat-autocomplete>
-                 <mat-error *ngIf="form.get('deliver_card_user')?.hasError('required')">Delivery User is required</mat-error>
-              </mat-form-field>
+         
   
               <mat-form-field>
                 <textarea formControlName="issue_description" matInput placeholder="Issue Description" ></textarea>
                 <mat-error *ngIf="form.get('issue_description')?.hasError('required')">Issue Description is required</mat-error>
               </mat-form-field>
               
+ 
+  
+         
+  
+          <span *ngIf="fileName">{{ fileName }}</span>
+          <input type="file" accept="image/*"
+          (change)="onFileChange($event)" [hidden]="true" #fileInput>
+          <button mat-raised-button type="button" (click)="chooseFile($event, fileInput)">Choose File</button>
+          
         </div>
       </mat-grid-tile>
-  
-  
   
     </mat-grid-list>
   

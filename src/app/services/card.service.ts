@@ -33,7 +33,9 @@ export class CardService {
       // card_state: new FormControl(CardState.ENTERED, Validators.required),
       no_of_card_pieces: new FormControl(1, [Validators.required, Validators.min(1)]),
       logged_in_user: new FormControl(this.storageService.getUser()),
-      deliver_card_user: new FormControl(null)
+      deliver_card_user: new FormControl(null),
+      component_image: new FormControl(''),
+      component_image_file_name: new FormControl('')
     });
     return this.form;
   }
@@ -102,7 +104,9 @@ export class CardService {
       // card_state: row.card_state || CardState.ENTERED,
       no_of_card_pieces: row.no_of_card_pieces || 0,
       logged_in_user: row.logged_in_user || '',
-      deliver_card_user: row.deliver_card_user || ''
+      deliver_card_user: row.deliver_card_user || '',
+      component_image: row.component_image || '',
+      component_image_file_name: row.component_image_file_name || ''
     });
   }
 }

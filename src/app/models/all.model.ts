@@ -39,21 +39,6 @@ export enum TransactionType {
   RETURN = 'RETURN'
 }
 
-export enum CardState {
-  ENTERED,
-  PRICE_OFFER,
-  REJECTED_OFFER,
-  UNDER_REPAIR,
-  READY,
-  WAIT_SPARE_PARTS,
-  REJECTED_TECH,
-  UNDER_TEST,
-  OK_WORKING_FINE,
-  OUT_OF_GUARANTEE,
-  RETURN_HAVE_ISSUE
-}
-
-
 export class Role {
   id: number = -1;
   name: string = '';
@@ -75,21 +60,25 @@ export class User {
   updated_at: string = ''; // Use appropriate date format
 }
 
+
 export class UserRepairAction {
   id: number = -1;
   user: User = new User();
   card: Card = new Card();
-  action_needed: string = '';
-  card_status_life_cycle: CardStatusLifeCycle = CardStatusLifeCycle.PENDING_OFFER_SETUP;
   note: string = '';
   needed_components: Components[] = [];
   assign_to: User = new User();
   logged_in_user: User = new User();
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
+  suggestedOfferRepairCost: number = -1;
+  department: Department = Department.ACCOUNT;
+  amountPaid: number = -1;
+  repairCost: number = -1;
+  additionalAmountPaid: number = -1;
 }
 
-export enum CardStatusLifeCycle {
+export enum CardStatus{
   PENDING_OFFER_SETUP = 'PENDING_OFFER_SETUP',
   OFFER_PRICE = 'OFFER_PRICE',
   REJECT_OFFER = 'REJECT_OFFER',
@@ -105,7 +94,10 @@ export enum CardStatusLifeCycle {
   UNDER_WARRANTY_PERIOD = 'UNDER_WARRANTY_PERIOD',
 }
 
-
+export enum Department{
+    ACCOUNT='ACCOUNT',
+    REPAIR='REPAIR'
+}
 export class Card {
   id: number = -1;
   serial_no: string = ''; // You can set the appropriate default value here
@@ -116,7 +108,7 @@ export class Card {
   repair_cost: number = 0;
   amount_paid: number = 0;
   user_actions: UserRepairAction[] = [];
-  card_state: CardState = CardState.ENTERED;
+  card_state: CardStatus = CardStatus.PENDING_OFFER_SETUP;
   component_image: string = '';
   component_image_file_name: string = '';
   no_of_card_pieces:number = 0;

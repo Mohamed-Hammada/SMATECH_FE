@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { UserRepairAction, User, CardStatusLifeCycle } from '../models/all.model';
+import { UserRepairAction, CardStatus,Department } from '../models/all.model';
 import { environment } from 'src/environments/environment';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StorageService } from '../_services/storage.service';
@@ -24,26 +24,31 @@ export class UserRepairActionService {
       id: new FormControl(null),
       user: new FormControl(null),
       card: new FormControl(null),
-      action_needed: new FormControl(''),
       note: new FormControl(''),
       needed_components: new FormControl([]),
       assign_to: new FormControl(null),
-      logged_in_user: new FormControl(this.storageService.getUser())
+      logged_in_user: new FormControl(this.storageService.getUser()),
+      serial_no: new FormControl(''),
+      suggested_offer_repair_cost: new FormControl(0),
+      repair_cost: new FormControl(0),
+      amount_paid: new FormControl(0),
+      additional_amount_paid: new FormControl(0),
     });
     return this.form;
   }
 
 
-  getUserRepairActionsByCardStatusAndUser(page: number, pageSize: number, card_status_life_cycle:CardStatusLifeCycle[]): Observable<any> {
-    const cardStatusLifeCycleValues = card_status_life_cycle.map(value => CardStatusLifeCycle[value]);
+  getUserRepairActionsByCardStatusAndUserAndDepartment(page: number, pageSize: number, card_status_life_cycle: CardStatus[],department: Department): Observable<any> {
+    const cardStatusLifeCycleValues = card_status_life_cycle.map(value => CardStatus[value]);
 
     const params = new HttpParams()
       .set('page', page.toString())
       .set('size', pageSize.toString())
+      .set('department', department.toString())
       .set('card_status_life_cycle', JSON.stringify(cardStatusLifeCycleValues))
       .set('logged_in_user_id', this.storageService.getUser()?.id.toString() || '');
-
-    return this.http.get<any>(this.apiUrl + "/ByCardStatusAndUser", {params}).pipe(
+      
+    return this.http.get<any>(this.apiUrl + "/ByCardStatusAndUserAndDepartment", { params }).pipe(
       catchError(error => {
         console.error('Error Message: ', error);
         return throwError(error);
@@ -91,6 +96,14 @@ export class UserRepairActionService {
       })
     );
   }
+  updateOfferState( offerStateDTORequest: UserRepairAction): Observable<UserRepairAction> {
+    return this.http.put<UserRepairAction>(`${this.apiUrl}/offer-state`, offerStateDTORequest).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
 
   deleteById(id: any): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`).pipe(
@@ -106,14 +119,15 @@ export class UserRepairActionService {
       id: row.id,
       user: row.user,
       card: row.card,
-      action_needed: row.action_needed,
-      card_status_life_cycle: row.card_status_life_cycle,
       note: row.note,
       needed_components: row.needed_components,
       assign_to: row.assign_to,
       logged_in_user: row.logged_in_user || '',
-      created_at: row.created_at,
-      updated_at: row.updated_at,
+      serial_no: row.card.serial_no,
+      suggested_offer_repair_cost: row.card.suggested_offer_repair_cost || 0,
+      repair_cost: row.card.repair_cost || 0,
+      amount_paid: row.card.amount_paid || 0,
+      additional_amount_paid: 0
     });
   }
 

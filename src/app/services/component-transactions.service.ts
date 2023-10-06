@@ -84,6 +84,7 @@ export class ComponentTransactionService {
   }
 
   populateForm(row: any): void {
+    debugger
     this.form.setValue({
       id: row.id,
       component: row.component || '',

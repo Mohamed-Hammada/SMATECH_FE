@@ -32,11 +32,13 @@
         </mat-form-field>
         
         <mat-form-field>
-          <mat-label formControlName="quantity">Quantity</mat-label>
+          <mat-label>Quantity</mat-label>
           <input formControlName="quantity" matInput type="number" placeholder="Quantity" pattern="^[0-9]*$" />
           <mat-error *ngIf="form.get('quantity')?.hasError('required')">Quantity is required</mat-error>
           <mat-error *ngIf="form.get('quantity')?.hasError('pattern')">Please enter a valid number</mat-error>
         </mat-form-field>
+
+    
 
 
         <mat-form-field>
@@ -68,7 +70,7 @@
       <div class="controles-container">
 
         <mat-form-field>
-          <mat-label formControlName="price_unit">Price per Unit</mat-label>
+          <mat-label >Price per Unit</mat-label>
           <input formControlName="price_unit" matInput type="number" placeholder="Price per Unit"
             pattern="^[0-9]*(\.\d{1,2})?$" />
           <mat-error *ngIf="form.get('price_unit')?.hasError('required')">Price is required</mat-error>
@@ -78,7 +80,7 @@
         <span *ngIf="fileName">{{ fileName }}</span>
         <input type="file" accept="image/*"
         (change)="onFileChange($event)" [hidden]="true" #fileInput>
-        <button mat-raised-button type="button" (click)="chooseFile($event, fileInput)">Choose File</button>
+        <button mat-raised-button type="button" (click)="chooseFile($event, fileInput)">Choose Component Image</button>
         
       </div>
     </mat-grid-tile>

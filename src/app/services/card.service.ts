@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Card, CardState, User } from '../models/all.model';
+import { Card, CardStatus, User } from '../models/all.model';
 import { environment } from 'src/environments/environment';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StorageService } from '../_services/storage.service';

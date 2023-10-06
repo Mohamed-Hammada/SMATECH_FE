@@ -115,7 +115,7 @@
           <span *ngIf="fileName">{{ fileName }}</span>
           <input type="file" accept="image/*"
           (change)="onFileChange($event)" [hidden]="true" #fileInput>
-          <button mat-raised-button type="button" (click)="chooseFile($event, fileInput)">Choose File</button>
+          <button mat-raised-button type="button" (click)="chooseFile($event, fileInput)">Choose Card Image</button>
           
         </div>
       </mat-grid-tile>

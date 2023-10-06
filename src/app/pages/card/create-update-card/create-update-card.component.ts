@@ -62,6 +62,11 @@ export class CreateUpdateCardComponent implements OnInit {
     if(deliveredUsersServiceControl?.value){
       this.filteredDeliveredUsers = of([deliveredUsersServiceControl?.value])
     }
+
+    const component_image_file_name =  this.service.form.controls?.['component_image_file_name'];
+    if(component_image_file_name?.value){
+      this.fileName = component_image_file_name.value
+    }
   }
 
   

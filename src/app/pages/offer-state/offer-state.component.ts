@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
-import { Components, Card, TransactionType, CardStatusLifeCycle } from 'src/app/models/all.model';
+import { Components, Card, TransactionType, CardStatus, Department } from 'src/app/models/all.model';
 import { NotificationService } from 'src/app/_helpers/notification.service';
 import { DialogService } from 'src/app/_helpers/dialog.service';
 
@@ -25,8 +25,8 @@ export class OfferStateComponent {
   currentPage: number = 1;
   totalPages: number = -1;
   pageSize: number = 10;
-  cardStatuses = Object.values(CardStatusLifeCycle);
-  selectedCardStatuses: CardStatusLifeCycle[] = [];
+  cardStatuses = Object.values(CardStatus);
+  selectedCardStatuses: CardStatus[] = [];
 
 
   displayedColumns: string[] = [
@@ -60,8 +60,8 @@ export class OfferStateComponent {
   ) { }
 
   ngOnInit(): void {
-    debugger
-    this.selectedCardStatuses.push(CardStatusLifeCycle.PENDING_OFFER_SETUP);
+    // debugger
+    this.selectedCardStatuses.push(CardStatus.PENDING_OFFER_SETUP);
     this.loadData();
   }
   onCardStatusChange(event: MatSelectChange) {
@@ -69,7 +69,7 @@ export class OfferStateComponent {
   }
 
   loadData(): void {
-    this.userRepairActionService.getUserRepairActionsByCardStatusAndUser(this.currentPage, this.pageSize,this.selectedCardStatuses).subscribe(
+    this.userRepairActionService.getUserRepairActionsByCardStatusAndUserAndDepartment(this.currentPage, this.pageSize,this.selectedCardStatuses,Department.ACCOUNT).subscribe(
       (data: any) => {
         if (data) {
           this.cards = data.data;

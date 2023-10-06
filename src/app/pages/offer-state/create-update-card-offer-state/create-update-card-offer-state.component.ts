@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/_helpers/notification.service';
-import { Components, TransactionType, User } from 'src/app/models/all.model';
+import { Components, OfferStatus, TransactionType, User } from 'src/app/models/all.model';
 
 
 import { Observable } from 'rxjs';
@@ -21,6 +21,10 @@ export class CreateUpdateCardOfferStateComponent {
   filteredCompanies!: Observable<any[]>;
   filteredDeliveredUsers!: Observable<any[]>;
 
+  statuses = Object.values(OfferStatus);
+
+  isSuggestedOfferAccepted: boolean = false;
+
   fileName: string = '';
   constructor(
     public dialogRef: MatDialogRef<CreateUpdateCardOfferStateComponent>,
@@ -32,6 +36,21 @@ export class CreateUpdateCardOfferStateComponent {
     this.form = this.service.form;
   }
   ngOnInit(): void {
+    const offer_status = this.service.form.controls?.['offer_status'];
+    if (offer_status?.value) {
+      if (offer_status.value === OfferStatus.ACCEPT) {
+        this.isSuggestedOfferAccepted = true
+      }
+    }
+
+    this.form.get('offer_status')?.valueChanges.subscribe(value => {
+      console.log('New status selected: ', value);
+      if (value === OfferStatus.ACCEPT) {
+        this.isSuggestedOfferAccepted = true
+      }else{
+        this.isSuggestedOfferAccepted = false
+      }
+    });
 
   }
 

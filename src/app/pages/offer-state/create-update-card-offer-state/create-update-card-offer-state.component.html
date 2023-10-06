@@ -1,57 +1,79 @@
 <mat-toolbar>
-    <span>{{ form.controls["id"].value ? "Edit" : "Create" }} Card</span>
-    <span class="fill-remaining-space"></span>
-    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
-      <mat-icon>clear</mat-icon>
-    </button>
-  </mat-toolbar>
-  <form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="normal-form">
-  
-    <mat-grid-list cols="1" rowHeight="350px">
-  
-      <mat-grid-tile>
-        <div class="controles-container">
-  
-            <input type="hidden" formControlName="id" />
+  <span>{{ form.controls["id"].value ? "Edit" : "Create" }} Card</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+<form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="normal-form">
 
-            <input type="hidden" formControlName="serial_no" placeholder="Serial No" />
-            <input type="hidden" formControlName="logged_in_user" placeholder="Logged In User" />
+  <mat-grid-list cols="1" rowHeight="350px">
 
-              <mat-form-field>
-                <mat-label >Suggested Offer Repair Cost</mat-label>
-                <input formControlName="suggested_offer_repair_cost" matInput type="number" placeholder="Suggested Offer Repair Cost" pattern="^[0-9]*$" />
-                <mat-error *ngIf="form.get('suggested_offer_repair_cost')?.hasError('required')">Suggested Offer Repair Cost is required</mat-error>
-                <mat-error *ngIf="form.get('suggested_offer_repair_cost')?.hasError('pattern')">Please enter a valid number</mat-error>
-              </mat-form-field>
+    <mat-grid-tile>
+      <div class="controles-container">
 
-              <mat-form-field>
-                <mat-label >Repair Cost (If this value is present, it will proceed to the next step automatically.)</mat-label>
-                <input formControlName="repair_cost" matInput type="number" placeholder="Repair Cost" pattern="^[0-9]*$" />
-                <mat-error *ngIf="form.get('repair_cost')?.hasError('required')">Repair Cost is required</mat-error>
-                <mat-error *ngIf="form.get('repair_cost')?.hasError('pattern')">Please enter a valid number</mat-error>
-              </mat-form-field>
+        <input type="hidden" formControlName="id" />
 
-                <mat-form-field>
-                <mat-label >Amount Paid</mat-label>
-                <input formControlName="amount_paid" matInput type="number" placeholder="Amount Paid" pattern="^[0-9]*$" />
-                <mat-error *ngIf="form.get('amount_paid')?.hasError('required')">Amount Paid is required</mat-error>
-                <mat-error *ngIf="form.get('amount_paid')?.hasError('pattern')">Please enter a valid number</mat-error>
-              </mat-form-field>
+        <input type="hidden" formControlName="serial_no" placeholder="Serial No" />
+        <input type="hidden" formControlName="logged_in_user" placeholder="Logged In User" />
 
-              <mat-form-field>
-                <mat-label >Add Additional Amount Paid</mat-label>
-                <input formControlName="additional_amount_paid" matInput type="number" placeholder="Additiona Amount Paid" pattern="^[0-9]*$" />
-                <mat-error *ngIf="form.get('additional_amount_paid')?.hasError('required')">Amount Paid is required</mat-error>
-                <mat-error *ngIf="form.get('additional_amount_paid')?.hasError('pattern')">Please enter a valid number</mat-error>
-              </mat-form-field>
+        <mat-form-field>
+          <mat-label>Suggested Offer Repair Cost</mat-label>
+          <input formControlName="suggested_offer_repair_cost" matInput type="number"
+            placeholder="Suggested Offer Repair Cost" pattern="^[0-9]*$" />
+          <mat-error *ngIf="form.get('suggested_offer_repair_cost')?.hasError('required')">Suggested Offer Repair Cost
+            is required</mat-error>
+          <mat-error *ngIf="form.get('suggested_offer_repair_cost')?.hasError('pattern')">Please enter a valid
+            number</mat-error>
+        </mat-form-field>
+
+        <mat-radio-group formControlName="offer_status">
+
+          <mat-radio-button *ngFor="let status of statuses" [value]="status">
+            {{status}}
+          </mat-radio-button>
+
+        </mat-radio-group>
+
+
+        <div *ngIf="isSuggestedOfferAccepted">
+          <div>
+            <mat-form-field>
+              <mat-label>Repair Cost</mat-label>
+              <input formControlName="repair_cost" matInput type="number" placeholder="Repair Cost"
+                pattern="^[0-9]*$" />
+              <mat-error *ngIf="form.get('repair_cost')?.hasError('required')">Repair Cost is required</mat-error>
+              <mat-error *ngIf="form.get('repair_cost')?.hasError('pattern')">Please enter a valid number</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Amount Paid</mat-label>
+              <input formControlName="amount_paid" matInput type="number" placeholder="Amount Paid"
+                pattern="^[0-9]*$" />
+              <mat-error *ngIf="form.get('amount_paid')?.hasError('required')">Amount Paid is required</mat-error>
+              <mat-error *ngIf="form.get('amount_paid')?.hasError('pattern')">Please enter a valid number</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Add Additional Amount Paid</mat-label>
+              <input formControlName="additional_amount_paid" matInput type="number" placeholder="Additiona Amount Paid"
+                pattern="^[0-9]*$" />
+              <mat-error *ngIf="form.get('additional_amount_paid')?.hasError('required')">Amount Paid is
+                required</mat-error>
+              <mat-error *ngIf="form.get('additional_amount_paid')?.hasError('pattern')">Please enter a valid
+                number</mat-error>
+            </mat-form-field>
+          </div>
         </div>
-            </mat-grid-tile>
-    </mat-grid-list>
-  
-    <div class="button-row">
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Save</button>
-      <button mat-raised-button color="warn" type="reset">Clear</button>
-    </div>
-  
-  </form>
-  
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="button-row">
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Save</button>
+    <button mat-raised-button color="warn" type="reset">Clear</button>
+  </div>
+
+</form>

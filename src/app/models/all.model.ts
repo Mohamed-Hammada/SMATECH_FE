@@ -73,6 +73,7 @@ export class UserRepairAction {
   updated_at: string = ''; // Use appropriate date format
   suggestedOfferRepairCost: number = -1;
   department: Department = Department.ACCOUNT;
+  selectedStatus: OfferStatus = OfferStatus.WAITING_RESPONSE;
   amountPaid: number = -1;
   repairCost: number = -1;
   additionalAmountPaid: number = -1;
@@ -92,6 +93,12 @@ export enum CardStatus{
   RETURN_NEEDS_FIX = 'RETURN_NEEDS_FIX',
   OUT_OF_WARRANTY = 'OUT_OF_WARRANTY',
   UNDER_WARRANTY_PERIOD = 'UNDER_WARRANTY_PERIOD',
+}
+
+export enum OfferStatus{
+  WAITING_RESPONSE='WAITING_RESPONSE',
+  ACCEPT='ACCEPT',
+  REJECT='REJECT'
 }
 
 export enum Department{

@@ -33,6 +33,7 @@ export class UserRepairActionService {
       repair_cost: new FormControl(0),
       amount_paid: new FormControl(0),
       additional_amount_paid: new FormControl(0),
+      offer_status: new FormControl() ,
     });
     return this.form;
   }
@@ -115,6 +116,7 @@ export class UserRepairActionService {
   }
 
   populateForm(row: any): void {
+    debugger
     this.form.setValue({
       id: row.id,
       user: row.user,
@@ -127,7 +129,8 @@ export class UserRepairActionService {
       suggested_offer_repair_cost: row.card.suggested_offer_repair_cost || 0,
       repair_cost: row.card.repair_cost || 0,
       amount_paid: row.card.amount_paid || 0,
-      additional_amount_paid: 0
+      additional_amount_paid: 0,
+      offer_status: row.offer_status || ''
     });
   }
 

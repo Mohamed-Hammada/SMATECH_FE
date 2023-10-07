@@ -17,7 +17,7 @@
         <input type="hidden" formControlName="serial_no" placeholder="Serial No" />
         <input type="hidden" formControlName="logged_in_user" placeholder="Logged In User" />
 
-
+        <div *ngIf="hide_show_assign_to">
         <mat-form-field>
           <mat-label>User Assigned the card</mat-label>
            <input type="text" formControlName="assign_to" matInput [matAutocomplete]="autoudelv">
@@ -28,8 +28,11 @@
           </mat-autocomplete>
            <mat-error *ngIf="form.get('assign_to')?.hasError('required')">Assigny User is required</mat-error>
         </mat-form-field>
+      </div>
         
-        
+      <div *ngIf="!hide_show_assign_to">
+        <input type="hidden" formControlName="assign_to" />
+        </div>
 
         <mat-form-field>
           <mat-label>Suggested Offer Repair Cost</mat-label>

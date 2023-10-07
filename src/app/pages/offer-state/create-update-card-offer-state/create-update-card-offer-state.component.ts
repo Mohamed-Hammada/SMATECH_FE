@@ -11,6 +11,7 @@ import { Observable, of } from 'rxjs';
 
 import { UserRepairActionService } from 'src/app/services/user-repair-action.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
+import { StorageService } from 'src/app/_services/storage.service';
 
 @Component({
   selector: 'app-create-update-card-offer-state',
@@ -22,7 +23,7 @@ export class CreateUpdateCardOfferStateComponent {
   transactionTypes = Object.values(TransactionType);
   filteredCompanies!: Observable<any[]>;
   filteredAssignUsers!: Observable<any[]>;
-
+  hide_show_assign_to:boolean=false;
   statuses = Object.values(OfferStatus);
 
   isSuggestedOfferAccepted: boolean = false;
@@ -32,12 +33,17 @@ export class CreateUpdateCardOfferStateComponent {
     public dialogRef: MatDialogRef<CreateUpdateCardOfferStateComponent>,
     private notificationService: NotificationService,
     private service: UserRepairActionService,
+    public storageService: StorageService,
     private userService: UserServiceService,
     private snackBar: MatSnackBar
   ) {
 
     this.form = this.service.form;
     this.setupAssignUsers();
+    if (this.storageService.hasRole('ROLE_ADMIN') ||
+    this.storageService.hasRole('ROLE_ACCOUNTANT_HEAD')) {
+    this.hide_show_assign_to = true;
+  }
   }
   ngOnInit(): void {
     const offer_status = this.service.form.controls?.['offer_status'];

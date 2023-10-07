@@ -5,10 +5,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/_helpers/notification.service';
 import { Components, OfferStatus, TransactionType, User } from 'src/app/models/all.model';
 
+import { debounceTime, distinctUntilChanged,catchError, map, startWith, switchMap } from 'rxjs/operators';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { UserRepairActionService } from 'src/app/services/user-repair-action.service';
+import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-create-update-card-offer-state',
@@ -19,7 +21,7 @@ export class CreateUpdateCardOfferStateComponent {
   form: FormGroup;
   transactionTypes = Object.values(TransactionType);
   filteredCompanies!: Observable<any[]>;
-  filteredDeliveredUsers!: Observable<any[]>;
+  filteredAssignUsers!: Observable<any[]>;
 
   statuses = Object.values(OfferStatus);
 
@@ -30,10 +32,12 @@ export class CreateUpdateCardOfferStateComponent {
     public dialogRef: MatDialogRef<CreateUpdateCardOfferStateComponent>,
     private notificationService: NotificationService,
     private service: UserRepairActionService,
+    private userService: UserServiceService,
     private snackBar: MatSnackBar
   ) {
 
     this.form = this.service.form;
+    this.setupAssignUsers();
   }
   ngOnInit(): void {
     const offer_status = this.service.form.controls?.['offer_status'];
@@ -51,11 +55,34 @@ export class CreateUpdateCardOfferStateComponent {
         this.isSuggestedOfferAccepted = false
       }
     });
-
+    const assignedUsersServiceControl =  this.service.form.controls?.['assign_to'];
+    if(assignedUsersServiceControl?.value){
+      this.filteredAssignUsers = of([assignedUsersServiceControl?.value])
+    }
   }
 
 
+  setupAssignUsers(): void {
+    // debugger
+    this.filteredAssignUsers = this.form.controls?.['assign_to'].valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(value => this.filterAssignUser(value))
+    );
+  }
 
+  private filterAssignUser(name: string): Observable<User[]> {
+    // debugger
+    console.log("Filtering for: ", name);
+    return this.userService.searchUsers(name).pipe(
+      map(users => users),
+      catchError(error => {
+        console.error('Error while filtering assign users:', error);
+        return of([]); // returns an empty array on error
+      })
+    );
+  }
 
   onFormSubmit(): void {
     // debugger
@@ -106,7 +133,7 @@ export class CreateUpdateCardOfferStateComponent {
   }
 
 
-  displayFnDeliverUser(user?: User): string {
+  displayFnAssignUser(user?: User): string {
     // debugger
     return user?.username ?? '';
   }

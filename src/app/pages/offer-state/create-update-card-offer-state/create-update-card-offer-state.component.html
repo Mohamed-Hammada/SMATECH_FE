@@ -17,6 +17,20 @@
         <input type="hidden" formControlName="serial_no" placeholder="Serial No" />
         <input type="hidden" formControlName="logged_in_user" placeholder="Logged In User" />
 
+
+        <mat-form-field>
+          <mat-label>User Deleiverd the card</mat-label>
+           <input type="text" formControlName="assign_to" matInput [matAutocomplete]="autoudelv">
+           <mat-autocomplete #autoudelv="matAutocomplete" [displayWith]="displayFnAssignUser">
+             <mat-option *ngFor="let assignedUser of filteredAssignUsers | async" [value]="assignedUser">
+               {{assignedUser.username}}
+            </mat-option>
+          </mat-autocomplete>
+           <mat-error *ngIf="form.get('assign_to')?.hasError('required')">Assigny User is required</mat-error>
+        </mat-form-field>
+        
+        
+
         <mat-form-field>
           <mat-label>Suggested Offer Repair Cost</mat-label>
           <input formControlName="suggested_offer_repair_cost" matInput type="number"

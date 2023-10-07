@@ -191,6 +191,11 @@ export class CreateUpdateCardComponent implements OnInit {
     return  user?.username ?? '';
   }
 
+  displayFnAssignUser(user?: User): string {
+    // debugger
+    return  user?.username ?? '';
+  }
+  
   chooseFile(event: Event, fileInput: any) {
     event.preventDefault();
     fileInput.click();

@@ -13,6 +13,7 @@ import { ImageDialogComponent } from 'src/app/_helpers/image-dialog/image-dialog
 import { CreateUpdateCardOfferStateComponent } from './create-update-card-offer-state/create-update-card-offer-state.component';
 import { UserRepairActionService } from 'src/app/services/user-repair-action.service';
 import { MatSelectChange } from '@angular/material/select';
+import { StorageService } from 'src/app/_services/storage.service';
 
 
 @Component({
@@ -40,7 +41,6 @@ export class OfferStateComponent {
     'card_state',
     'no_of_card_pieces',
     'logged_in_user',
-    'assign_to',
     'deliver_card_user',
     'createdAt',
     'updatedAt'
@@ -57,8 +57,15 @@ export class OfferStateComponent {
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private dialogService: DialogService,
+    public storageService: StorageService,
     private userRepairActionService: UserRepairActionService
-  ) { }
+  ) {
+
+    if (this.storageService.hasRole('ROLE_ADMIN') ||
+      this.storageService.hasRole('ROLE_ACCOUNTANT_HEAD')) {
+      this.displayedColumns.push('assign_to');
+    }
+  }
 
   ngOnInit(): void {
     // debugger
@@ -70,7 +77,7 @@ export class OfferStateComponent {
   }
 
   loadData(): void {
-    this.userRepairActionService.getUserRepairActionsByCardStatusAndUserAndDepartment(this.currentPage, this.pageSize,this.selectedCardStatuses,Department.ACCOUNT).subscribe(
+    this.userRepairActionService.getUserRepairActionsByCardStatusAndUserAndDepartment(this.currentPage, this.pageSize, this.selectedCardStatuses, Department.ACCOUNT).subscribe(
       (data: any) => {
         if (data) {
           this.cards = data.data;

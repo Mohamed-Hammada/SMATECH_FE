@@ -40,6 +40,7 @@ export class CreateUpdateComponentTransactionComponent implements OnInit {
    const componentServiceControl =  this.service.form.controls?.['component'];
     if(componentServiceControl?.value){
       this.filteredComponents = of([componentServiceControl?.value])
+      this.setupProductNameField();
     }
     const component_image_file_name =  this.service.form.controls?.['component_image_file_name'];
     if(component_image_file_name?.value){

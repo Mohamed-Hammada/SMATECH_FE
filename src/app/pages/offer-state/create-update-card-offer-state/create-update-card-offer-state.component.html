@@ -19,7 +19,7 @@
 
 
         <mat-form-field>
-          <mat-label>User Deleiverd the card</mat-label>
+          <mat-label>User Assigned the card</mat-label>
            <input type="text" formControlName="assign_to" matInput [matAutocomplete]="autoudelv">
            <mat-autocomplete #autoudelv="matAutocomplete" [displayWith]="displayFnAssignUser">
              <mat-option *ngFor="let assignedUser of filteredAssignUsers | async" [value]="assignedUser">

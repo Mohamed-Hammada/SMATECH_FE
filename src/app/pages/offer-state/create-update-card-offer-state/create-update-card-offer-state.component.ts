@@ -59,6 +59,8 @@ export class CreateUpdateCardOfferStateComponent {
     if(assignedUsersServiceControl?.value){
       this.filteredAssignUsers = of([assignedUsersServiceControl?.value])
     }
+
+    this.setupAssignUsers();
   }
 
 
@@ -133,7 +135,7 @@ export class CreateUpdateCardOfferStateComponent {
   }
 
 
-  displayFnAssignUser(user?: User): string {
+  displayFnAssignUser(user?: User): string{
     // debugger
     return user?.username ?? '';
   }

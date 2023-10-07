@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'card', component: CardComponent,canActivate: [AuthGuardService], data: { requiredRoles:[ 'ROLE_ADMIN'] } },
-  { path: 'app-offer-state', component: OfferStateComponent,canActivate: [AuthGuardService], data: { requiredRoles: ['ROLE_ADMIN','ROLE_ACCOUNTANT_HEAD']  } },
+  { path: 'app-offer-state', component: OfferStateComponent,canActivate: [AuthGuardService], data: { requiredRoles: ['ROLE_ADMIN','ROLE_ACCOUNTANT','ROLE_ACCOUNTANT_HEAD']  } },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuardService], data: { requiredRoles: ['ROLE_ADMIN'] } },
   { path: 'companies', component: CompaniesComponent, canActivate: [AuthGuardService], data: { requiredRoles: ['ROLE_ADMIN'] } },
   { path: 'components', component: ComponentsComponent, canActivate: [AuthGuardService], data: { requiredRoles: ['ROLE_ADMIN'] } },

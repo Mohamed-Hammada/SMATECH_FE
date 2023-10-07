@@ -56,11 +56,13 @@ export class CreateUpdateCardComponent implements OnInit {
     const companyServiceControl =  this.service.form.controls?.['company'];
     if(companyServiceControl?.value){
       this.filteredCompanies = of([companyServiceControl?.value])
+      this.setupCompaniesField();
     }
 
     const deliveredUsersServiceControl =  this.service.form.controls?.['deliver_card_user'];
     if(deliveredUsersServiceControl?.value){
       this.filteredDeliveredUsers = of([deliveredUsersServiceControl?.value])
+      this.setupDeliveredUsers();
     }
 
     const component_image_file_name =  this.service.form.controls?.['component_image_file_name'];
@@ -195,7 +197,7 @@ export class CreateUpdateCardComponent implements OnInit {
     // debugger
     return  user?.username ?? '';
   }
-  
+
   chooseFile(event: Event, fileInput: any) {
     event.preventDefault();
     fileInput.click();

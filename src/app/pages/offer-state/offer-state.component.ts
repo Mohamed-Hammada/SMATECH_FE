@@ -40,6 +40,7 @@ export class OfferStateComponent {
     'card_state',
     'no_of_card_pieces',
     'logged_in_user',
+    'assign_to',
     'deliver_card_user',
     'createdAt',
     'updatedAt'

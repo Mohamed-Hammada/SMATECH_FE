@@ -105,9 +105,14 @@
     <!-- deliver_card_user Column -->
     <ng-container matColumnDef="deliver_card_user">
         <mat-header-cell *matHeaderCellDef>Deliver Card User</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.card.deliver_card_user.username }}</mat-cell>
+        <mat-cell *matCellDef="let row">{{ row.card.deliver_card_user?.username }}</mat-cell>
     </ng-container>
 
+
+    <ng-container matColumnDef="assign_to">
+        <mat-header-cell *matHeaderCellDef>Assigned User</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.assign_to?.username }}</mat-cell>
+    </ng-container>
 
     <ng-container matColumnDef="component_image">
         <mat-header-cell *matHeaderCellDef>Component Image</mat-header-cell>

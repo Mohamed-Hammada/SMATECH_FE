@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/_helpers/notification.service';
-import { Components, TechStatus, TransactionType, User } from 'src/app/models/all.model';
+import { Components, ERole, TechStatus, TransactionType, User } from 'src/app/models/all.model';
 
 import { debounceTime, distinctUntilChanged,catchError, map, startWith, switchMap } from 'rxjs/operators';
 
@@ -12,6 +12,7 @@ import { Observable, of } from 'rxjs';
 import { UserRepairActionService } from 'src/app/services/user-repair-action.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { StorageService } from 'src/app/_services/storage.service';
+import { ComponentService } from 'src/app/services/components.service';
 @Component({
   selector: 'app-create-update-tech-state',
   templateUrl: './create-update-tech-state.component.html',
@@ -26,21 +27,24 @@ export class CreateUpdateTechStateComponent {
   statuses = Object.values(TechStatus);
 
   isAcceptedTechnical: boolean = false;
-
+  filteredComponents!: Observable<any[]>;
   fileName: string = '';
   constructor(
     public dialogRef: MatDialogRef<CreateUpdateTechStateComponent>,
     private notificationService: NotificationService,
     private service: UserRepairActionService,
+    private fb: FormBuilder,
     public storageService: StorageService,
     private userService: UserServiceService,
+    private componentService: ComponentService,
     private snackBar: MatSnackBar
   ) {
 
     this.form = this.service.form;
     this.setupAssignUsers();
-    if (this.storageService.hasRole('ROLE_ADMIN') ||
-    this.storageService.hasRole('ROLE_ACCOUNTANT_HEAD')) {
+    this.setupProductNameField();
+    if (this.storageService.hasRole(ERole.ROLE_ADMIN) ||
+    this.storageService.hasRole(ERole.ROLE_REPAIR_TECHNICIAN_HEAD)) {
     this.hide_show_assign_to = true;
   }
   }
@@ -66,8 +70,37 @@ export class CreateUpdateTechStateComponent {
     }
 
     this.setupAssignUsers();
+    this.populateForm();
   }
 
+  private populateForm(): void {
+    const needed_components = this.userService.form.get("needed_components")?.value;
+    // debugger
+    this.form.setControl('needed_components', this.fb.array([]));
+
+    if (needed_components && needed_components.length > 0) {
+      this.addNeededComponentsList(needed_components);
+    } else {
+      this.addNeededComponent();
+    }
+  }
+
+  addNeededComponentsList(needed_components: Components[]): void {
+    for (const needed_component of needed_components) {
+      this.needed_components.push(this.fb.control(needed_component));
+    }
+  }
+
+  addNeededComponent(): void {
+    this.needed_components.push(this.fb.control(''));
+  }
+
+  removeNeededComponent(index: number): void {
+    this.needed_components.removeAt(index);
+  }
+  get needed_components(): FormArray {
+    return this.form.get('needed_components') as FormArray;
+  }
 
   setupAssignUsers(): void {
     // debugger
@@ -109,7 +142,7 @@ export class CreateUpdateTechStateComponent {
       return;
     }
 
-    this.service.updateOfferState(this.form.value).subscribe(
+    this.service.updateTechState(this.form.value).subscribe(
       (data) => {
         this.notificationService.success('Saved Successfully');
         this.onClose();
@@ -171,6 +204,26 @@ export class CreateUpdateTechStateComponent {
         // console.log('Form Control Value:', this.form.get('component_image')?.value); // <-- Add this line
       };
     }
+  }
+  private filterComponents(name: string): Observable<Components[]> {
+    // debugger
+    console.log("Filtering for: ", name);
+    return this.componentService.searchComponents(name).pipe(
+      map(components => components),
+      catchError(error => {
+        console.error('Error while filtering components:', error);
+        return of([]); // returns an empty array on error
+      })
+    );
+  }
+  
+  setupProductNameField(): void {
+    this.filteredComponents = this.form.controls?.['needed_components'].valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(value => this.filterComponents(value))
+    );
   }
   onClose(): void {
     this.form.reset();

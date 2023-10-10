@@ -108,6 +108,15 @@ export class UserRepairActionService {
     );
   }
 
+  updateTechState( offerStateDTORequest: UserRepairAction): Observable<UserRepairAction> {
+    return this.http.put<UserRepairAction>(`${this.apiUrl}/tech-state`, offerStateDTORequest).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
+
   deleteById(id: any): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`).pipe(
       catchError(error => {

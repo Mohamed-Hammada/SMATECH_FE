@@ -150,7 +150,7 @@ export class TechStateComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
+    dialogConfig.width = "70%";
     return dialogConfig;
   }
 

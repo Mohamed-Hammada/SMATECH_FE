@@ -7,7 +7,7 @@
 </mat-toolbar>
 <form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="normal-form">
 
-  <mat-grid-list cols="2" rowHeight="350px">
+  <mat-grid-list cols="2" rowHeight="300px">
 
     <mat-grid-tile>
       <div class="controles-container">
@@ -45,8 +45,8 @@
         </mat-radio-group>
 
         <div *ngIf="isAcceptedTechnical">
-          <mat-checkbox formControlName="enabled">
-            Enabled
+          <mat-checkbox formControlName="waiting_spare">
+            Waiting Spare
           </mat-checkbox>
 
           <mat-form-field>
@@ -69,13 +69,13 @@
             <div *ngFor="let component of needed_components.controls; let i = index">
               <mat-form-field>
                 <!-- <input [formControlName]="i" matInput placeholder="Component" [value]="component.value.name"/> -->
-                <input type="text" formControlName="i" matInput [matAutocomplete]="auto">
+                <input type="text" [formControlName]="i" matInput [matAutocomplete]="auto">
                 <!-- MatAutocomplete directive that controls the behavior of the options panel associated with the input -->
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                   <!-- Loop through the filtered components, which is an observable containing the filtered results -->
                   <mat-option *ngFor="let component of filteredComponents | async" [value]="component">
                     <!-- Display the 'name' property of each component in the options panel -->
-                    {{component.name}}
+                    {{component.name + ' (' + component.current_exist_quantity + ')'}}
                   </mat-option>
                 </mat-autocomplete>
                 <button mat-icon-button matSuffix (click)="removeNeededComponent(i); $event.stopPropagation()">
@@ -84,7 +84,7 @@
               </mat-form-field>
             </div>
 
-            <button mat-icon-button (click)="addNeededComponent(); $event.stopPropagation()">
+            <button type="button" mat-icon-button (click)="addNeededComponent(); $event.stopPropagation()">
               <mat-icon class="add-icon">add_circle</mat-icon>
             </button>
           </div>

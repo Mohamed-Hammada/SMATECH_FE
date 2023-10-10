@@ -46,7 +46,6 @@ export class TechStateComponent {
     'serial_no',
     'issue_description',
     'card_state',
-    'assign_to',
     'no_of_card_pieces',
     'component_image',
     'createdAt',

@@ -44,7 +44,15 @@
   
           </mat-radio-group>
   
-  
+          <div *ngIf="isAcceptedTechnical">
+            <mat-checkbox formControlName="enabled">
+              Enabled
+            </mat-checkbox>
+            
+            <mat-form-field>
+              <textarea formControlName="note" matInput placeholder="Note" ></textarea>
+            </mat-form-field>
+          </div>
           
         </div>
       </mat-grid-tile>
@@ -53,7 +61,7 @@
         <div class="controles-container">
 
           <div *ngIf="isAcceptedTechnical">
-    
+           
           </div>
     </div>
   </mat-grid-tile>

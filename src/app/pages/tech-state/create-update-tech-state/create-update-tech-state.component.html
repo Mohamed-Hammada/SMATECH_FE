@@ -1,0 +1,67 @@
+<mat-toolbar>
+    <span>{{ form.controls["id"].value ? "Edit" : "Create" }} Card</span>
+    <span class="fill-remaining-space"></span>
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-toolbar>
+  <form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="normal-form">
+  
+    <mat-grid-list cols="2" rowHeight="350px">
+  
+      <mat-grid-tile>
+        <div class="controles-container">
+  
+          <input type="hidden" formControlName="id" />
+  
+          <input type="hidden" formControlName="serial_no" placeholder="Serial No" />
+          <input type="hidden" formControlName="logged_in_user" placeholder="Logged In User" />
+  
+          <div *ngIf="hide_show_assign_to">
+          <mat-form-field>
+            <mat-label>User Assigned the card</mat-label>
+             <input type="text" formControlName="assign_to" matInput [matAutocomplete]="autoudelv">
+             <mat-autocomplete #autoudelv="matAutocomplete" [displayWith]="displayFnAssignUser">
+               <mat-option *ngFor="let assignedUser of filteredAssignUsers | async" [value]="assignedUser">
+                 {{assignedUser.username}}
+              </mat-option>
+            </mat-autocomplete>
+             <mat-error *ngIf="form.get('assign_to')?.hasError('required')">Assigny User is required</mat-error>
+          </mat-form-field>
+        </div>
+          
+        <div *ngIf="!hide_show_assign_to">
+          <input type="hidden" formControlName="assign_to" />
+          </div>
+  
+    
+  
+          <mat-radio-group formControlName="tech_status">
+  
+            <mat-radio-button *ngFor="let status of statuses" [value]="status">
+              {{status}}
+            </mat-radio-button>
+  
+          </mat-radio-group>
+  
+  
+          
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <div class="controles-container">
+
+          <div *ngIf="isAcceptedTechnical">
+    
+          </div>
+    </div>
+  </mat-grid-tile>
+    </mat-grid-list>
+  
+    <div class="button-row">
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Save</button>
+      <button mat-raised-button color="warn" type="reset">Clear</button>
+    </div>
+  
+  </form>

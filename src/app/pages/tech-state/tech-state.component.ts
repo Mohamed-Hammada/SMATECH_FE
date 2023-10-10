@@ -4,46 +4,52 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
-import { Components, Card, TransactionType, CardStatus, Department } from 'src/app/models/all.model';
+import { Components, Card, TransactionType, CardStatus, Department, ERole } from 'src/app/models/all.model';
 import { NotificationService } from 'src/app/_helpers/notification.service';
 import { DialogService } from 'src/app/_helpers/dialog.service';
 
 
 import { ImageDialogComponent } from 'src/app/_helpers/image-dialog/image-dialog.component';
-import { CreateUpdateCardOfferStateComponent } from './create-update-card-offer-state/create-update-card-offer-state.component';
 import { UserRepairActionService } from 'src/app/services/user-repair-action.service';
 import { MatSelectChange } from '@angular/material/select';
 import { StorageService } from 'src/app/_services/storage.service';
+import { CreateUpdateTechStateComponent } from './create-update-tech-state/create-update-tech-state.component';
 
 
 @Component({
-  selector: 'app-offer-state',
-  templateUrl: './offer-state.component.html',
-  styleUrls: ['./offer-state.component.css']
+  selector: 'app-tech-state',
+  templateUrl: './tech-state.component.html',
+  styleUrls: ['./tech-state.component.css']
 })
-export class OfferStateComponent {
+export class TechStateComponent {
+
   cards: Card[] = [];
   currentPage: number = 1;
   totalPages: number = -1;
   pageSize: number = 10;
-  cardStatuses = Object.values(CardStatus);
+
+  cardStatuses: string[] = [
+    CardStatus.UNDER_REPAIR_PENDING_ASSIGNMENT,
+    CardStatus.UNDER_REPAIR,
+    CardStatus.READY_FOR_DELIVERY,
+    CardStatus.WAITING_SPARE_PARTS,
+    CardStatus.TECHNICALLY_REJECTED,
+    CardStatus.DELIVERY_PENDING,
+    CardStatus.UNDER_TEST,
+    CardStatus.RETURN_NEEDS_FIX
+  ];
+
   selectedCardStatuses: CardStatus[] = [];
 
 
   displayedColumns: string[] = [
-    // 'id',
     'serial_no',
     'issue_description',
-    'company',
-    'suggested_offer_repair_cost',
-    'repair_cost',
-    'amount_paid',
     'card_state',
-    // 'no_of_card_pieces',
-    // 'logged_in_user',
-    'deliver_card_user',
+    'assign_to',
+    'no_of_card_pieces',
+    'component_image',
     'createdAt',
-    // 'updatedAt',
     'actions'
   ];
 
@@ -61,15 +67,15 @@ export class OfferStateComponent {
     private userRepairActionService: UserRepairActionService
   ) {
 
-    if (this.storageService.hasRole('ROLE_ADMIN') ||
-      this.storageService.hasRole('ROLE_ACCOUNTANT_HEAD')) {
+    if (this.storageService.hasRole(ERole.ROLE_ADMIN) ||
+      this.storageService.hasRole(ERole.ROLE_REPAIR_TECHNICIAN_HEAD)) {
       this.displayedColumns.push('assign_to');
     }
   }
 
   ngOnInit(): void {
     // debugger
-    this.selectedCardStatuses.push(CardStatus.PENDING_OFFER_SETUP);
+    this.selectedCardStatuses.push(CardStatus.UNDER_REPAIR_PENDING_ASSIGNMENT);
     this.loadData();
   }
   onCardStatusChange(event: MatSelectChange) {
@@ -135,7 +141,7 @@ export class OfferStateComponent {
 
   private openTransactionDialog(): void {
     const dialogConfig = this.getDialogConfig();
-    const dialogRef = this.dialog.open(CreateUpdateCardOfferStateComponent, dialogConfig);
+    const dialogRef = this.dialog.open(CreateUpdateTechStateComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(() => {
       this.loadData();
     });

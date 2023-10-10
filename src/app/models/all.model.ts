@@ -71,12 +71,13 @@ export class UserRepairAction {
   logged_in_user: User = new User();
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
-  suggestedOfferRepairCost: number = -1;
+  suggested_offer_repair_cost: number = -1;
   department: Department = Department.ACCOUNT;
-  selectedStatus: OfferStatus = OfferStatus.WAITING_RESPONSE;
-  amountPaid: number = -1;
-  repairCost: number = -1;
-  additionalAmountPaid: number = -1;
+  offer_status: OfferStatus = OfferStatus.WAITING_RESPONSE;
+  tech_status: TechStatus = TechStatus.WAITING_ACTION;
+  amount_paid: number = -1;
+  repair_cost: number = -1;
+  additional_amount_paid: number = -1;
 }
 
 export enum CardStatus{
@@ -97,6 +98,12 @@ export enum CardStatus{
 
 export enum OfferStatus{
   WAITING_RESPONSE='WAITING_RESPONSE',
+  ACCEPT='ACCEPT',
+  REJECT='REJECT'
+}
+
+export enum TechStatus{
+  WAITING_ACTION='WAITING_ACTION',
   ACCEPT='ACCEPT',
   REJECT='REJECT'
 }
@@ -123,4 +130,14 @@ export class Card {
   deliver_card_user: User = new User();
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
+}
+
+export enum ERole {
+  ROLE_ACCOUNTANT = 'ROLE_ACCOUNTANT',
+  ROLE_ACCOUNTANT_HEAD = 'ROLE_ACCOUNTANT_HEAD',
+  ROLE_REPAIR_TECHNICIAN = 'ROLE_REPAIR_TECHNICIAN',
+  ROLE_REPAIR_TECHNICIAN_HEAD = 'ROLE_REPAIR_TECHNICIAN_HEAD',
+  ROLE_MARKETING = 'ROLE_MARKETING',
+  ROLE_MARKETING_HEAD = 'ROLE_MARKETING_HEAD',
+  ROLE_ADMIN = 'ROLE_ADMIN',
 }

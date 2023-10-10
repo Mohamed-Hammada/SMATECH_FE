@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/_helpers/notification.service';
-import { Components, OfferStatus, TransactionType, User } from 'src/app/models/all.model';
+import { Components, TechStatus, TransactionType, User } from 'src/app/models/all.model';
 
 import { debounceTime, distinctUntilChanged,catchError, map, startWith, switchMap } from 'rxjs/operators';
 
@@ -12,25 +12,24 @@ import { Observable, of } from 'rxjs';
 import { UserRepairActionService } from 'src/app/services/user-repair-action.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { StorageService } from 'src/app/_services/storage.service';
-
 @Component({
-  selector: 'app-create-update-card-offer-state',
-  templateUrl: './create-update-card-offer-state.component.html',
-  styleUrls: ['./create-update-card-offer-state.component.css']
+  selector: 'app-create-update-tech-state',
+  templateUrl: './create-update-tech-state.component.html',
+  styleUrls: ['./create-update-tech-state.component.css']
 })
-export class CreateUpdateCardOfferStateComponent {
+export class CreateUpdateTechStateComponent {
   form: FormGroup;
   transactionTypes = Object.values(TransactionType);
   filteredCompanies!: Observable<any[]>;
   filteredAssignUsers!: Observable<any[]>;
   hide_show_assign_to:boolean=false;
-  statuses = Object.values(OfferStatus);
+  statuses = Object.values(TechStatus);
 
-  isSuggestedOfferAccepted: boolean = false;
+  isAcceptedTechnical: boolean = false;
 
   fileName: string = '';
   constructor(
-    public dialogRef: MatDialogRef<CreateUpdateCardOfferStateComponent>,
+    public dialogRef: MatDialogRef<CreateUpdateTechStateComponent>,
     private notificationService: NotificationService,
     private service: UserRepairActionService,
     public storageService: StorageService,
@@ -46,19 +45,19 @@ export class CreateUpdateCardOfferStateComponent {
   }
   }
   ngOnInit(): void {
-    const offer_status = this.service.form.controls?.['offer_status'];
-    if (offer_status?.value) {
-      if (offer_status.value === OfferStatus.ACCEPT) {
-        this.isSuggestedOfferAccepted = true
+    const tech_status = this.service.form.controls?.['tech_status'];
+    if (tech_status?.value) {
+      if (tech_status.value === TechStatus.ACCEPT) {
+        this.isAcceptedTechnical = true
       }
     }
 
-    this.form.get('offer_status')?.valueChanges.subscribe(value => {
+    this.form.get('tech_status')?.valueChanges.subscribe(value => {
       console.log('New status selected: ', value);
-      if (value === OfferStatus.ACCEPT) {
-        this.isSuggestedOfferAccepted = true
+      if (value === TechStatus.ACCEPT) {
+        this.isAcceptedTechnical = true
       }else{
-        this.isSuggestedOfferAccepted = false
+        this.isAcceptedTechnical = false
       }
     });
     const assignedUsersServiceControl =  this.service.form.controls?.['assign_to'];
@@ -109,7 +108,7 @@ export class CreateUpdateCardOfferStateComponent {
       });
       return;
     }
-    debugger
+
     this.service.updateOfferState(this.form.value).subscribe(
       (data) => {
         this.notificationService.success('Saved Successfully');
@@ -177,4 +176,5 @@ export class CreateUpdateCardOfferStateComponent {
     this.form.reset();
     this.dialogRef.close();
   }
+
 }

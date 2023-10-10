@@ -57,6 +57,8 @@ import { CardComponent } from './pages/card/card.component';
 import { CreateUpdateCardComponent } from './pages/card/create-update-card/create-update-card.component';
 import { OfferStateComponent } from './pages/offer-state/offer-state.component';
 import { CreateUpdateCardOfferStateComponent } from './pages/offer-state/create-update-card-offer-state/create-update-card-offer-state.component';
+import { TechStateComponent } from './pages/tech-state/tech-state.component';
+import { CreateUpdateTechStateComponent } from './pages/tech-state/create-update-tech-state/create-update-tech-state.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +81,9 @@ import { CreateUpdateCardOfferStateComponent } from './pages/offer-state/create-
     CardComponent,
     CreateUpdateCardComponent,
     OfferStateComponent,
-    CreateUpdateCardOfferStateComponent
+    CreateUpdateCardOfferStateComponent,
+    TechStateComponent,
+    CreateUpdateTechStateComponent
   ],
   imports: [
     BrowserModule,

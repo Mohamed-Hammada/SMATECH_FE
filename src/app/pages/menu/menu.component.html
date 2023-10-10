@@ -49,7 +49,11 @@
             Offer State
           </a>
         </div>
-
+        <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN') || storageService.hasRole('ROLE_REPAIR_TECHNICIAN_HEAD') || storageService.hasRole('ROLE_REPAIR_TECHNICIAN')">
+        <a mat-list-item routerLink="/app-tech-state" routerLinkActive="active" (click)="drawer.toggle()">
+          Technical State
+        </a>
+      </div>
         <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="logOut(drawer)">Logout</a>
       </mat-nav-list>
     </div>

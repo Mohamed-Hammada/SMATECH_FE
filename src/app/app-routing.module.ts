@@ -13,7 +13,8 @@ import { ComponentsComponent } from './pages/components/components.component';
 import { ComponentsTransactionsComponent } from './pages/components-transactions/components-transactions.component';
 import { CardComponent } from './pages/card/card.component';
 import { OfferStateComponent } from './pages/offer-state/offer-state.component';
-import { Role } from './models/all.model';
+import { Role , ERole } from './models/all.model';
+import { TechStateComponent } from './pages/tech-state/tech-state.component';
 
 
 const routes: Routes = [
@@ -21,12 +22,14 @@ const routes: Routes = [
   { path: 'login', redirectTo: 'welcome', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'card', component: CardComponent,canActivate: [AuthGuardService], data: { requiredRoles:[ 'ROLE_ADMIN'] } },
-  { path: 'app-offer-state', component: OfferStateComponent,canActivate: [AuthGuardService], data: { requiredRoles: ['ROLE_ADMIN','ROLE_ACCOUNTANT','ROLE_ACCOUNTANT_HEAD']  } },
-  { path: 'users', component: UsersComponent, canActivate: [AuthGuardService], data: { requiredRoles: ['ROLE_ADMIN'] } },
-  { path: 'companies', component: CompaniesComponent, canActivate: [AuthGuardService], data: { requiredRoles: ['ROLE_ADMIN'] } },
-  { path: 'components', component: ComponentsComponent, canActivate: [AuthGuardService], data: { requiredRoles: ['ROLE_ADMIN'] } },
-  { path: 'components-transaction', component: ComponentsTransactionsComponent, canActivate: [AuthGuardService], data: { requiredRoles: ['ROLE_ADMIN'] } },
+  { path: 'card', component: CardComponent,canActivate: [AuthGuardService], data: { requiredRoles:[ ERole.ROLE_ADMIN] } },
+  { path: 'app-offer-state', component: OfferStateComponent,canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN,ERole.ROLE_ACCOUNTANT,ERole.ROLE_ACCOUNTANT_HEAD]  } },
+  { path: 'app-tech-state', component: TechStateComponent,canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN,ERole.ROLE_REPAIR_TECHNICIAN_HEAD,ERole.ROLE_REPAIR_TECHNICIAN]  } },
+
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN] } },
+  { path: 'companies', component: CompaniesComponent, canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN] } },
+  { path: 'components', component: ComponentsComponent, canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN] } },
+  { path: 'components-transaction', component: ComponentsTransactionsComponent, canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN] } },
   { path: 'pageNotFound', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
 ];

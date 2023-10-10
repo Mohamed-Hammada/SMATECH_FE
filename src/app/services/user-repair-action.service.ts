@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { UserRepairAction, CardStatus,Department } from '../models/all.model';
+import { UserRepairAction, CardStatus,Department, TechStatus, OfferStatus } from '../models/all.model';
 import { environment } from 'src/environments/environment';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StorageService } from '../_services/storage.service';
@@ -33,7 +33,8 @@ export class UserRepairActionService {
       repair_cost: new FormControl(0),
       amount_paid: new FormControl(0),
       additional_amount_paid: new FormControl(0),
-      offer_status: new FormControl() ,
+      offer_status: new FormControl(OfferStatus.WAITING_RESPONSE) ,
+      tech_status: new FormControl(TechStatus.WAITING_ACTION),
     });
     return this.form;
   }
@@ -124,13 +125,14 @@ export class UserRepairActionService {
       note: row.note,
       needed_components: row.needed_components,
       assign_to: row.assign_to,
-      logged_in_user: row.logged_in_user || '',
+      logged_in_user: row.logged_in_user || this.storageService.getUser(),
       serial_no: row.card.serial_no,
       suggested_offer_repair_cost: row.card.suggested_offer_repair_cost || 0,
       repair_cost: row.card.repair_cost || 0,
       amount_paid: row.card.amount_paid || 0,
       additional_amount_paid: 0,
-      offer_status: row.offer_status || ''
+      offer_status: row.offer_status || OfferStatus.WAITING_RESPONSE,
+      tech_status: row.tech_status || TechStatus.WAITING_ACTION
     });
   }
 

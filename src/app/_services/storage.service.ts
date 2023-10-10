@@ -33,6 +33,7 @@ export class StorageService {
 
   getUser(): User | null {
     const user = window.sessionStorage.getItem(USER_KEY);
+    debugger
     return user ? JSON.parse(user) : null;
   }
 

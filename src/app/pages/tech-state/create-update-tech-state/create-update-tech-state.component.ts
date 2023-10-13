@@ -44,7 +44,6 @@ export class CreateUpdateTechStateComponent {
     public dialogRef: MatDialogRef<CreateUpdateTechStateComponent>,
     private notificationService: NotificationService,
     private service: UserRepairActionService,
-    private fb: FormBuilder,
     public storageService: StorageService,
     private userService: UserServiceService,
     private componentService: ComponentService,
@@ -53,7 +52,6 @@ export class CreateUpdateTechStateComponent {
     this.componentsFormInput = this.formBuilder.group({});
     this.form = this.service.form;
     this.setupAssignUsers();
-    this.setupProductNameField();
     if (this.storageService.hasRole(ERole.ROLE_ADMIN) ||
     this.storageService.hasRole(ERole.ROLE_REPAIR_TECHNICIAN_HEAD)) {
     this.hide_show_assign_to = true;
@@ -83,7 +81,6 @@ export class CreateUpdateTechStateComponent {
     }
 
     this.setupAssignUsers();
-    this.populateForm();
     this.loadInitialData();
   }
 
@@ -117,34 +114,6 @@ export class CreateUpdateTechStateComponent {
     this.componentsFormInput.removeControl(formGroupName);
   }
 
-  private populateForm(): void {
-    const needed_components = this.userService.form.get("needed_components")?.value;
-    // debugger
-    this.form.setControl('needed_components', this.fb.array([]));
-
-    if (needed_components && needed_components.length > 0) {
-      this.addNeededComponentsList(needed_components);
-    } else {
-      this.addNeededComponent();
-    }
-  }
-
-  addNeededComponentsList(needed_components: Components[]): void {
-    for (const needed_component of needed_components) {
-      this.needed_components.push(this.fb.control(needed_component));
-    }
-  }
-
-  addNeededComponent(): void {
-    this.needed_components.push(this.fb.control(''));
-  }
-
-  removeNeededComponent(index: number): void {
-    this.needed_components.removeAt(index);
-  }
-  get needed_components(): FormArray {
-    return this.form.get('needed_components') as FormArray;
-  }
 
   setupAssignUsers(): void {
     // debugger
@@ -263,14 +232,6 @@ export class CreateUpdateTechStateComponent {
     );
   }
   
-  setupProductNameField(): void {
-    this.filteredComponents = this.form.controls?.['needed_components'].valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap(value => this.filterComponents(value))
-    );
-  }
   onClose(): void {
     this.form.reset();
     this.dialogRef.close();

@@ -20,6 +20,13 @@ export class Components {
   updated_at: string = ''; // Use appropriate date format
 }
 
+export class NeededComponent {
+  id: number = -1;
+  component: Components = new Components();
+  user_repair_action: UserRepairAction = new UserRepairAction();
+  needed_count: number = 1;
+}
+
 export class ComponentTransaction {
   id: number = -1;
   component: Components = new Components();
@@ -66,7 +73,7 @@ export class UserRepairAction {
   user: User = new User();
   card: Card = new Card();
   note: string = '';
-  needed_components: Components[] = [];
+  needed_components: NeededComponent[] = [];
   assign_to: User = new User();
   logged_in_user: User = new User();
   created_at: string = ''; // Use appropriate date format

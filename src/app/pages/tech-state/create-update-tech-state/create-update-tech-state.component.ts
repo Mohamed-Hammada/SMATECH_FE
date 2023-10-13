@@ -3,9 +3,9 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/_helpers/notification.service';
-import { Components, ERole, TechStatus, TransactionType, User } from 'src/app/models/all.model';
+import { Components, ERole, NeededComponent, TechStatus, TransactionType, User } from 'src/app/models/all.model';
 
-import { debounceTime, distinctUntilChanged,catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 import { Observable, of } from 'rxjs';
 
@@ -23,7 +23,7 @@ export class CreateUpdateTechStateComponent {
   transactionTypes = Object.values(TransactionType);
   filteredCompanies!: Observable<any[]>;
   filteredAssignUsers!: Observable<any[]>;
-  hide_show_assign_to:boolean=false;
+  hide_show_assign_to: boolean = false;
   statuses = Object.values(TechStatus);
 
   isAcceptedTechnical: boolean = false;
@@ -33,11 +33,6 @@ export class CreateUpdateTechStateComponent {
 
   componentsFormInput: FormGroup;
   inputsOfComponentsForm: any[] = [];
-  initialData = [
-    { autocomplete: 'Initial 1', number: 123 },
-    { autocomplete: 'Initial 2', number: 456 },
-  ];
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,9 +48,10 @@ export class CreateUpdateTechStateComponent {
     this.form = this.service.form;
     this.setupAssignUsers();
     if (this.storageService.hasRole(ERole.ROLE_ADMIN) ||
-    this.storageService.hasRole(ERole.ROLE_REPAIR_TECHNICIAN_HEAD)) {
-    this.hide_show_assign_to = true;
-  }
+      this.storageService.hasRole(ERole.ROLE_REPAIR_TECHNICIAN_HEAD)) {
+      this.hide_show_assign_to = true;
+    }
+    this.setupProductNameField();
   }
   ngOnInit(): void {
     this.componentsFormInput = this.formBuilder.group({});
@@ -71,12 +67,12 @@ export class CreateUpdateTechStateComponent {
       console.log('New status selected: ', value);
       if (value === TechStatus.ACCEPT) {
         this.isAcceptedTechnical = true
-      }else{
+      } else {
         this.isAcceptedTechnical = false
       }
     });
-    const assignedUsersServiceControl =  this.service.form.controls?.['assign_to'];
-    if(assignedUsersServiceControl?.value){
+    const assignedUsersServiceControl = this.service.form.controls?.['assign_to'];
+    if (assignedUsersServiceControl?.value) {
       this.filteredAssignUsers = of([assignedUsersServiceControl?.value])
     }
 
@@ -85,28 +81,41 @@ export class CreateUpdateTechStateComponent {
   }
 
   loadInitialData() {
-    this.initialData.forEach((data, index) => {
+    const neededComponents = this.form.controls?.['needed_components'].value as NeededComponent[];
+
+
+    neededComponents.forEach((data, index) => {
       const formGroupName = `inputGroup${index}`;
       this.inputsOfComponentsForm.push(formGroupName);
+      // this.componentsFormInput.get([formGroupName, 'autocomplete'])!.patchValue(data.autocomplete); 
 
       this.componentsFormInput.addControl(formGroupName, this.formBuilder.group({
-        autocomplete: [data.autocomplete, Validators.required],
-        number: [data.number, Validators.pattern(/^\d+$/)],
+        autocomplete: [data.component.name, Validators.required],
+        number: [data.needed_count, Validators.pattern(/^\d+$/)],
       }));
     });
   }
-  
+
+  setupProductNameField(): void {
+    this.filteredComponents = this.form.controls?.['needed_components'].valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(value => this.filterComponents(value))
+    );
+  }
+
   addInput() {
     const index = this.inputsOfComponentsForm.length;
     const formGroupName = `inputGroup${index}`;
     this.inputsOfComponentsForm.push(formGroupName);
-  
+
     this.componentsFormInput.addControl(formGroupName, this.formBuilder.group({
       autocomplete: ['', Validators.required],
-      number: [1, [Validators.pattern(/^\d+$/) , Validators.min(1)]],
+      number: [1, [Validators.pattern(/^\d+$/), Validators.min(1)]],
     }));
   }
-  
+
 
   removeInput(index: number) {
     const formGroupName = this.inputsOfComponentsForm[index];
@@ -157,6 +166,25 @@ export class CreateUpdateTechStateComponent {
       return;
     }
 
+    const neededComponents: any[] = [];
+
+    this.inputsOfComponentsForm.forEach(formGroupName => {
+
+      const formGroup = this.componentsFormInput.get(formGroupName);
+
+      const component = new Components();
+      component.name = formGroup!.value.autocomplete;
+      const number = formGroup!.value.number;
+
+      neededComponents.push({
+        component,
+        needed_count: number
+      });
+
+    });
+
+    this.form.controls?.['needed_components'].setValue(neededComponents)
+
     this.service.updateTechState(this.form.value).subscribe(
       (data) => {
         this.notificationService.success('Saved Successfully');
@@ -183,12 +211,14 @@ export class CreateUpdateTechStateComponent {
   }
 
   displayFn(component?: Components): string {
-    // debugger
+    // if (typeof component === 'string') {
+    //   return component; 
+    // }  
     return component?.name ?? '';
   }
 
 
-  displayFnAssignUser(user?: User): string{
+  displayFnAssignUser(user?: User): string {
     // debugger
     return user?.username ?? '';
   }
@@ -231,7 +261,7 @@ export class CreateUpdateTechStateComponent {
       })
     );
   }
-  
+
   onClose(): void {
     this.form.reset();
     this.dialogRef.close();

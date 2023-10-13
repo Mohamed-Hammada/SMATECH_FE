@@ -35,7 +35,7 @@ export class UserRepairActionService {
       additional_amount_paid: new FormControl(0),
       offer_status: new FormControl(OfferStatus.WAITING_RESPONSE) ,
       tech_status: new FormControl(TechStatus.WAITING_ACTION),
-      waiting_spare : new FormControl(false)
+      fixed : new FormControl(false)
     });
     return this.form;
   }
@@ -143,7 +143,7 @@ export class UserRepairActionService {
       additional_amount_paid: 0,
       offer_status: row.offer_status || OfferStatus.WAITING_RESPONSE,
       tech_status: row.tech_status || TechStatus.WAITING_ACTION,
-      waiting_spare:row.waiting_spare || false
+      fixed:row.fixed || false
     });
   }
 

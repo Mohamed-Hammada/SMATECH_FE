@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/_helpers/notification.service';
@@ -29,7 +29,14 @@ export class CreateUpdateTechStateComponent {
   isAcceptedTechnical: boolean = false;
   filteredComponents!: Observable<any[]>;
   fileName: string = '';
+
+
+  inputForm: FormGroup;
+  inputs: any[] = [];
+
+
   constructor(
+    private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<CreateUpdateTechStateComponent>,
     private notificationService: NotificationService,
     private service: UserRepairActionService,
@@ -39,7 +46,7 @@ export class CreateUpdateTechStateComponent {
     private componentService: ComponentService,
     private snackBar: MatSnackBar
   ) {
-
+    this.inputForm = this.formBuilder.group({});
     this.form = this.service.form;
     this.setupAssignUsers();
     this.setupProductNameField();
@@ -49,6 +56,8 @@ export class CreateUpdateTechStateComponent {
   }
   }
   ngOnInit(): void {
+    this.inputForm = this.formBuilder.group({});
+
     const tech_status = this.service.form.controls?.['tech_status'];
     if (tech_status?.value) {
       if (tech_status.value === TechStatus.ACCEPT) {
@@ -71,6 +80,24 @@ export class CreateUpdateTechStateComponent {
 
     this.setupAssignUsers();
     this.populateForm();
+  }
+
+  addInput() {
+    const index = this.inputs.length;
+    const formGroupName = `inputGroup${index}`;
+    this.inputs.push(formGroupName);
+  
+    this.inputForm.addControl(formGroupName, this.formBuilder.group({
+      autocomplete: ['', Validators.required],
+      number: [null, Validators.pattern(/^\d+$/)],
+    }));
+  }
+  
+
+  removeInput(index: number) {
+    const formGroupName = this.inputs[index];
+    this.inputs.splice(index, 1);
+    this.inputForm.removeControl(formGroupName);
   }
 
   private populateForm(): void {

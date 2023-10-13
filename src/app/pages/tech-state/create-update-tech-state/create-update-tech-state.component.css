@@ -1,11 +1,17 @@
 .controles-container {
-    /* Adjust spacing and alignment as needed */
-    margin: 20px;
-  }
-  
-  .button-row {
-    display: flex;
-    justify-content: flex-end;
-    /* margin-top: 20px; */
-  }
-  
+  /* Adjust spacing and alignment as needed */
+  margin: 20px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  /* margin-top: 20px; */
+}
+
+
+.circular-input {
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+}

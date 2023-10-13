@@ -45,13 +45,16 @@
         </mat-radio-group>
 
         <div *ngIf="isAcceptedTechnical">
-          <mat-checkbox formControlName="waiting_spare">
-            Waiting Spare
-          </mat-checkbox>
-
-          <mat-form-field>
-            <textarea formControlName="note" matInput placeholder="Note"></textarea>
-          </mat-form-field>
+          <div>
+            <mat-checkbox formControlName="waiting_spare">
+              Waiting Spare
+            </mat-checkbox>
+          </div>
+          <div>
+            <mat-form-field>
+              <textarea formControlName="note" matInput placeholder="Note"></textarea>
+            </mat-form-field>
+          </div>
         </div>
 
       </div>
@@ -59,17 +62,15 @@
 
     <mat-grid-tile>
       <div class="controles-container">
-
-
-
         <div *ngIf="isAcceptedTechnical">
 
-          <div formArrayName="needed_components">
-            <!-- Needed Components rows -->
-            <div *ngFor="let component of needed_components.controls; let i = index">
+          <form [formGroup]="inputForm">
+            <div class="input-container" *ngFor="let formGroupName of inputs; let i = index"
+              [formGroupName]="formGroupName">
+              <!-- <input type="text" formControlName="autocomplete" placeholder="Autocomplete" /> -->
               <mat-form-field>
-                <!-- <input [formControlName]="i" matInput placeholder="Component" [value]="component.value.name"/> -->
-                <input type="text" [formControlName]="i" matInput [matAutocomplete]="auto">
+
+                <input matInput type="text" formControlName="autocomplete" matInput [matAutocomplete]="auto">
                 <!-- MatAutocomplete directive that controls the behavior of the options panel associated with the input -->
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                   <!-- Loop through the filtered components, which is an observable containing the filtered results -->
@@ -78,16 +79,19 @@
                     {{component.name + ' (' + component.current_exist_quantity + ')'}}
                   </mat-option>
                 </mat-autocomplete>
-                <button mat-icon-button matSuffix (click)="removeNeededComponent(i); $event.stopPropagation()">
+
+                <input matInput type="number" formControlName="number" placeholder="Number" class="circular-input" />
+                <button mat-icon-button matSuffix (click)="removeInput(i); $event.stopPropagation()">
                   <mat-icon>remove_circle</mat-icon>
                 </button>
+
               </mat-form-field>
             </div>
+          </form>
 
-            <button type="button" mat-icon-button (click)="addNeededComponent(); $event.stopPropagation()">
-              <mat-icon class="add-icon">add_circle</mat-icon>
-            </button>
-          </div>
+          <button type="button" mat-icon-button (click)="addInput(); $event.stopPropagation()">
+            <mat-icon class="add-icon">add_circle</mat-icon>
+          </button>
 
         </div>
       </div>

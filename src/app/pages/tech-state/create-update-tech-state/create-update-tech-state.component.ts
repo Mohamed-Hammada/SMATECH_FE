@@ -172,8 +172,11 @@ export class CreateUpdateTechStateComponent {
 
       const formGroup = this.componentsFormInput.get(formGroupName);
 
-      const component = new Components();
-      component.name = formGroup!.value.autocomplete;
+      let component = formGroup!.value.autocomplete;
+      if (typeof component === 'string') {
+        component = new Components();
+        component.name = formGroup!.value.autocomplete;
+      }
       const number = formGroup!.value.number;
 
       neededComponents.push({

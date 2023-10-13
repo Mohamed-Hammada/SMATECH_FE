@@ -31,8 +31,12 @@ export class CreateUpdateTechStateComponent {
   fileName: string = '';
 
 
-  inputForm: FormGroup;
-  inputs: any[] = [];
+  componentsFormInput: FormGroup;
+  inputsOfComponentsForm: any[] = [];
+  initialData = [
+    { autocomplete: 'Initial 1', number: 123 },
+    { autocomplete: 'Initial 2', number: 456 },
+  ];
 
 
   constructor(
@@ -46,7 +50,7 @@ export class CreateUpdateTechStateComponent {
     private componentService: ComponentService,
     private snackBar: MatSnackBar
   ) {
-    this.inputForm = this.formBuilder.group({});
+    this.componentsFormInput = this.formBuilder.group({});
     this.form = this.service.form;
     this.setupAssignUsers();
     this.setupProductNameField();
@@ -56,7 +60,7 @@ export class CreateUpdateTechStateComponent {
   }
   }
   ngOnInit(): void {
-    this.inputForm = this.formBuilder.group({});
+    this.componentsFormInput = this.formBuilder.group({});
 
     const tech_status = this.service.form.controls?.['tech_status'];
     if (tech_status?.value) {
@@ -80,24 +84,37 @@ export class CreateUpdateTechStateComponent {
 
     this.setupAssignUsers();
     this.populateForm();
+    this.loadInitialData();
   }
 
-  addInput() {
-    const index = this.inputs.length;
-    const formGroupName = `inputGroup${index}`;
-    this.inputs.push(formGroupName);
+  loadInitialData() {
+    this.initialData.forEach((data, index) => {
+      const formGroupName = `inputGroup${index}`;
+      this.inputsOfComponentsForm.push(formGroupName);
+
+      this.componentsFormInput.addControl(formGroupName, this.formBuilder.group({
+        autocomplete: [data.autocomplete, Validators.required],
+        number: [data.number, Validators.pattern(/^\d+$/)],
+      }));
+    });
+  }
   
-    this.inputForm.addControl(formGroupName, this.formBuilder.group({
+  addInput() {
+    const index = this.inputsOfComponentsForm.length;
+    const formGroupName = `inputGroup${index}`;
+    this.inputsOfComponentsForm.push(formGroupName);
+  
+    this.componentsFormInput.addControl(formGroupName, this.formBuilder.group({
       autocomplete: ['', Validators.required],
-      number: [null, Validators.pattern(/^\d+$/)],
+      number: [1, [Validators.pattern(/^\d+$/) , Validators.min(1)]],
     }));
   }
   
 
   removeInput(index: number) {
-    const formGroupName = this.inputs[index];
-    this.inputs.splice(index, 1);
-    this.inputForm.removeControl(formGroupName);
+    const formGroupName = this.inputsOfComponentsForm[index];
+    this.inputsOfComponentsForm.splice(index, 1);
+    this.componentsFormInput.removeControl(formGroupName);
   }
 
   private populateForm(): void {
@@ -152,7 +169,7 @@ export class CreateUpdateTechStateComponent {
   }
 
   onFormSubmit(): void {
-    // debugger
+    debugger
     if (this.form.valid) {
       console.log('Form Submitted!');
       // ... handle the submit action ...
@@ -160,6 +177,8 @@ export class CreateUpdateTechStateComponent {
       console.log('Form is not valid');
       this.logValidationErrors(this.form);
     }
+
+
 
     if (!this.form.valid) {
       this.snackBar.open('Form is not valid. Please check the errors.', 'Dismiss', {

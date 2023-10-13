@@ -64,8 +64,8 @@
       <div class="controles-container">
         <div *ngIf="isAcceptedTechnical">
 
-          <form [formGroup]="inputForm">
-            <div class="input-container" *ngFor="let formGroupName of inputs; let i = index"
+          <form [formGroup]="componentsFormInput">
+            <div class="input-container" *ngFor="let formGroupName of inputsOfComponentsForm; let i = index"
               [formGroupName]="formGroupName">
               <!-- <input type="text" formControlName="autocomplete" placeholder="Autocomplete" /> -->
               <mat-form-field>

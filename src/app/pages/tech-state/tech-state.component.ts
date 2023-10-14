@@ -74,7 +74,13 @@ export class TechStateComponent {
 
   ngOnInit(): void {
     // debugger
-    this.selectedCardStatuses.push(CardStatus.UNDER_REPAIR_PENDING_ASSIGNMENT);
+    if (this.storageService.hasRole(ERole.ROLE_REPAIR_TECHNICIAN)) {
+      this.selectedCardStatuses.push(CardStatus.UNDER_REPAIR);
+    }
+    if (this.storageService.hasRole(ERole.ROLE_ADMIN) ||
+      this.storageService.hasRole(ERole.ROLE_REPAIR_TECHNICIAN_HEAD)) {
+      this.selectedCardStatuses.push(CardStatus.UNDER_REPAIR_PENDING_ASSIGNMENT);
+    }
     this.loadData();
   }
   onCardStatusChange(event: MatSelectChange) {

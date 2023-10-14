@@ -61,6 +61,8 @@ import { TechStateComponent } from './pages/tech-state/tech-state.component';
 import { CreateUpdateTechStateComponent } from './pages/tech-state/create-update-tech-state/create-update-tech-state.component';
 import { CardStatusLifeCycleMatrixRolesComponent } from './pages/card-status-life-cycle-matrix-roles/card-status-life-cycle-matrix-roles.component';
 import { CreateUpdateCardStatusLifeCycleMatrixRolesComponent } from './pages/card-status-life-cycle-matrix-roles/create-update-card-status-life-cycle-matrix-roles/create-update-card-status-life-cycle-matrix-roles.component';
+import { MarketingManagerComponent } from './pages/marketing-manager/marketing-manager.component';
+import { CreateUpdateMarketingManagerComponent } from './pages/marketing-manager/create-update-marketing-manager/create-update-marketing-manager.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +89,9 @@ import { CreateUpdateCardStatusLifeCycleMatrixRolesComponent } from './pages/car
     TechStateComponent,
     CreateUpdateTechStateComponent,
     CardStatusLifeCycleMatrixRolesComponent,
-    CreateUpdateCardStatusLifeCycleMatrixRolesComponent
+    CreateUpdateCardStatusLifeCycleMatrixRolesComponent,
+    MarketingManagerComponent,
+    CreateUpdateMarketingManagerComponent
   ],
   imports: [
     BrowserModule,

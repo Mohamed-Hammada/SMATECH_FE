@@ -22,16 +22,16 @@ export class Components {
 
 export class NeededComponent {
   id: number = -1;
-  component: Components = new Components();
-  user_repair_action: UserRepairAction = new UserRepairAction();
+  component: Components| null = new Components();
+  user_repair_action: UserRepairAction| null = new UserRepairAction();
   needed_count: number = 1;
 }
 
 export class ComponentTransaction {
   id: number = -1;
-  component: Components = new Components();
+  component: Components| null = new Components();
   transaction_date: string = ''; // Use appropriate date format
-  transaction_type: TransactionType = TransactionType.ADD;
+  transaction_type: TransactionType| null = TransactionType.ADD;
   quantity: number = 0;
   price_unit: number = 0;
   component_image: string = '';
@@ -70,18 +70,18 @@ export class User {
 
 export class UserRepairAction {
   id: number = -1;
-  user: User = new User();
-  card: Card = new Card();
+  user: User | null = new User();
+  card: Card | null= new Card();
   note: string = '';
-  needed_components: NeededComponent[] = [];
-  assign_to: User = new User();
-  logged_in_user: User = new User();
+  needed_components: NeededComponent[] | null= [];
+  assign_to: User | null = new User();
+  logged_in_user: User| null = new User();
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
   suggested_offer_repair_cost: number = -1;
-  department: Department = Department.ACCOUNT;
-  offer_status: OfferStatus = OfferStatus.WAITING_RESPONSE;
-  tech_status: TechStatus = TechStatus.WAITING_ACTION;
+  department: Department| null = Department.ACCOUNT;
+  offer_status: OfferStatus| null = OfferStatus.WAITING_RESPONSE;
+  tech_status: TechStatus| null = TechStatus.WAITING_ACTION;
   amount_paid: number = -1;
   repair_cost: number = -1;
   additional_amount_paid: number = -1;
@@ -123,18 +123,18 @@ export class Card {
   id: number = -1;
   serial_no: string = ''; // You can set the appropriate default value here
   issue_description: string = '';
-  company: Company = new Company();
-  important_components_of_card: Components[] = [];
+  company: Company| null = new Company();
+  important_components_of_card: Components[]| null = [];
   suggested_offer_repair_cost: number = 0;
   repair_cost: number = 0;
   amount_paid: number = 0;
-  user_actions: UserRepairAction[] = [];
-  card_state: CardStatus = CardStatus.PENDING_OFFER_SETUP;
+  user_actions: UserRepairAction[]| null = [];
+  card_state: CardStatus| null = CardStatus.PENDING_OFFER_SETUP;
   component_image: string = '';
   component_image_file_name: string = '';
   no_of_card_pieces:number = 0;
-  logged_in_user: User = new User();
-  deliver_card_user: User = new User();
+  logged_in_user: User| null = new User();
+  deliver_card_user: User | null= new User();
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
 }

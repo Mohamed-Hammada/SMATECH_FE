@@ -74,6 +74,11 @@ export class UserRepairActionService {
 
   createUserRepairAction(userRepairAction: UserRepairAction): Observable<UserRepairAction> {
     // debugger
+
+    if (typeof userRepairAction.assign_to === "string") {
+      userRepairAction.assign_to = null;
+    }
+    
     return this.http.post<UserRepairAction>(this.apiUrl, userRepairAction).pipe(
       catchError(error => {
         console.error('Error Message: ', error);
@@ -92,6 +97,9 @@ export class UserRepairActionService {
   }
 
   updateUserRepairAction(id: number, userRepairAction: UserRepairAction): Observable<UserRepairAction> {
+    if (typeof userRepairAction.assign_to === "string") {
+      userRepairAction.assign_to = null;
+    }
     return this.http.put<UserRepairAction>(`${this.apiUrl}/${id}`, userRepairAction).pipe(
       catchError(error => {
         console.error('Error Message: ', error);
@@ -100,6 +108,9 @@ export class UserRepairActionService {
     );
   }
   updateOfferState( offerStateDTORequest: UserRepairAction): Observable<UserRepairAction> {
+    if (typeof offerStateDTORequest.assign_to === "string") {
+      offerStateDTORequest.assign_to = null;
+    }
     return this.http.put<UserRepairAction>(`${this.apiUrl}/offer-state`, offerStateDTORequest).pipe(
       catchError(error => {
         console.error('Error Message: ', error);
@@ -108,8 +119,11 @@ export class UserRepairActionService {
     );
   }
 
-  updateTechState( offerStateDTORequest: UserRepairAction): Observable<UserRepairAction> {
-    return this.http.put<UserRepairAction>(`${this.apiUrl}/tech-state`, offerStateDTORequest).pipe(
+  updateTechState( techStateDTORequest: UserRepairAction): Observable<UserRepairAction> {
+    if (typeof techStateDTORequest.assign_to === "string") {
+      techStateDTORequest.assign_to = null;
+    }
+    return this.http.put<UserRepairAction>(`${this.apiUrl}/tech-state`, techStateDTORequest).pipe(
       catchError(error => {
         console.error('Error Message: ', error);
         return throwError(error);
@@ -134,7 +148,7 @@ export class UserRepairActionService {
       card: row.card,
       note: row.note,
       needed_components: row.needed_components,
-      assign_to: row.assign_to,
+      assign_to: row.assign_to || null,
       logged_in_user: row.logged_in_user || this.storageService.getUser(),
       serial_no: row.card.serial_no,
       suggested_offer_repair_cost: row.card.suggested_offer_repair_cost || 0,

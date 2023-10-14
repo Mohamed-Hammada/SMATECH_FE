@@ -90,7 +90,7 @@ export class CreateUpdateTechStateComponent {
       // this.componentsFormInput.get([formGroupName, 'autocomplete'])!.patchValue(data.autocomplete); 
 
       this.componentsFormInput.addControl(formGroupName, this.formBuilder.group({
-        autocomplete: [data.component.name, Validators.required],
+        autocomplete: [data?.component?.name, Validators.required],
         number: [data.needed_count, Validators.pattern(/^\d+$/)],
       }));
     });

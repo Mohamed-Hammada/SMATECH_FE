@@ -43,6 +43,18 @@
         </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="fixed">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+    
+            <button mat-button (click)="markFixed(row)">
+                <!-- <mat-icon>launch</mat-icon> -->
+                Fixed
+            </button>
+
+        </mat-cell>
+    </ng-container>
+
 
     <ng-container matColumnDef="serial_no">
         <mat-header-cell *matHeaderCellDef>Serial No.</mat-header-cell>

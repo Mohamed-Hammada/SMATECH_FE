@@ -140,6 +140,15 @@ export class UserRepairActionService {
     );
   }
 
+  markFixed(id: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/mark-fixed/${id}`,this.storageService.getUser()).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
+
   populateForm(row: any): void {
     debugger
     this.form.setValue({

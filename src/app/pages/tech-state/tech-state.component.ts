@@ -49,7 +49,8 @@ export class TechStateComponent {
     'no_of_card_pieces',
     'component_image',
     'createdAt',
-    'actions'
+    'actions',
+    'fixed'
   ];
 
   searchKey: string = '';
@@ -85,6 +86,29 @@ export class TechStateComponent {
   }
   onCardStatusChange(event: MatSelectChange) {
     this.selectedCardStatuses = event.value;
+  }
+
+  markFixed(row: any): void {
+
+    this.dialogService.openConfirmDialog('Are You Sure?')
+    .afterClosed().subscribe((res: any) => {
+      if (res) {
+
+        this.userRepairActionService.markFixed(row.id).subscribe(
+          (data) => {
+            this.notificationService.success('Saved Successfully');
+            this.loadData();
+          },
+          error => {
+            this.notificationService.warn(error.message);
+          }
+        );
+        
+      }
+    });
+
+
+
   }
 
   loadData(): void {

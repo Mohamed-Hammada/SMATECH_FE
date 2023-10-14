@@ -23,6 +23,12 @@
           </a>
         </div>
 
+        <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN')">
+          <a mat-list-item routerLink="/app-card-status-life-cycle-matrix-roles" routerLinkActive="active" (click)="drawer.toggle()">
+            Matrix Config
+          </a>
+        </div>
+        
 
         <!-- Components Manager should not be exists we will use Components Transaction Manager instead and this will add or remove from components -->
         <!-- <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN')">

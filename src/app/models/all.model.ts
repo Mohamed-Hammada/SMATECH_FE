@@ -148,3 +148,11 @@ export enum ERole {
   ROLE_MARKETING_HEAD = 'ROLE_MARKETING_HEAD',
   ROLE_ADMIN = 'ROLE_ADMIN',
 }
+
+export class CardStatusLifeCycleMatrixRoles {
+  id: number = -1;
+  card_status_life_cycle: CardStatus = CardStatus.DELIVERY_PENDING;
+  role: Role | null = new Role();
+  created_at: string = ''; // Use appropriate date format
+  updated_at: string = ''; // Use appropriate date format
+}

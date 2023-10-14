@@ -1,0 +1,52 @@
+<mat-toolbar>
+    <span>{{ form.controls["id"].value !== null ? "Edit" : "Create" }} Component Transaction</span>
+    <span class="fill-remaining-space"></span>
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-toolbar>
+  <form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="normal-form">
+  
+    <mat-grid-list cols="2" rowHeight="350px">
+  
+      <mat-grid-tile>
+        <div class="controles-container">
+  
+          <input type="hidden" formControlName="id" />
+  
+          
+          <mat-form-field>
+            <mat-label>Role</mat-label>
+            <input type="text" formControlName="role" matInput [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let role of filteredRole | async" [value]="role">
+             
+                {{role.name}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="form.get('role')?.hasError('required')">Role is required</mat-error>
+          </mat-form-field>
+          
+           
+          <mat-form-field>
+            <mat-label>Transaction Type</mat-label>
+            <mat-select formControlName="transaction_type">
+              <mat-option *ngFor="let status of cardStatus" [value]="status">
+                {{status}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('transaction_type')?.hasError('required')">Transaction Type is required</mat-error>
+          </mat-form-field> 
+  
+        </div>
+      </mat-grid-tile>
+  
+    </mat-grid-list>
+  
+    <div class="button-row">
+      <button mat-raised-button color="primary" type="submit">Save</button>
+      <button mat-raised-button color="warn" type="reset">Clear</button>
+    </div>
+  
+  </form>
+  

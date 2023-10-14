@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Role } from '../models/all.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +29,16 @@ export class RulesService {
         return throwError(error);
       })
     );;
+  }
+
+  search(query: string): Observable<Role[]> {
+    // debugger
+    const params = new HttpParams().set('query', query);
+    return this.http.get<Role[]>(`${this.apiUrl}/search`, { params }).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
   }
 }

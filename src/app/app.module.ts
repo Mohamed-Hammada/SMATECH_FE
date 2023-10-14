@@ -59,6 +59,8 @@ import { OfferStateComponent } from './pages/offer-state/offer-state.component';
 import { CreateUpdateCardOfferStateComponent } from './pages/offer-state/create-update-card-offer-state/create-update-card-offer-state.component';
 import { TechStateComponent } from './pages/tech-state/tech-state.component';
 import { CreateUpdateTechStateComponent } from './pages/tech-state/create-update-tech-state/create-update-tech-state.component';
+import { CardStatusLifeCycleMatrixRolesComponent } from './pages/card-status-life-cycle-matrix-roles/card-status-life-cycle-matrix-roles.component';
+import { CreateUpdateCardStatusLifeCycleMatrixRolesComponent } from './pages/card-status-life-cycle-matrix-roles/create-update-card-status-life-cycle-matrix-roles/create-update-card-status-life-cycle-matrix-roles.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +85,9 @@ import { CreateUpdateTechStateComponent } from './pages/tech-state/create-update
     OfferStateComponent,
     CreateUpdateCardOfferStateComponent,
     TechStateComponent,
-    CreateUpdateTechStateComponent
+    CreateUpdateTechStateComponent,
+    CardStatusLifeCycleMatrixRolesComponent,
+    CreateUpdateCardStatusLifeCycleMatrixRolesComponent
   ],
   imports: [
     BrowserModule,

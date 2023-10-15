@@ -117,7 +117,8 @@ export enum TechStatus{
 
 export enum Department{
     ACCOUNT='ACCOUNT',
-    REPAIR='REPAIR'
+    REPAIR='REPAIR',
+    MARKETING='MARKETING'
 }
 export class Card {
   id: number = -1;

@@ -16,6 +16,7 @@ import { OfferStateComponent } from './pages/offer-state/offer-state.component';
 import { Role , ERole } from './models/all.model';
 import { TechStateComponent } from './pages/tech-state/tech-state.component';
 import { CardStatusLifeCycleMatrixRolesComponent } from './pages/card-status-life-cycle-matrix-roles/card-status-life-cycle-matrix-roles.component';
+import { MarketingManagerComponent } from './pages/marketing-manager/marketing-manager.component';
 
 
 const routes: Routes = [
@@ -31,7 +32,7 @@ const routes: Routes = [
   { path: 'companies', component: CompaniesComponent, canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN] } },
   { path: 'components', component: ComponentsComponent, canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN] } },
   { path: 'app-card-status-life-cycle-matrix-roles', component: CardStatusLifeCycleMatrixRolesComponent, canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN] } },
-  
+  { path: 'app-marketing-manager', component: MarketingManagerComponent, canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN, ERole.ROLE_MARKETING_HEAD , ERole.ROLE_MARKETING] } },
   { path: 'components-transaction', component: ComponentsTransactionsComponent, canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN] } },
   { path: 'pageNotFound', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }

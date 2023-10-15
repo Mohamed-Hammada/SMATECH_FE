@@ -1,1 +1,107 @@
-<p>marketing-manager works!</p>
+<app-custom-toolbar title="Tech State"></app-custom-toolbar>
+
+<div class="search-div" style="display: flex; align-items: center;">
+    <mat-form-field style="flex: 1;" appearance="outline">
+        <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+        <button mat-button matSuffix aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    
+    <span style="flex: 1 1 auto;"></span>
+
+</div>
+<div class="search-div flex">
+    <mat-form-field appearance="outline" class="multi-select flex-grow">
+        <mat-select multiple [(value)]="selectedCardStatuses" placeholder="Select Tech States" [(ngModel)]="selectedCardStatuses">
+            <mat-option *ngFor="let cardStatus of cardStatuses" [value]="cardStatus">{{ cardStatus }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button (click)="loadData()">
+            <mat-icon>add</mat-icon>Load Data
+        </button>
+        <span class="flex-space"></span>
+
+</div>
+
+<mat-table [dataSource]="cards">
+
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+    
+            <button mat-button (click)="onEdit(row)">
+                <mat-icon>launch</mat-icon>
+            </button>
+            <button mat-button (click)="onViewImage(row.card.component_image)">
+                <mat-icon>visibility</mat-icon>
+            </button>
+
+        </mat-cell>
+    </ng-container>
+ 
+
+    <ng-container matColumnDef="assign_to">
+        <mat-header-cell *matHeaderCellDef>Assigned User</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.assign_to?.username }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="serial_no">
+        <mat-header-cell *matHeaderCellDef>Serial No.</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.card.serial_no }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="issue_description">
+        <mat-header-cell *matHeaderCellDef>Issue Description</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.card.issue_description }}</mat-cell>
+    </ng-container>
+
+    <!-- no_of_card_pieces Column -->
+    <ng-container matColumnDef="no_of_card_pieces">
+        <mat-header-cell *matHeaderCellDef>No. of Card Pieces</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.card.no_of_card_pieces }}</mat-cell>
+    </ng-container>
+
+
+
+    <!-- card_state Column -->
+    <ng-container matColumnDef="card_state">
+        <mat-header-cell *matHeaderCellDef>Card State</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.card.card_state }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="component_image">
+        <mat-header-cell *matHeaderCellDef>Component Image</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.card.component_image_file_name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef>Creation Date</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.created_at }}</mat-cell>
+    </ng-container>
+
+
+    <!-- Rest of your ng-container definitions -->
+
+
+    <ng-container matColumnDef="loading">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+            Loading data...
+        </mat-footer-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="noData">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+            No data.
+        </mat-footer-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': dataArray!=null}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']"
+        [ngClass]="{'hide': !(dataArray!=null && dataArray.data.length==0)}"></mat-footer-row>
+
+</mat-table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageChanged($event)"></mat-paginator>

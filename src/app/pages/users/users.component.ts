@@ -56,40 +56,21 @@ export class UsersComponent implements OnInit {
   }
 
   private loadData(): void {
-    this.userService.getUsers(this.currentPage, this.pageSize).pipe(
-      tap(data => {
-        console.log("Total Records (tap):", data['total_count']);
-        console.log("Page Size (tap):", data['size']);
-        this.totalRecords = data['total_count'];
-        this.pageSize = data['size'];
-      })
-    ).subscribe(
+    this.userService.getUsers(this.currentPage, this.pageSize).subscribe(
       (data: any) => {
         if (data) {
           this.users = data.data;
-          console.log("Total Records (subscribe):", this.totalRecords);
-          console.log("Page Size (subscribe):", this.pageSize);
           this.totalRecords = data['total_count']
           this.currentPage = data['page']
           this.totalPages = data['total_pages'];
           this.pageSize = data['size']
-          // this.initializeTable(data.data);
-          // Update dataArray's data
           this.dataArray.data = this.users;
-          
-          if (this.paginator) {
-            console.log("Paginator before setting index - Page Index:", this.paginator.pageIndex);
-            console.log("Paginator before setting index - Page Size:", this.paginator.pageSize);
-            console.log("Paginator before setting index - Length:", this.paginator.length);
 
+          if (this.paginator) {
             this.paginator.pageIndex = this.currentPage - 1;
             this.paginator.pageSize = this.pageSize;
             this.paginator.length = this.totalRecords;
             this.cdr.detectChanges(); // Trigger change detection
-
-            console.log("Paginator after setting index - Page Index:", this.paginator.pageIndex);
-            console.log("Paginator after setting index - Page Size:", this.paginator.pageSize);
-            console.log("Paginator after setting index - Length:", this.paginator.length);
           }
          
         }
@@ -98,30 +79,6 @@ export class UsersComponent implements OnInit {
         this.notificationService.warn(error.message);
       }
     );
-  }
-
-  
-
-  private initializeTable(users: User[]): void {
-    this.dataArray = new MatTableDataSource(users);
-    
-    this.dataArray.filterPredicate = (data: any, filterValue: string) => {
-      return JSON.stringify(data).toLowerCase().includes(filterValue);
-    };
-  
-    if (this.paginator) {
-      console.log("Before assignment - Page Index:", this.paginator.pageIndex);
-      console.log("Before assignment - Page Size:", this.paginator.pageSize);
-      console.log("Before assignment - Length:", this.paginator.length);
-    }
-  
-    this.dataArray.paginator = this.paginator;
-    this.paginator.length = this.totalRecords;
-    if (this.dataArray.paginator) {
-      console.log("After assignment - Page Index:", this.dataArray.paginator.pageIndex);
-      console.log("After assignment - Page Size:", this.dataArray.paginator.pageSize);
-      console.log("After assignment - Length:", this.dataArray.paginator.length);
-    }
   }
   
 

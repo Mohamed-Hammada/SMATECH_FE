@@ -61,13 +61,13 @@
           <div *ngFor="let phone of phones.controls; let i = index" class="phone-input">
             <mat-form-field>
               <input [formControlName]="i" matInput placeholder="Phone" />
-              <button mat-icon-button matSuffix (click)="removePhone(i)">
+              <button type="button" mat-icon-button matSuffix (click)="removePhone(i)">
                 <mat-icon>remove_circle</mat-icon>
               </button>
             </mat-form-field>
           </div>
 
-          <button mat-icon-button (click)="addPhone()" class="add-phone-button">
+          <button type="button" mat-icon-button (click)="addPhone()" class="add-phone-button">
             <mat-icon class="add-icon">add_circle</mat-icon>
           </button>
 

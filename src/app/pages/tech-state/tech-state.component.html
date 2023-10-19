@@ -1,4 +1,4 @@
-<app-custom-toolbar title="Tech State"></app-custom-toolbar>
+<app-custom-toolbar title="Technical State"></app-custom-toolbar>
 
 <div class="search-div" style="display: flex; align-items: center;">
     <mat-form-field style="flex: 1;" appearance="outline">
@@ -125,4 +125,8 @@
 
 </mat-table>
 
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageChanged($event)"></mat-paginator>
+<mat-paginator showFirstLastButtons 
+                          [pageSize]="pageSize" 
+                          [pageSizeOptions]="pageSizeOptions" 
+                          (page)="pageEvent($event)" 
+                          [length]="totalRecords"></mat-paginator>

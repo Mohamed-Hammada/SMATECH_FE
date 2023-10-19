@@ -1,4 +1,4 @@
-<app-custom-toolbar title="Tech State"></app-custom-toolbar>
+<app-custom-toolbar title="Marketing Manager"></app-custom-toolbar>
 
 <div class="search-div" style="display: flex; align-items: center;">
     <mat-form-field style="flex: 1;" appearance="outline">
@@ -13,7 +13,7 @@
 </div>
 <div class="search-div flex">
     <mat-form-field appearance="outline" class="multi-select flex-grow">
-        <mat-select multiple [(value)]="selectedCardStatuses" placeholder="Select Tech States" [(ngModel)]="selectedCardStatuses">
+        <mat-select multiple [(value)]="selectedCardStatuses" placeholder="Select States" [(ngModel)]="selectedCardStatuses">
             <mat-option *ngFor="let cardStatus of cardStatuses" [value]="cardStatus">{{ cardStatus }}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -104,4 +104,9 @@
 
 </mat-table>
 
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageChanged($event)"></mat-paginator>
+
+<mat-paginator showFirstLastButtons 
+                          [pageSize]="pageSize" 
+                          [pageSizeOptions]="pageSizeOptions" 
+                          (page)="pageEvent($event)" 
+                          [length]="totalRecords"></mat-paginator>

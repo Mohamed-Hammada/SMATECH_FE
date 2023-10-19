@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, SimpleChanges,ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -25,7 +25,9 @@ export class CardStatusLifeCycleMatrixRolesComponent {
   cardStatusLifeCycleMatrixRoles: CardStatusLifeCycleMatrixRoles[] = [];
   currentPage: number = 1;
   totalPages: number = -1;
-  pageSize: number = 10;
+  pageSizeOptions: number[] = [5,10,15,20];
+  totalRecords: number = -1;
+  pageSize: number = 5;
   displayedColumns: string[] = ['id', 'card_status_life_cycle', 'role' , 'createdAt' , 'updatedAt' , 'UPDATE'];
   searchKey: string = '';
   dataArray: MatTableDataSource<any> = new MatTableDataSource<any>();
@@ -35,6 +37,7 @@ export class CardStatusLifeCycleMatrixRolesComponent {
 
   constructor(
     private storageService: StorageService,
+    private cdr: ChangeDetectorRef,
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private dialogService: DialogService,
@@ -56,7 +59,20 @@ export class CardStatusLifeCycleMatrixRolesComponent {
           debugger
           this.cardStatusLifeCycleMatrixRoles = data.data;
           this.totalPages = data['total_pages'];
-          this.initializeTable(data.data);
+         
+          this.totalRecords = data['total_count']
+          this.currentPage = data['page']
+          this.totalPages = data['total_pages'];
+          this.pageSize = data['size']
+          this.dataArray.data = this.cardStatusLifeCycleMatrixRoles;
+
+          if (this.paginator) {
+            this.paginator.pageIndex = this.currentPage - 1;
+            this.paginator.pageSize = this.pageSize;
+            this.paginator.length = this.totalRecords;
+            this.cdr.detectChanges(); // Trigger change detection
+          }
+
         }
       },
       error => {
@@ -65,35 +81,39 @@ export class CardStatusLifeCycleMatrixRolesComponent {
     );
   }
 
-  private initializeTable(cardStatusLifeCycleMatrixRolesService: CardStatusLifeCycleMatrixRolesService[]): void {
-    this.dataArray = new MatTableDataSource(cardStatusLifeCycleMatrixRolesService);
-    this.dataArray.paginator = this.paginator;
-    this.dataArray.filterPredicate = (data: any, filterValue: string) => {
-      return JSON.stringify(data).toLowerCase().includes(filterValue);
-    };
-  }
-
+  
   prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadData();
-    }
+
+    this.currentPage--;
+    this.loadData();
+
   }
 
   nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.loadData();
+    this.currentPage++;
+    this.loadData();
+  }
+
+  pageEvent(event: any): void {
+    debugger
+    // Page size changed
+    if (event.pageSize !== this.pageSize) {
+      this.pageSizeChanged(event);
+    }
+    // Next page
+    else if (event.pageIndex > event.previousPageIndex) {
+      this.nextPage();
+    }
+    // Previous page
+    else if (event.pageIndex < event.previousPageIndex) {
+      this.prevPage();
     }
   }
 
-  pageChanged(event: any): void {
+  pageSizeChanged(event: any): void {
     this.pageSize = event.pageSize;
-    if (event.pageIndex > event.previousPageIndex) {
-      this.nextPage();
-    } else {
-      this.prevPage();
-    }
+    this.currentPage = 1;  // Reset to the first page when changing page size
+    this.loadData();
   }
 
   onCreate(): void {

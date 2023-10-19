@@ -1,4 +1,4 @@
-<app-custom-toolbar title="Components Manager"></app-custom-toolbar>
+<app-custom-toolbar title="Card Manager"></app-custom-toolbar>
 
 <div class="search-div">
   <mat-form-field class="search-form-field" appearance="outline">
@@ -138,4 +138,8 @@
 
 </mat-table>
 
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageChanged($event)"></mat-paginator>
+<mat-paginator showFirstLastButtons 
+                          [pageSize]="pageSize" 
+                          [pageSizeOptions]="pageSizeOptions" 
+                          (page)="pageEvent($event)" 
+                          [length]="totalRecords"></mat-paginator>

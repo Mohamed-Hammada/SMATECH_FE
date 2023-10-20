@@ -36,9 +36,9 @@
             <button mat-button (click)="onViewImage(row.card.component_image)">
                 <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-button color="warn" (click)="onDelete(row.id)">
+            <!-- <button mat-button color="warn" (click)="onDelete(row.id)">
                 <mat-icon>delete_outline</mat-icon>
-            </button>
+            </button> -->
 
         </mat-cell>
     </ng-container>
@@ -120,15 +120,15 @@
         <mat-cell *matCellDef="let row">{{ row.card.company.component_image_file_name }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="createdAt">
-        <mat-header-cell *matHeaderCellDef>Last Modified Date</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.created_at }}</mat-cell>
-    </ng-container>
-
     <ng-container matColumnDef="updatedAt">
-        <mat-header-cell *matHeaderCellDef>Creation Date</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Last Modified Date</mat-header-cell>
         <mat-cell *matCellDef="let row">{{ row.updated_at }}</mat-cell>
-    </ng-container>
+      </ng-container>
+    
+      <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef>Creation Date</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.created_at }}</mat-cell>
+      </ng-container>
 
 
     <!-- Rest of your ng-container definitions -->

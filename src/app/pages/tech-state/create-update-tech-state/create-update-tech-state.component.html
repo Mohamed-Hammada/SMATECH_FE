@@ -81,7 +81,7 @@
                 </mat-autocomplete>
 
                 <input matInput type="number" formControlName="number" placeholder="Number" class="circular-input" />
-                <button mat-icon-button matSuffix (click)="removeInput(i); $event.stopPropagation()">
+                <button type="button" mat-icon-button matSuffix (click)="removeInput(i); $event.stopPropagation()">
                   <mat-icon>remove_circle</mat-icon>
                 </button>
 

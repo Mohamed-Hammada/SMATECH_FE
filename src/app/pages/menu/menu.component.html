@@ -1,10 +1,8 @@
 <mat-sidenav-container class="sidenav-container">
 
   <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'over'"
-    [opened]="false"
-    *ngIf="storageService.isLoggedIn()">
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'over'"
+    [opened]="false" *ngIf="storageService.isLoggedIn()">
 
     <div class="menu-wrapper">
       <span class="menu-title"></span>
@@ -24,16 +22,13 @@
         </div>
 
         <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN')">
-          <a mat-list-item routerLink="/app-card-status-life-cycle-matrix-roles" routerLinkActive="active" (click)="drawer.toggle()">
+          <a mat-list-item routerLink="/app-card-status-life-cycle-matrix-roles" routerLinkActive="active"
+            (click)="drawer.toggle()">
             Matrix Config
           </a>
         </div>
-        
-        <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN') || storageService.hasRole('ROLE_MARKETING_HEAD') || storageService.hasRole('ROLE_MARKETING')">
-          <a mat-list-item routerLink="/app-marketing-manager" routerLinkActive="active" (click)="drawer.toggle()">
-            Marketing
-          </a>
-        </div>
+
+
 
         <!-- Components Manager should not be exists we will use Components Transaction Manager instead and this will add or remove from components -->
         <!-- <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN')">
@@ -54,17 +49,25 @@
           </a>
         </div>
 
-        
-        <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN') || storageService.hasRole('ROLE_ACCOUNTANT_HEAD') || storageService.hasRole('ROLE_ACCOUNTANT')">
+
+        <div
+          *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN') || storageService.hasRole('ROLE_ACCOUNTANT_HEAD') || storageService.hasRole('ROLE_ACCOUNTANT')">
           <a mat-list-item routerLink="/app-offer-state" routerLinkActive="active" (click)="drawer.toggle()">
             Offer State
           </a>
         </div>
-        <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN') || storageService.hasRole('ROLE_REPAIR_TECHNICIAN_HEAD') || storageService.hasRole('ROLE_REPAIR_TECHNICIAN')">
-        <a mat-list-item routerLink="/app-tech-state" routerLinkActive="active" (click)="drawer.toggle()">
-          Technical State
-        </a>
-      </div>
+        <div
+          *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN') || storageService.hasRole('ROLE_REPAIR_TECHNICIAN_HEAD') || storageService.hasRole('ROLE_REPAIR_TECHNICIAN')">
+          <a mat-list-item routerLink="/app-tech-state" routerLinkActive="active" (click)="drawer.toggle()">
+            Technical State
+          </a>
+        </div>
+        <div
+          *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN') || storageService.hasRole('ROLE_MARKETING_HEAD') || storageService.hasRole('ROLE_MARKETING')">
+          <a mat-list-item routerLink="/app-marketing-manager" routerLinkActive="active" (click)="drawer.toggle()">
+            Marketing
+          </a>
+        </div>
         <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="logOut(drawer)">Logout</a>
       </mat-nav-list>
     </div>

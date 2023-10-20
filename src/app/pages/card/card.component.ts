@@ -26,7 +26,7 @@ export class CardComponent {
   pageSizeOptions: number[] = [5,10,15,20];
   totalRecords: number = -1;
   displayedColumns: string[] = [
-    'id',
+    // 'id',
     'serial_no',
     'issue_description',
     'company',
@@ -35,10 +35,10 @@ export class CardComponent {
     // 'amount_paid',
     'card_state',
     'no_of_card_pieces',
-    'logged_in_user',
+    // 'logged_in_user',
     'deliver_card_user',
-    'createdAt',
-    'updatedAt'
+    'createdAt'
+    // ,'updatedAt'
     , 'actions'
   ];
 

@@ -57,14 +57,14 @@
     <mat-cell *matCellDef="let row">{{ row.component_image_file_name }}</mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="createdAt">
+  <ng-container matColumnDef="updatedAt">
     <mat-header-cell *matHeaderCellDef>Last Modified Date</mat-header-cell>
-    <mat-cell *matCellDef="let row">{{ row.created_at }}</mat-cell>
+    <mat-cell *matCellDef="let row">{{ row.updated_at }}</mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="updatedAt">
+  <ng-container matColumnDef="createdAt">
     <mat-header-cell *matHeaderCellDef>Creation Date</mat-header-cell>
-    <mat-cell *matCellDef="let row">{{ row.updated_at }}</mat-cell>
+    <mat-cell *matCellDef="let row">{{ row.created_at }}</mat-cell>
   </ng-container>
 
   <!-- Add other columns similarly -->

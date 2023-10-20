@@ -24,8 +24,8 @@ export class CompaniesComponent {
   companies: Company[] = [];
   currentPage: number = 1;
   totalPages: number = -1;
-  pageSize: number = 10;
-  displayedColumns: string[] = ['id', 'name', 'area' , 'customer_name' , 'createdAt' , 'updatedAt' , 'UPDATE'];
+  pageSize: number = 5;
+  displayedColumns: string[] = ['name', 'area' , 'customer_name' , 'createdAt' , 'updatedAt' , 'UPDATE'];
   searchKey: string = '';
   dataArray: MatTableDataSource<any> = new MatTableDataSource<any>();
   pageSizeOptions: number[] = [5,10,15,20];

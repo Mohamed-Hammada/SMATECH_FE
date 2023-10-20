@@ -80,9 +80,11 @@ export class MarketingManagerComponent {
   }
 
   loadData(): void {
-    this.userRepairActionService.getUserRepairActionsByCardStatusAndUserAndDepartment(this.currentPage, this.pageSize, this.selectedCardStatuses, Department.MARKETING).subscribe(
+    this.userRepairActionService.getUserRepairActionsByCardStatusAndUserAndDepartment
+    (this.currentPage, this.pageSize, this.selectedCardStatuses, Department.MARKETING).subscribe(
       (data: any) => {
         if (data) {
+          debugger
           this.cards = data.data;
           this.totalPages = data['total_pages'];
           this.totalRecords = data['total_count']

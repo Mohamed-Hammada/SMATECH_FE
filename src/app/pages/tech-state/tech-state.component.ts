@@ -115,7 +115,8 @@ export class TechStateComponent {
   }
 
   loadData(): void {
-    this.userRepairActionService.getUserRepairActionsByCardStatusAndUserAndDepartment(this.currentPage, this.pageSize, this.selectedCardStatuses, Department.REPAIR).subscribe(
+    this.userRepairActionService.getUserRepairActionsByCardStatusAndUserAndDepartment
+    (this.currentPage, this.pageSize, this.selectedCardStatuses, Department.REPAIR).subscribe(
       (data: any) => {
         if (data) {
           this.cards = data.data;

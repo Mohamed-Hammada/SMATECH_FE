@@ -59,6 +59,13 @@
                  <mat-error *ngIf="form.get('deliver_card_user')?.hasError('required')">Delivery User is required</mat-error>
               </mat-form-field>
             
+              <mat-form-field>
+                <mat-label>Warranty Period Per Days</mat-label>
+                <input formControlName="warranty_period_per_days" matInput type="number" placeholder="Number Of Warranty Period Per Days" pattern="^[0-9]*$" />
+                <mat-error *ngIf="form.get('warranty_period_per_days')?.hasError('required')">Number Of Warranty Period Per Days</mat-error>
+                <mat-error *ngIf="form.get('warranty_period_per_days')?.hasError('pattern')">Please enter a valid number</mat-error>
+              </mat-form-field>
+
               <!-- <mat-form-field>
                 <mat-select formControlName="card_state" placeholder="Card State">
                   <mat-option value="ENTERED">Entered</mat-option>

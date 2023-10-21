@@ -104,6 +104,11 @@
     <mat-cell *matCellDef="let company">{{ company.component_image_file_name }}</mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="warranty_period_per_days">
+    <mat-header-cell *matHeaderCellDef>Warranty Period Per Days</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.warranty_period_per_days }}</mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="updatedAt">
     <mat-header-cell *matHeaderCellDef>Last Modified Date</mat-header-cell>
     <mat-cell *matCellDef="let row">{{ row.updated_at }}</mat-cell>

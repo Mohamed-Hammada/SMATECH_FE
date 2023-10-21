@@ -14,7 +14,7 @@ export class CardService {
 
   form: FormGroup = this.initializeFormGroup();
   private apiUrl = `${environment.baseUrl}/api/cards`;
-
+ 
   constructor(private http: HttpClient,
     private storageService: StorageService) {
   }
@@ -32,6 +32,7 @@ export class CardService {
       // user_actions: new FormControl([]),
       // card_state: new FormControl(CardState.ENTERED, Validators.required),
       no_of_card_pieces: new FormControl(1, [Validators.required, Validators.min(1)]),
+      warranty_period_per_days: new FormControl(30, [Validators.required, Validators.min(1)]),
       logged_in_user: new FormControl(this.storageService.getUser()),
       deliver_card_user: new FormControl(null),
       component_image: new FormControl(''),
@@ -106,7 +107,8 @@ export class CardService {
       logged_in_user: row.logged_in_user || '',
       deliver_card_user: row.deliver_card_user || '',
       component_image: row.component_image || '',
-      component_image_file_name: row.component_image_file_name || ''
+      component_image_file_name: row.component_image_file_name || '',
+      warranty_period_per_days: row.warranty_period_per_days
     });
   }
 }

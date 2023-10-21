@@ -134,6 +134,7 @@ export class Card {
   component_image: string = '';
   component_image_file_name: string = '';
   no_of_card_pieces:number = 0;
+  warranty_period_per_days:number = 0;
   logged_in_user: User| null = new User();
   deliver_card_user: User | null= new User();
   created_at: string = ''; // Use appropriate date format

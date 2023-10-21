@@ -157,3 +157,9 @@ export class CardStatusLifeCycleMatrixRoles {
   created_at: string = ''; // Use appropriate date format
   updated_at: string = ''; // Use appropriate date format
 }
+
+export class MarketingRequest {
+  user_repair_action_id: number = -1;
+  assign_to: User | null = new User();
+  logged_in_user: User| null = new User();
+} 

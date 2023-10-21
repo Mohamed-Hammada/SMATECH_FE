@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/_helpers/notification.service';
-import { Components, ERole, NeededComponent, TechStatus, TransactionType, User } from 'src/app/models/all.model';
+import { Components, ERole, MarketingRequest, NeededComponent, TechStatus, TransactionType, User, UserRepairAction } from 'src/app/models/all.model';
 
 import { debounceTime, distinctUntilChanged, catchError, map, startWith, switchMap } from 'rxjs/operators';
 
@@ -188,7 +188,16 @@ export class CreateUpdateMarketingManagerComponent {
 
     this.form.controls?.['needed_components'].setValue(neededComponents)
 
-    this.service.updateMarketingManager(this.form.value).subscribe(
+    const userRepairAction = this.form.value; 
+    if (typeof userRepairAction.assign_to === "string") {
+      userRepairAction.assign_to = null;
+    }
+    const marketingRequest = new MarketingRequest();
+    marketingRequest.assign_to = userRepairAction.assign_to;
+    marketingRequest.logged_in_user = userRepairAction.logged_in_user;
+    marketingRequest.user_repair_action_id = userRepairAction.id;
+
+    this.service.updateMarketingManager(marketingRequest).subscribe(
       (data) => {
         this.notificationService.success('Saved Successfully');
         this.onClose();

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { UserRepairAction, CardStatus,Department, TechStatus, OfferStatus } from '../models/all.model';
+import { UserRepairAction, CardStatus,Department, TechStatus, OfferStatus, MarketingRequest } from '../models/all.model';
 import { environment } from 'src/environments/environment';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StorageService } from '../_services/storage.service';
@@ -130,11 +130,8 @@ export class UserRepairActionService {
       })
     );
   }
-  updateMarketingManager( techStateDTORequest: UserRepairAction): Observable<UserRepairAction> {
-    if (typeof techStateDTORequest.assign_to === "string") {
-      techStateDTORequest.assign_to = null;
-    }
-    return this.http.put<UserRepairAction>(`${this.apiUrl}/tech-state`, techStateDTORequest).pipe(
+  updateMarketingManager( marketingStateDTORequest: MarketingRequest): Observable<UserRepairAction> {
+    return this.http.put<UserRepairAction>(`${this.apiUrl}/marketing-state`, marketingStateDTORequest).pipe(
       catchError(error => {
         console.error('Error Message: ', error);
         return throwError(error);

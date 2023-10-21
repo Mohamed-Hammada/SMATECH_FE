@@ -32,7 +32,7 @@ export class CardService {
       // user_actions: new FormControl([]),
       // card_state: new FormControl(CardState.ENTERED, Validators.required),
       no_of_card_pieces: new FormControl(1, [Validators.required, Validators.min(1)]),
-      warranty_period_per_days: new FormControl(30, [Validators.required, Validators.min(1)]),
+      warranty_period_per_days: new FormControl(90, [Validators.required, Validators.min(1)]),
       logged_in_user: new FormControl(this.storageService.getUser()),
       deliver_card_user: new FormControl(null),
       component_image: new FormControl(''),

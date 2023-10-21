@@ -38,7 +38,7 @@ export class MarketingManagerComponent {
     CardStatus.RETURN_NEEDS_FIX
   ];
 
-  selectedCardStatuses: CardStatus[] = [CardStatus.WAITING_SPARE_PARTS];
+  selectedCardStatuses: CardStatus[] = [CardStatus.WAITING_SPARE_PARTS,CardStatus.DELIVERY_PENDING,CardStatus.TECHNICALLY_REJECTED];
 
 
   displayedColumns: string[] = [

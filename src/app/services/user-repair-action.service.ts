@@ -130,6 +130,17 @@ export class UserRepairActionService {
       })
     );
   }
+  updateMarketingManager( techStateDTORequest: UserRepairAction): Observable<UserRepairAction> {
+    if (typeof techStateDTORequest.assign_to === "string") {
+      techStateDTORequest.assign_to = null;
+    }
+    return this.http.put<UserRepairAction>(`${this.apiUrl}/tech-state`, techStateDTORequest).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
 
   deleteById(id: any): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`).pipe(

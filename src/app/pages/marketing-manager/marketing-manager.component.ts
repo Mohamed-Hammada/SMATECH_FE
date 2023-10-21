@@ -28,17 +28,19 @@ export class MarketingManagerComponent {
   pageSize: number = 5;
   pageSizeOptions: number[] = [5,10,15,20];
   totalRecords: number = -1;
-
+  needDelivery: boolean = false;
   cardStatuses: string[] = [
     CardStatus.DELIVERY_PENDING,
     CardStatus.READY_FOR_DELIVERY,
     CardStatus.WAITING_SPARE_PARTS,
     CardStatus.TECHNICALLY_REJECTED,
     CardStatus.UNDER_TEST,
+    CardStatus.REJECT_OFFER,
     CardStatus.RETURN_NEEDS_FIX
   ];
 
-  selectedCardStatuses: CardStatus[] = [CardStatus.WAITING_SPARE_PARTS,CardStatus.DELIVERY_PENDING,CardStatus.TECHNICALLY_REJECTED];
+  selectedCardStatuses: CardStatus[] = [CardStatus.WAITING_SPARE_PARTS,
+    CardStatus.DELIVERY_PENDING,CardStatus.TECHNICALLY_REJECTED,CardStatus.UNDER_TEST,CardStatus.REJECT_OFFER];
 
 
   displayedColumns: string[] = [
@@ -47,6 +49,7 @@ export class MarketingManagerComponent {
     'card_state',
     'no_of_card_pieces',
     'component_image',
+    'deliver',
     'createdAt',
     'actions'
   ];
@@ -78,6 +81,31 @@ export class MarketingManagerComponent {
   onCardStatusChange(event: MatSelectChange) {
     this.selectedCardStatuses = event.value;
   }
+
+
+  markDelivered(row: any): void {
+
+    this.dialogService.openConfirmDialog('Are You Sure?')
+    .afterClosed().subscribe((res: any) => {
+      if (res) {
+
+        this.userRepairActionService.markDelivered(row.id).subscribe(
+          (data) => {
+            this.notificationService.success('Saved Successfully');
+            this.loadData();
+          },
+          error => {
+            this.notificationService.warn(error.message);
+          }
+        );
+        
+      }
+    });
+
+
+
+  }
+
 
   loadData(): void {
     this.userRepairActionService.getUserRepairActionsByCardStatusAndUserAndDepartment

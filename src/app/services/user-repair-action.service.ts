@@ -35,7 +35,9 @@ export class UserRepairActionService {
       additional_amount_paid: new FormControl(0),
       offer_status: new FormControl(OfferStatus.WAITING_RESPONSE) ,
       tech_status: new FormControl(TechStatus.WAITING_ACTION),
-      fixed : new FormControl(false)
+      fixed : new FormControl(false),
+      need_delivery:new FormControl(false),
+      delivery_state:new FormControl('')
     });
     return this.form;
   }
@@ -156,6 +158,14 @@ export class UserRepairActionService {
       })
     );
   }
+  markDelivered(id: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/mark-delivered/${id}`,this.storageService.getUser()).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
 
   populateForm(row: any): void {
     debugger
@@ -174,7 +184,9 @@ export class UserRepairActionService {
       additional_amount_paid: 0,
       offer_status: row.offer_status || OfferStatus.WAITING_RESPONSE,
       tech_status: row.tech_status || TechStatus.WAITING_ACTION,
-      fixed:row.fixed || false
+      fixed:row.fixed || false,
+      delivery_state:row.delivery_state || '',
+      need_delivery:row.need_delivery || false
     });
   }
 

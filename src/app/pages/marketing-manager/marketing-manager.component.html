@@ -75,6 +75,18 @@
         <mat-cell *matCellDef="let row">{{ row.card.component_image_file_name }}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="deliver">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+        <ng-container *ngIf="row.need_delivery">
+            <button mat-button (click)="markDelivered(row)">
+                <!-- <mat-icon>launch</mat-icon> -->
+                {{ row.delivery_state }}
+            </button>
+        </ng-container>
+        </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="updatedAt">
         <mat-header-cell *matHeaderCellDef>Last Modified Date</mat-header-cell>
         <mat-cell *matCellDef="let row">{{ row.updated_at }}</mat-cell>

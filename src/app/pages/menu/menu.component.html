@@ -31,11 +31,11 @@
 
 
         <!-- Components Manager should not be exists we will use Components Transaction Manager instead and this will add or remove from components -->
-        <!-- <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN')">
+        <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN')">
           <a mat-list-item routerLink="/components" routerLinkActive="active" (click)="drawer.toggle()">
             Components Manager
           </a>
-        </div> -->
+        </div>
 
         <div *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN')">
           <a mat-list-item routerLink="/components-transaction" routerLinkActive="active" (click)="drawer.toggle()">

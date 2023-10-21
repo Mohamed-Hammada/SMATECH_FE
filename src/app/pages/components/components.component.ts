@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, SimpleChanges,ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,6 +13,8 @@ import { DialogService } from 'src/app/_helpers/dialog.service';
 import { ComponentService } from 'src/app/services/components.service';
 import { CreateUpdateComponentsComponent } from './create-update-components/create-update-components.component';
 import { ImageDialogComponent } from 'src/app/_helpers/image-dialog/image-dialog.component';
+import { CreateUpdateComponentTransactionComponent } from '../components-transactions/create-update-component-transaction/create-update-component-transaction.component';
+import { ComponentTransactionService } from 'src/app/services/component-transactions.service';
 
 @Component({
   selector: 'app-components',
@@ -23,8 +25,11 @@ export class ComponentsComponent {
   components: Components[] = [];
   currentPage: number = 1;
   totalPages: number = -1;
-  pageSize: number = 10;
-  displayedColumns: string[] = ['id', 'name', 'description', 'current_exist_quantity', 'last_price_of_unit', 'component_image', 'createdAt', 'updatedAt', 'UPDATE'];
+  pageSize: number = 5;
+  pageSizeOptions: number[] = [5,10,15,20];
+  totalRecords: number = -1;
+  displayedColumns: string[] = ['name', 'description', 'current_exist_quantity', 
+  'last_price_of_unit', 'component_image','updatedAt', 'UPDATE'];
   searchKey: string = '';
   dataArray: MatTableDataSource<any> = new MatTableDataSource<any>();
 
@@ -36,7 +41,9 @@ export class ComponentsComponent {
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private dialogService: DialogService,
-    private componentsService: ComponentService
+    private cdr: ChangeDetectorRef,
+    private componentsService: ComponentService,
+    private componentTransactionService: ComponentTransactionService
   ) { }
 
   ngOnInit(): void {
@@ -53,7 +60,14 @@ export class ComponentsComponent {
         if (data) {
           this.components = data.data;
           this.totalPages = data['total_pages'];
-          this.initializeTable(data.data);
+          this.dataArray.data = this.components;
+
+          if (this.paginator) {
+            this.paginator.pageIndex = this.currentPage - 1;
+            this.paginator.pageSize = this.pageSize;
+            this.paginator.length = this.totalRecords;
+            this.cdr.detectChanges(); // Trigger change detection
+          }
         }
       },
       error => {
@@ -62,52 +76,57 @@ export class ComponentsComponent {
     );
   }
 
-  private initializeTable(components: Components[]): void {
-    this.dataArray = new MatTableDataSource(components);
-    this.dataArray.paginator = this.paginator;
-    this.dataArray.sort = this.sort; // Add this line to enable sorting
-    this.dataArray.filterPredicate = (data: any, filterValue: string) => {
-      return JSON.stringify(data).toLowerCase().includes(filterValue);
-    };
-  }
+ 
+
 
   prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadData();
-    }
+
+    this.currentPage--;
+    this.loadData();
+
   }
 
   nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.loadData();
-    }
+    this.currentPage++;
+    this.loadData();
   }
 
-  pageChanged(event: any): void {
-    this.pageSize = event.pageSize;
-    if (event.pageIndex > event.previousPageIndex) {
+  pageEvent(event: any): void {
+    debugger
+    // Page size changed
+    if (event.pageSize !== this.pageSize) {
+      this.pageSizeChanged(event);
+    }
+    // Next page
+    else if (event.pageIndex > event.previousPageIndex) {
       this.nextPage();
-    } else {
+    }
+    // Previous page
+    else if (event.pageIndex < event.previousPageIndex) {
       this.prevPage();
     }
   }
 
+  pageSizeChanged(event: any): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = 1;  // Reset to the first page when changing page size
+    this.loadData();
+  }
+
   onCreate(): void {
-    this.componentsService.initializeFormGroup();
+    this.componentTransactionService.initializeFormGroup();
     this.openComponentDialog();
   }
 
   onEdit(row: any): void {
-    this.componentsService.initializeFormGroup();
-    this.componentsService.populateForm(this.components.filter(e => e.id === row.id)[0]);
+    this.componentTransactionService.initializeFormGroup();
+    this.componentTransactionService.populateForm(this.components.filter(e => e.id === row.id)[0]);
     this.openComponentDialog();
   }
 
   private openComponentDialog(): void {
     const dialogConfig = this.getDialogConfig();
-    const dialogRef = this.dialog.open(CreateUpdateComponentsComponent, dialogConfig);
+    const dialogRef = this.dialog.open(CreateUpdateComponentTransactionComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(() => {
       this.loadData();
     });

@@ -1,0 +1,24 @@
+<mat-tab-group>
+    <mat-tab label="Components Needs to Purchase">
+        <!-- Content for Tab 1 -->
+        <div *ngIf="storageService.isLoggedIn() && (storageService.hasRole('ROLE_ADMIN') ||storageService.hasRole('ROLE_MARKETING') || storageService.hasRole('ROLE_MARKETING_HEAD')  ) ">
+            <app-components [isNeedsToPurchaseChecked]="true" ></app-components>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Components">
+        <!-- Content for Tab 2 -->
+       
+        <div *ngIf="storageService.isLoggedIn() && (storageService.hasRole('ROLE_ADMIN') ||storageService.hasRole('ROLE_MARKETING') || storageService.hasRole('ROLE_MARKETING_HEAD')  ) ">
+            <app-components></app-components>
+        </div>
+
+    </mat-tab>
+
+    <mat-tab label="Components Transactions">
+        <!-- Content for Tab 3 -->
+        <div *ngIf="storageService.isLoggedIn() && (storageService.hasRole('ROLE_ADMIN') ||storageService.hasRole('ROLE_MARKETING') || storageService.hasRole('ROLE_MARKETING_HEAD')  ) ">
+            <app-components-transactions></app-components-transactions>
+        </div>
+    </mat-tab>
+</mat-tab-group>

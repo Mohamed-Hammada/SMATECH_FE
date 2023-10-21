@@ -25,7 +25,7 @@ export class CardStatusLifeCycleMatrixRolesComponent {
   cardStatusLifeCycleMatrixRoles: CardStatusLifeCycleMatrixRoles[] = [];
   currentPage: number = 1;
   totalPages: number = -1;
-  pageSizeOptions: number[] = [5,10,15,20];
+  pageSizeOptions: number[] = [5,10,15,20,50,100,200,500];
   totalRecords: number = -1;
   pageSize: number = 5;
   displayedColumns: string[] = ['id', 'card_status_life_cycle', 'role' , 'createdAt' , 'updatedAt' , 'UPDATE'];

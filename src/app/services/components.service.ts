@@ -58,6 +58,19 @@ export class ComponentService {
     );
   }
 
+  getComponentsNeedsToPurchase(page: number, pageSize: number): Observable<any> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', pageSize.toString());
+
+    return this.http.get<any>(this.apiUrl + '/needs-to-purchase', { params }).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
+
   createComponent(component: Components): Observable<Components> {
     return this.http.post<Components>(this.apiUrl, component).pipe(
       catchError(error => {

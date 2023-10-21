@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/_helpers/notification.service';
-import { Components, TransactionType } from 'src/app/models/all.model';
+import { ComponentTransaction, Components, TransactionType } from 'src/app/models/all.model';
 import { ComponentTransactionService } from 'src/app/services/component-transactions.service';
 import { debounceTime, distinctUntilChanged,catchError, map, startWith, switchMap } from 'rxjs/operators';
 

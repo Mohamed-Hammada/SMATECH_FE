@@ -63,12 +63,14 @@ import { CardStatusLifeCycleMatrixRolesComponent } from './pages/card-status-lif
 import { CreateUpdateCardStatusLifeCycleMatrixRolesComponent } from './pages/card-status-life-cycle-matrix-roles/create-update-card-status-life-cycle-matrix-roles/create-update-card-status-life-cycle-matrix-roles.component';
 import { MarketingManagerComponent } from './pages/marketing-manager/marketing-manager.component';
 import { CreateUpdateMarketingManagerComponent } from './pages/marketing-manager/create-update-marketing-manager/create-update-marketing-manager.component';
-
+import { MainProductsComponent } from './pages/main-products/main-products.component';
+import { MatTabsModule } from '@angular/material/tabs';
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     routingComponents,
+    
     MatConfirmDialogComponent,
     UsersComponent,
     CreateUserComponent,
@@ -91,13 +93,15 @@ import { CreateUpdateMarketingManagerComponent } from './pages/marketing-manager
     CardStatusLifeCycleMatrixRolesComponent,
     CreateUpdateCardStatusLifeCycleMatrixRolesComponent,
     MarketingManagerComponent,
-    CreateUpdateMarketingManagerComponent
+    CreateUpdateMarketingManagerComponent,
+    MainProductsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
+    MatTabsModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,

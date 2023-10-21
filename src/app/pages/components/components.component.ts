@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, SimpleChanges,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, SimpleChanges, ChangeDetectorRef ,Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -22,14 +22,15 @@ import { ComponentTransactionService } from 'src/app/services/component-transact
   styleUrls: ['./components.component.css']
 })
 export class ComponentsComponent {
+  @Input() isNeedsToPurchaseChecked = false;
   components: Components[] = [];
   currentPage: number = 1;
   totalPages: number = -1;
   pageSize: number = 5;
-  pageSizeOptions: number[] = [5,10,15,20];
+  pageSizeOptions: number[] = [5, 10, 15, 20, 50, 100, 200, 500];
   totalRecords: number = -1;
-  displayedColumns: string[] = ['name', 'description', 'current_exist_quantity', 
-  'last_price_of_unit', 'component_image','updatedAt', 'UPDATE'];
+  displayedColumns: string[] = ['name', 'description', 'current_exist_quantity',
+    'last_price_of_unit', 'component_image', 'updatedAt', 'UPDATE'];
   searchKey: string = '';
   dataArray: MatTableDataSource<any> = new MatTableDataSource<any>();
 
@@ -55,28 +56,51 @@ export class ComponentsComponent {
   }
 
   private loadData(): void {
+    if (this.isNeedsToPurchaseChecked) {
+      this.getComponentsNeedsToPurchase()
+    } else {
+      this.getComponents()
+    }
+  }
+
+  getComponents(): void {
     this.componentsService.getComponents(this.currentPage, this.pageSize).subscribe(
       (data: any) => {
-        if (data) {
-          this.components = data.data;
-          this.totalPages = data['total_pages'];
-          this.dataArray.data = this.components;
-
-          if (this.paginator) {
-            this.paginator.pageIndex = this.currentPage - 1;
-            this.paginator.pageSize = this.pageSize;
-            this.paginator.length = this.totalRecords;
-            this.cdr.detectChanges(); // Trigger change detection
-          }
-        }
+        this.prepareLoadedData(data)
       },
       error => {
         this.notificationService.warn(error.message);
       }
     );
   }
+  getComponentsNeedsToPurchase(): void {
+    this.componentsService.getComponentsNeedsToPurchase(this.currentPage, this.pageSize).subscribe(
+      (data: any) => {
+        this.prepareLoadedData(data)
+      },
+      error => {
+        this.notificationService.warn(error.message);
+      }
+    );
+  }
+  private prepareLoadedData(data: any) {
+    if (data) {
+      this.components = data.data;
+      this.totalPages = data['total_pages'];
+      this.totalRecords = data['total_count']
+      this.currentPage = data['page']
+      this.totalPages = data['total_pages'];
+      this.pageSize = data['size']
+      this.dataArray.data = this.components;
 
- 
+      if (this.paginator) {
+        this.paginator.pageIndex = this.currentPage - 1;
+        this.paginator.pageSize = this.pageSize;
+        this.paginator.length = this.totalRecords;
+        this.cdr.detectChanges(); // Trigger change detection
+      }
+    }
+  }
 
 
   prevPage(): void {

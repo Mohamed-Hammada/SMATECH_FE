@@ -23,7 +23,7 @@ export class CardComponent {
   currentPage: number = 1;
   totalPages: number = -1;
   pageSize: number = 5;
-  pageSizeOptions: number[] = [5,10,15,20];
+  pageSizeOptions: number[] = [5,10,15,20,50,100,200,500];
   totalRecords: number = -1;
   displayedColumns: string[] = [
     // 'id',

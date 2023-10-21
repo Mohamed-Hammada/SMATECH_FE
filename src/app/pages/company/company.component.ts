@@ -28,7 +28,7 @@ export class CompaniesComponent {
   displayedColumns: string[] = ['name', 'area' , 'customer_name' , 'createdAt' , 'updatedAt' , 'UPDATE'];
   searchKey: string = '';
   dataArray: MatTableDataSource<any> = new MatTableDataSource<any>();
-  pageSizeOptions: number[] = [5,10,15,20];
+  pageSizeOptions: number[] = [5,10,15,20,50,100,200,500];
     totalRecords: number = -1;
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;

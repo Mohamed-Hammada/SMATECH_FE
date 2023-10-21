@@ -81,9 +81,8 @@ export class CreateUpdateTechStateComponent {
   }
 
   loadInitialData() {
-    const neededComponents = this.form.controls?.['needed_components'].value as NeededComponent[];
-
-
+    let neededComponents = this.form.controls?.['needed_components'].value as NeededComponent[];
+  
     neededComponents.forEach((data, index) => {
       const formGroupName = `inputGroup${index}`;
       this.inputsOfComponentsForm.push(formGroupName);
@@ -167,7 +166,7 @@ export class CreateUpdateTechStateComponent {
     }
 
     const neededComponents: any[] = [];
-
+    let negativeSequence = -2;
     this.inputsOfComponentsForm.forEach(formGroupName => {
 
       const formGroup = this.componentsFormInput.get(formGroupName);
@@ -175,10 +174,11 @@ export class CreateUpdateTechStateComponent {
       let component = formGroup!.value.autocomplete;
       if (typeof component === 'string') {
         component = new Components();
+        component.id = negativeSequence--;
         component.name = formGroup!.value.autocomplete;
       }
       const number = formGroup!.value.number;
-
+ 
       neededComponents.push({
         component,
         needed_count: number

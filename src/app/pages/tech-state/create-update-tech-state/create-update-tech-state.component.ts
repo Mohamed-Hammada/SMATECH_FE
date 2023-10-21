@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -33,6 +33,8 @@ export class CreateUpdateTechStateComponent {
 
   componentsFormInput: FormGroup;
   inputsOfComponentsForm: any[] = [];
+
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -79,6 +81,16 @@ export class CreateUpdateTechStateComponent {
     this.setupAssignUsers();
     this.loadInitialData();
   }
+
+  scrollStep(event: WheelEvent): void {
+    const direction = Math.sign(event.deltaY);
+    const stepHeight = 100 * 3; // 3 times the height of each item
+    this.scrollContainer.nativeElement.scrollTop += stepHeight * direction;
+
+    // Prevent the default scroll behavior
+    event.preventDefault();
+  }
+
 
   loadInitialData() {
     let neededComponents = this.form.controls?.['needed_components'].value as NeededComponent[];

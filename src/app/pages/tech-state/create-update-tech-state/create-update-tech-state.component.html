@@ -65,27 +65,29 @@
         <div *ngIf="isAcceptedTechnical">
 
           <form [formGroup]="componentsFormInput">
-            <div class="input-container" *ngFor="let formGroupName of inputsOfComponentsForm; let i = index"
-              [formGroupName]="formGroupName">
-              <!-- <input type="text" formControlName="autocomplete" placeholder="Autocomplete" /> -->
-              <mat-form-field>
+            <div class="scrollable-container" #scrollContainer (wheel)="scrollStep($event)">
 
-                <input matInput type="text" formControlName="autocomplete" matInput [matAutocomplete]="auto">
-                <!-- MatAutocomplete directive that controls the behavior of the options panel associated with the input -->
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                  <!-- Loop through the filtered components, which is an observable containing the filtered results -->
-                  <mat-option *ngFor="let component of filteredComponents | async" [value]="component">
-                    <!-- Display the 'name' property of each component in the options panel -->
-                    {{component.name + ' (' + component.current_exist_quantity + ')'}}
-                  </mat-option>
-                </mat-autocomplete>
+              <div *ngFor="let formGroupName of inputsOfComponentsForm; let i = index" [formGroupName]="formGroupName">
+                <!-- <input type="text" formControlName="autocomplete" placeholder="Autocomplete" /> -->
+                <mat-form-field>
 
-                <input matInput type="number" formControlName="number" placeholder="Number" class="circular-input" />
-                <button type="button" mat-icon-button matSuffix (click)="removeInput(i); $event.stopPropagation()">
-                  <mat-icon>remove_circle</mat-icon>
-                </button>
+                  <input matInput type="text" formControlName="autocomplete" matInput [matAutocomplete]="auto">
+                  <!-- MatAutocomplete directive that controls the behavior of the options panel associated with the input -->
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <!-- Loop through the filtered components, which is an observable containing the filtered results -->
+                    <mat-option *ngFor="let component of filteredComponents | async" [value]="component">
+                      <!-- Display the 'name' property of each component in the options panel -->
+                      {{component.name + ' (' + component.current_exist_quantity + ')'}}
+                    </mat-option>
+                  </mat-autocomplete>
 
-              </mat-form-field>
+                  <input matInput type="number" formControlName="number" placeholder="Number" class="circular-input" />
+                  <button type="button" mat-icon-button matSuffix (click)="removeInput(i); $event.stopPropagation()">
+                    <mat-icon>remove_circle</mat-icon>
+                  </button>
+
+                </mat-form-field>
+              </div>
             </div>
           </form>
 

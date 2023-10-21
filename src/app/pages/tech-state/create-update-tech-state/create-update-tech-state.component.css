@@ -15,3 +15,28 @@
   width: 100px;
   height: 100px;
 }
+
+
+
+.input-container {
+  height: 100px; /* Example height */
+}
+
+.scrollable-container {
+  max-height: 400px; /* Adjust based on your requirements */
+  overflow-y: auto;
+}
+
+/* Always show the scrollbar for webkit browsers like Chrome and Safari */
+.scrollable-container::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* You can adjust color */
+  border-radius: 6px;
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1); /* You can adjust color */
+}

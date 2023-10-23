@@ -73,6 +73,8 @@ export class TechStateComponent {
     if (this.storageService.hasRole(ERole.ROLE_ADMIN) ||
       this.storageService.hasRole(ERole.ROLE_REPAIR_TECHNICIAN_HEAD)) {
       this.displayedColumns.push('assign_to');
+    }else{
+      this.selectedCardStatuses.push(CardStatus.UNDER_REPAIR)
     }
   }
 

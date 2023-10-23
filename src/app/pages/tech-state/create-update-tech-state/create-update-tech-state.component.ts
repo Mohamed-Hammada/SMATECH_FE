@@ -94,15 +94,21 @@ export class CreateUpdateTechStateComponent {
 
   loadInitialData() {
     let neededComponents = this.form.controls?.['needed_components'].value as NeededComponent[];
-  
-    neededComponents.forEach((data, index) => {
+    console.log(neededComponents); // Before the loop
+
+   
+    
+    neededComponents.forEach((dataRow, index) => {
+      
+      console.log(dataRow);
+      debugger
       const formGroupName = `inputGroup${index}`;
       this.inputsOfComponentsForm.push(formGroupName);
       // this.componentsFormInput.get([formGroupName, 'autocomplete'])!.patchValue(data.autocomplete); 
-
+     
       this.componentsFormInput.addControl(formGroupName, this.formBuilder.group({
-        autocomplete: [data?.component?.name, Validators.required],
-        number: [data.needed_count, Validators.pattern(/^\d+$/)],
+        autocomplete: [dataRow?.component?.name, Validators.required],
+        number: [dataRow.needed_count, Validators.pattern(/^\d+$/)],
       }));
     });
   }
@@ -226,9 +232,10 @@ export class CreateUpdateTechStateComponent {
   }
 
   displayFn(component?: Components): string {
-    // if (typeof component === 'string') {
-    //   return component; 
-    // }  
+    debugger
+    if (typeof component === 'string') {
+      return component; 
+    }  
     return component?.name ?? '';
   }
 

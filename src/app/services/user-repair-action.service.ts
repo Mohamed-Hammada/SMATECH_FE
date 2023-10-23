@@ -168,7 +168,6 @@ export class UserRepairActionService {
   }
 
   populateForm(row: any): void {
-    debugger
     this.form.setValue({
       id: row.id,
       user: row.user,

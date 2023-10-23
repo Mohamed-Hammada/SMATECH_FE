@@ -34,10 +34,14 @@ export class CreateUpdateTechStateComponent {
   componentsFormInput: FormGroup;
   inputsOfComponentsForm: any[] = [];
 
+  inputsOfImportantComponentsForm: any[] = [];
+  importantComponentsFormInput: FormGroup;
+
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,
+    private formBuilderImportantComponents: FormBuilder,
     public dialogRef: MatDialogRef<CreateUpdateTechStateComponent>,
     private notificationService: NotificationService,
     private service: UserRepairActionService,
@@ -47,6 +51,9 @@ export class CreateUpdateTechStateComponent {
     private snackBar: MatSnackBar
   ) {
     this.componentsFormInput = this.formBuilder.group({});
+    
+    this.importantComponentsFormInput = this.formBuilderImportantComponents.group({});
+
     this.form = this.service.form;
     this.setupAssignUsers();
     if (this.storageService.hasRole(ERole.ROLE_ADMIN) ||
@@ -54,10 +61,11 @@ export class CreateUpdateTechStateComponent {
       this.hide_show_assign_to = true;
     }
     this.setupProductNameField();
+    this.setupImportantProductNameField();
   }
   ngOnInit(): void {
     this.componentsFormInput = this.formBuilder.group({});
-
+    this.importantComponentsFormInput = this.formBuilderImportantComponents.group({});
     const tech_status = this.service.form.controls?.['tech_status'];
     if (tech_status?.value) {
       if (tech_status.value === TechStatus.ACCEPT) {
@@ -91,13 +99,13 @@ export class CreateUpdateTechStateComponent {
     event.preventDefault();
   }
 
-
   loadInitialData() {
+    this.loadInitialNeededComponents();
+    this.loadInitialImportantComponents();
+  }
+  loadInitialNeededComponents() {
     let neededComponents = this.form.controls?.['needed_components'].value as NeededComponent[];
     console.log(neededComponents); // Before the loop
-
-   
-    
     neededComponents.forEach((dataRow, index) => {
       
       console.log(dataRow);
@@ -113,12 +121,39 @@ export class CreateUpdateTechStateComponent {
     });
   }
 
+  loadInitialImportantComponents() {
+    let neededComponents = this.form.controls?.['important_components'].value as NeededComponent[];
+    console.log(neededComponents); // Before the loop
+    neededComponents.forEach((dataRow, index) => {
+      
+      console.log(dataRow);
+      debugger
+      const formGroupName = `inputGroupImportant${index}`;
+      this.inputsOfImportantComponentsForm.push(formGroupName);
+      // this.componentsFormInput.get([formGroupName, 'autocomplete'])!.patchValue(data.autocomplete); 
+     
+      this.importantComponentsFormInput.addControl(formGroupName, this.formBuilderImportantComponents.group({
+        autocomplete: [dataRow?.component?.name, Validators.required],
+        number: [dataRow.needed_count, Validators.pattern(/^\d+$/)],
+      }));
+    });
+  }
+
   setupProductNameField(): void {
     this.filteredComponents = this.form.controls?.['needed_components'].valueChanges.pipe(
       startWith(''),
       debounceTime(300),
       distinctUntilChanged(),
       switchMap(value => this.filterComponents(value))
+    );
+  }
+
+  setupImportantProductNameField(): void {
+    this.filteredComponents = this.form.controls?.['important_components'].valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(value => this.filterImportantComponents(value))
     );
   }
 
@@ -140,6 +175,24 @@ export class CreateUpdateTechStateComponent {
     this.componentsFormInput.removeControl(formGroupName);
   }
 
+
+  addImportantInput() {
+    const index = this.inputsOfImportantComponentsForm.length;
+    const formGroupName = `inputGroupImportant${index}`;
+    this.inputsOfImportantComponentsForm.push(formGroupName);
+
+    this.importantComponentsFormInput.addControl(formGroupName, this.formBuilderImportantComponents.group({
+      autocomplete: ['', Validators.required],
+      number: [1, [Validators.pattern(/^\d+$/), Validators.min(1)]],
+    }));
+  }
+
+
+  removeImportantInput(index: number) {
+    const formGroupName = this.inputsOfImportantComponentsForm[index];
+    this.inputsOfImportantComponentsForm.splice(index, 1);
+    this.importantComponentsFormInput.removeControl(formGroupName);
+  }
 
   setupAssignUsers(): void {
     // debugger
@@ -172,9 +225,6 @@ export class CreateUpdateTechStateComponent {
       console.log('Form is not valid');
       this.logValidationErrors(this.form);
     }
-
-
-
     if (!this.form.valid) {
       this.snackBar.open('Form is not valid. Please check the errors.', 'Dismiss', {
         duration: 5000,
@@ -182,7 +232,45 @@ export class CreateUpdateTechStateComponent {
       });
       return;
     }
+    this.form.controls?.['important_components'].setValue(this.getImportantComponents())
+    this.form.controls?.['needed_components'].setValue(this.getNeededComponents())
 
+    this.service.updateTechState(this.form.value).subscribe(
+      (data) => {
+        this.notificationService.success('Saved Successfully');
+        this.onClose();
+      },
+      error => {
+        this.notificationService.warn(error.message);
+      }
+    );
+  }
+
+  getImportantComponents(){
+    const importantComponents: any[] = [];
+    let negativeSequence = -2;
+    this.inputsOfImportantComponentsForm.forEach(formGroupName => {
+
+      const formGroup = this.importantComponentsFormInput.get(formGroupName);
+
+      let component = formGroup!.value.autocomplete;
+      if (typeof component === 'string') {
+        component = new Components();
+        component.id = negativeSequence--;
+        component.name = formGroup!.value.autocomplete;
+      }
+      const number = formGroup!.value.number;
+ 
+      importantComponents.push({
+        component,
+        needed_count: number
+      });
+
+    });
+    return importantComponents;
+  }
+
+  getNeededComponents(){
     const neededComponents: any[] = [];
     let negativeSequence = -2;
     this.inputsOfComponentsForm.forEach(formGroupName => {
@@ -203,19 +291,9 @@ export class CreateUpdateTechStateComponent {
       });
 
     });
-
-    this.form.controls?.['needed_components'].setValue(neededComponents)
-
-    this.service.updateTechState(this.form.value).subscribe(
-      (data) => {
-        this.notificationService.success('Saved Successfully');
-        this.onClose();
-      },
-      error => {
-        this.notificationService.warn(error.message);
-      }
-    );
+    return neededComponents;
   }
+
   logValidationErrors(group: FormGroup) {
     Object.keys(group.controls).forEach((key: string) => {
       const control = group.get(key);
@@ -232,7 +310,7 @@ export class CreateUpdateTechStateComponent {
   }
 
   displayFn(component?: Components): string {
-    debugger
+    
     if (typeof component === 'string') {
       return component; 
     }  
@@ -273,6 +351,18 @@ export class CreateUpdateTechStateComponent {
     }
   }
   private filterComponents(name: string): Observable<Components[]> {
+    // debugger
+    console.log("Filtering for: ", name);
+    return this.componentService.searchComponents(name).pipe(
+      map(components => components),
+      catchError(error => {
+        console.error('Error while filtering components:', error);
+        return of([]); // returns an empty array on error
+      })
+    );
+  }
+
+  private filterImportantComponents(name: string): Observable<Components[]> {
     // debugger
     console.log("Filtering for: ", name);
     return this.componentService.searchComponents(name).pipe(

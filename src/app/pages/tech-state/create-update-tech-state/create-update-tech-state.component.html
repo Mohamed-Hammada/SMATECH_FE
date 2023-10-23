@@ -7,7 +7,7 @@
 </mat-toolbar>
 <form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="normal-form">
 
-  <mat-grid-list cols="2" rowHeight="500px">
+  <mat-grid-list cols="3" rowHeight="500px">
 
     <mat-grid-tile>
       <div class="controles-container">
@@ -60,8 +60,10 @@
       </div>
     </mat-grid-tile>
 
-    <mat-grid-tile>
+    <mat-grid-tile class="needed-components" matTooltip="Needed Components for repairs">
       <div class="controles-container">
+        <h4>Needed Components for repairs</h4>
+
         <div *ngIf="isAcceptedTechnical">
 
           <form [formGroup]="componentsFormInput">
@@ -92,6 +94,47 @@
           </form>
 
           <button type="button" mat-icon-button (click)="addInput(); $event.stopPropagation()">
+            <mat-icon class="add-icon">add_circle</mat-icon>
+          </button>
+
+        </div>
+      </div>
+    </mat-grid-tile>
+
+
+    <mat-grid-tile class="important-components" matTooltip="Important Components">
+      <div class="controles-container">
+        <h4>Important Components for history</h4>
+        <div *ngIf="isAcceptedTechnical">
+
+          <form [formGroup]="importantComponentsFormInput">
+            <div class="scrollable-container" #scrollContainer (wheel)="scrollStep($event)">
+
+              <div *ngFor="let formGroupName of inputsOfImportantComponentsForm; let i = index" [formGroupName]="formGroupName">
+                <!-- <input type="text" formControlName="autocomplete" placeholder="Autocomplete" /> -->
+                <mat-form-field>
+
+                  <input matInput type="text" formControlName="autocomplete" matInput [matAutocomplete]="auto">
+                  <!-- MatAutocomplete directive that controls the behavior of the options panel associated with the input -->
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <!-- Loop through the filtered components, which is an observable containing the filtered results -->
+                    <mat-option *ngFor="let component of filteredComponents | async" [value]="component">
+                      <!-- Display the 'name' property of each component in the options panel -->
+                      {{component.name + ' (' + component.current_exist_quantity + ')'}}
+                    </mat-option>
+                  </mat-autocomplete>
+
+                  <input hidden matInput type="number" formControlName="number" placeholder="Number" class="circular-input" />
+                  <button type="button" mat-icon-button matSuffix (click)="removeImportantInput(i); $event.stopPropagation()">
+                    <mat-icon>remove_circle</mat-icon>
+                  </button>
+
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+
+          <button type="button" mat-icon-button (click)="addImportantInput(); $event.stopPropagation()">
             <mat-icon class="add-icon">add_circle</mat-icon>
           </button>
 

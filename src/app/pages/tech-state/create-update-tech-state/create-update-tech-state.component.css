@@ -40,3 +40,12 @@
 .scrollable-container::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0.1); /* You can adjust color */
 }
+
+
+.needed-components {
+  background-color: #e1f5fe;
+}
+
+.important-components {
+  background-color: #ffebee;
+}

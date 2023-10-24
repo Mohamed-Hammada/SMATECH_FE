@@ -62,6 +62,25 @@ export class UserRepairActionService {
     );
   }
 
+  searchByString(page: number, pageSize: number, card_status_life_cycle: CardStatus[],department: Department,search_string: string): Observable<any> {
+    const cardStatusLifeCycleValues = card_status_life_cycle.map(value => CardStatus[value]);
+
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', pageSize.toString())
+      .set('department', department.toString())
+      .set('card_status_life_cycle', JSON.stringify(cardStatusLifeCycleValues))
+      .set('logged_in_user_id', this.storageService.getUser()?.id.toString() || '')
+      .set('search_string', search_string);
+      
+    return this.http.get<any>(this.apiUrl + "/searchByString", { params }).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
+
   getUserRepairActions(page: number, pageSize: number): Observable<any> {
     const params = new HttpParams()
       .set('page', page.toString())

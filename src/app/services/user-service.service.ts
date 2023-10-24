@@ -66,6 +66,21 @@ export class UserServiceService {
     );
   }
 
+  
+  searchByString(page: number, pageSize: number,search_string: string): Observable<any> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', pageSize.toString())
+      .set('search_string', search_string);
+
+    return this.http.get<any>(this.apiUrl, { params }).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
+
   createUser(user: User): Observable<User> {
     return this.http.post<User>(this.apiUrl, user).pipe(
       catchError(error => {

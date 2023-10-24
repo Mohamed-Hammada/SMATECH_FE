@@ -54,6 +54,20 @@ export class CardService {
     );
   }
 
+  searchByString(page: number, pageSize: number,search_string: string): Observable<any> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', pageSize.toString())
+      .set('search_string', search_string);
+
+    return this.http.get<any>(this.apiUrl+ "/searchByString", { params }).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
+
   createCard(card: Card): Observable<Card> {
     // debugger
     return this.http.post<Card>(this.apiUrl, card).pipe(

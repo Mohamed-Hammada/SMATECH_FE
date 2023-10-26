@@ -53,22 +53,7 @@ export class CompaniesComponent {
   private loadData(): void {
     this.companyService.getCompanies(this.currentPage, this.pageSize).subscribe(
       (data: any) => {
-        if (data) {
-          this.companies = data.data;
-         
-          this.totalRecords = data['total_count']
-          this.currentPage = data['page']
-          this.totalPages = data['total_pages'];
-          this.pageSize = data['size']
-          this.dataArray.data = this.companies;
-
-          if (this.paginator) {
-            this.paginator.pageIndex = this.currentPage - 1;
-            this.paginator.pageSize = this.pageSize;
-            this.paginator.length = this.totalRecords;
-            this.cdr.detectChanges(); // Trigger change detection
-          }
-        }
+        this.prepareLoadData(data)
       },
       error => {
         this.notificationService.warn(error.message);
@@ -161,9 +146,37 @@ export class CompaniesComponent {
   }
 
   applyFilter(): void {
-    this.dataArray.filter = this.searchKey.trim().toLowerCase();
+    // this.dataArray.filter = this.searchKey.trim().toLowerCase();
+    this.companyService.searchByString(this.currentPage, this.pageSize,this.searchKey).subscribe(
+      (data: any) => {
+        
+          this.prepareLoadData(data)
+       
+      },
+      error => {
+        this.notificationService.warn(error.message);
+      }
+    );
   }
 
+  prepareLoadData(data:any):void{
+    if (!data) {return}
+    this.companies = data.data;
+         
+    this.totalRecords = data['total_count']
+    this.currentPage = data['page']
+    this.totalPages = data['total_pages'];
+    this.pageSize = data['size']
+    this.dataArray.data = this.companies;
+
+    if (this.paginator) {
+      this.paginator.pageIndex = this.currentPage - 1;
+      this.paginator.pageSize = this.pageSize;
+      this.paginator.length = this.totalRecords;
+      this.cdr.detectChanges(); // Trigger change detection
+    }
+   
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loadData();

@@ -84,7 +84,7 @@ export class ComponentsComponent {
     );
   }
   private prepareLoadedData(data: any) {
-    if (data) {
+    if (!data) {return}
       this.components = data.data;
       this.totalPages = data['total_pages'];
       this.totalRecords = data['total_count']
@@ -99,7 +99,7 @@ export class ComponentsComponent {
         this.paginator.length = this.totalRecords;
         this.cdr.detectChanges(); // Trigger change detection
       }
-    }
+     
   }
 
 
@@ -187,9 +187,34 @@ export class ComponentsComponent {
   }
 
   applyFilter(): void {
-    this.dataArray.filter = this.searchKey.trim().toLowerCase();
+    // this.dataArray.filter = this.searchKey.trim().toLowerCase();
+    if (this.isNeedsToPurchaseChecked) {
+      this.getByStringComponentsNeedsToPurchase()
+    } else {
+      this.getByString()
+    }
   }
 
+  getByStringComponentsNeedsToPurchase():void{
+    this.componentsService.searchByStringNeedsToPurchase(this.currentPage, this.pageSize,this.searchKey).subscribe(
+      (data: any) => {
+        this.prepareLoadedData(data)
+      },
+      error => {
+        this.notificationService.warn(error.message);
+      }
+    );
+  }
+  getByString():void{
+    this.componentsService.searchByString(this.currentPage, this.pageSize,this.searchKey).subscribe(
+      (data: any) => {
+        this.prepareLoadedData(data)
+      },
+      error => {
+        this.notificationService.warn(error.message);
+      }
+    );
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loadData();

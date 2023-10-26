@@ -47,23 +47,9 @@ export class ComponentsTransactionsComponent {
   private loadData(): void {
     this.componentTransactionService.getComponentTransactions(this.currentPage, this.pageSize).subscribe(
       (data: any) => {
-        if (data) {
-          this.transactions = data.data;
-          this.totalPages = data['total_pages'];
- 
-          this.totalRecords = data['total_count']
-          this.currentPage = data['page']
-          this.totalPages = data['total_pages'];
-          this.pageSize = data['size']
-          this.dataArray.data = this.transactions;
-
-          if (this.paginator) {
-            this.paginator.pageIndex = this.currentPage - 1;
-            this.paginator.pageSize = this.pageSize;
-            this.paginator.length = this.totalRecords;
-            this.cdr.detectChanges(); // Trigger change detection
-          }
-        }
+       
+         this.prepareLoadData(data)
+        
       },
       error => {
         this.notificationService.warn(error.message);
@@ -72,7 +58,24 @@ export class ComponentsTransactionsComponent {
   }
 
 
+prepareLoadData(data:any):void{
+  if(!data) { return}
+  this.transactions = data.data;
+  this.totalPages = data['total_pages'];
 
+  this.totalRecords = data['total_count']
+  this.currentPage = data['page']
+  this.totalPages = data['total_pages'];
+  this.pageSize = data['size']
+  this.dataArray.data = this.transactions;
+
+  if (this.paginator) {
+    this.paginator.pageIndex = this.currentPage - 1;
+    this.paginator.pageSize = this.pageSize;
+    this.paginator.length = this.totalRecords;
+    this.cdr.detectChanges(); // Trigger change detection
+  }
+}
 
   prevPage(): void {
 
@@ -158,7 +161,17 @@ export class ComponentsTransactionsComponent {
   }
 
   applyFilter(): void {
-    this.dataArray.filter = this.searchKey.trim().toLowerCase();
+    // this.dataArray.filter = this.searchKey.trim().toLowerCase();
+    this.componentTransactionService.searchByString(this.currentPage, this.pageSize,this.searchKey).subscribe(
+      (data: any) => {
+       
+         this.prepareLoadData(data)
+     
+      },
+      error => {
+        this.notificationService.warn(error.message);
+      }
+    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {

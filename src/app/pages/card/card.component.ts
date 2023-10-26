@@ -65,22 +65,7 @@ export class CardComponent {
   private loadData(): void {
     this.cardService.getCards(this.currentPage, this.pageSize).subscribe(
       (data: any) => {
-        if (data) {
-          this.cards = data.data;
-          this.totalPages = data['total_pages'];
-          this.totalRecords = data['total_count']
-          this.currentPage = data['page']
-          this.totalPages = data['total_pages'];
-          this.pageSize = data['size']
-          this.dataArray.data = this.cards;
-          if (this.paginator) {
-            this.paginator.pageIndex = this.currentPage - 1;
-            this.paginator.pageSize = this.pageSize;
-            this.paginator.length = this.totalRecords;
-            this.cdr.detectChanges(); // Trigger change detection
-          }
-
-        }
+        this.prepareLoadData(data)
       },
       error => {
         this.notificationService.warn(error.message);
@@ -175,22 +160,10 @@ export class CardComponent {
    // this.dataArray.filter = this.searchKey.trim().toLowerCase();
    this.cardService.searchByString( this.currentPage, this.pageSize,this.searchKey).subscribe(
     (data: any) => {
-      if (data) {
-        this.cards = data.data;
-        this.totalPages = data['total_pages'];
-        this.totalRecords = data['total_count']
-        this.currentPage = data['page']
-        this.totalPages = data['total_pages'];
-        this.pageSize = data['size']
-        this.dataArray.data = this.cards;
-        if (this.paginator) {
-          this.paginator.pageIndex = this.currentPage - 1;
-          this.paginator.pageSize = this.pageSize;
-          this.paginator.length = this.totalRecords;
-          this.cdr.detectChanges(); // Trigger change detection
-        }
+   
+        this.prepareLoadData(data)
 
-      }
+ 
     },
     error => {
       this.notificationService.warn(error.message);
@@ -198,6 +171,24 @@ export class CardComponent {
   );
   }
 
+  prepareLoadData(data:any):void{
+    if(!data){
+      return
+    }
+    this.cards = data.data;
+    this.totalPages = data['total_pages'];
+    this.totalRecords = data['total_count']
+    this.currentPage = data['page']
+    this.totalPages = data['total_pages'];
+    this.pageSize = data['size']
+    this.dataArray.data = this.cards;
+    if (this.paginator) {
+      this.paginator.pageIndex = this.currentPage - 1;
+      this.paginator.pageSize = this.pageSize;
+      this.paginator.length = this.totalRecords;
+      this.cdr.detectChanges(); // Trigger change detection
+    }
+  }
   ngOnChanges(changes: SimpleChanges): void {
     this.loadData();
   }

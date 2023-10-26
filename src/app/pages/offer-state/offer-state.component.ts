@@ -82,8 +82,18 @@ export class OfferStateComponent {
   loadData(): void {
     this.userRepairActionService.getUserRepairActionsByCardStatusAndUserAndDepartment(this.currentPage, this.pageSize, this.selectedCardStatuses, Department.ACCOUNT).subscribe(
       (data: any) => {
-        if (data) {
-          this.cards = data.data;
+        this.prepareLoadData(data)
+      },
+      error => {
+        this.notificationService.warn(error.message);
+      }
+    );
+  }
+
+
+  prepareLoadData(data:any):void{
+    if(!data) { return}
+    this.cards = data.data;
           this.totalPages = data['total_pages'];
           this.totalRecords = data['total_count']
           this.currentPage = data['page']
@@ -97,14 +107,7 @@ export class OfferStateComponent {
             this.paginator.length = this.totalRecords;
             this.cdr.detectChanges(); // Trigger change detection
           }
-
-        }
-      },
-      error => {
-        this.notificationService.warn(error.message);
-      }
-    );
-  }
+    }
 
   prevPage(): void {
 
@@ -190,7 +193,15 @@ export class OfferStateComponent {
   }
 
   applyFilter(): void {
-    this.dataArray.filter = this.searchKey.trim().toLowerCase();
+    // this.dataArray.filter = this.searchKey.trim().toLowerCase();
+    this.userRepairActionService.searchByString(this.currentPage, this.pageSize, this.selectedCardStatuses, Department.ACCOUNT,this.searchKey).subscribe(
+      (data: any) => {
+        this.prepareLoadData(data)
+      },
+      error => {
+        this.notificationService.warn(error.message);
+      }
+    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {

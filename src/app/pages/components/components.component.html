@@ -2,19 +2,21 @@
 
 <div class="search-div">
   <mat-form-field class="search-form-field" appearance="outline">
-    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keydown.enter)="applyFilter()">
     <button mat-button matSuffix aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-  <div class="button-row">
-    <!-- <mat-checkbox [(ngModel)]="isNeedsToPurchaseChecked">Load Components needs to Purchase</mat-checkbox> -->
-
+  
+  <!-- Search Button -->
+  <button mat-raised-button (click)="applyFilter()" style="height: 55px; margin-right: 5px;">
+    <mat-icon>search</mat-icon>Search
+  </button>
+  
   <button mat-raised-button (click)="onCreate()" style="height: 55px;width: 70%;">
     <mat-icon>add</mat-icon>Create
   </button>
 
-  </div>
   <span class="fill-remaining-space"></span>
 </div>
 

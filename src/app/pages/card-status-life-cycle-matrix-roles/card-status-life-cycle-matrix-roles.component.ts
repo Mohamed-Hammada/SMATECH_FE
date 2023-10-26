@@ -55,25 +55,10 @@ export class CardStatusLifeCycleMatrixRolesComponent {
   private loadData(): void {
     this.cardStatusLifeCycleMatrixRolesService.getCardStatusLifeCycleMatrixRolesService(this.currentPage, this.pageSize).subscribe(
       (data: any) => {
-        if (data) {
-          debugger
-          this.cardStatusLifeCycleMatrixRoles = data.data;
-          this.totalPages = data['total_pages'];
-         
-          this.totalRecords = data['total_count']
-          this.currentPage = data['page']
-          this.totalPages = data['total_pages'];
-          this.pageSize = data['size']
-          this.dataArray.data = this.cardStatusLifeCycleMatrixRoles;
+        
+          this.prepareLoadData(data)
 
-          if (this.paginator) {
-            this.paginator.pageIndex = this.currentPage - 1;
-            this.paginator.pageSize = this.pageSize;
-            this.paginator.length = this.totalRecords;
-            this.cdr.detectChanges(); // Trigger change detection
-          }
-
-        }
+      
       },
       error => {
         this.notificationService.warn(error.message);
@@ -167,9 +152,39 @@ export class CardStatusLifeCycleMatrixRolesComponent {
   }
 
   applyFilter(): void {
-    this.dataArray.filter = this.searchKey.trim().toLowerCase();
+    // this.dataArray.filter = this.searchKey.trim().toLowerCase();
+    this.cardStatusLifeCycleMatrixRolesService.searchByString(this.currentPage, this.pageSize,this.searchKey).subscribe(
+      (data: any) => {
+    
+          
+          this.prepareLoadData(data)
+
+ 
+      },
+      error => {
+        this.notificationService.warn(error.message);
+      }
+    );
   }
 
+  prepareLoadData(data:any):void{
+    if(!data){return}
+    this.cardStatusLifeCycleMatrixRoles = data.data;
+    this.totalPages = data['total_pages'];
+   
+    this.totalRecords = data['total_count']
+    this.currentPage = data['page']
+    this.totalPages = data['total_pages'];
+    this.pageSize = data['size']
+    this.dataArray.data = this.cardStatusLifeCycleMatrixRoles;
+
+    if (this.paginator) {
+      this.paginator.pageIndex = this.currentPage - 1;
+      this.paginator.pageSize = this.pageSize;
+      this.paginator.length = this.totalRecords;
+      this.cdr.detectChanges(); // Trigger change detection
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loadData();

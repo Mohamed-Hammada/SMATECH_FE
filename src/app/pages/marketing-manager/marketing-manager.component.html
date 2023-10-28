@@ -91,6 +91,20 @@
         </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="components_purchased">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+        <ng-container *ngIf="row.card?.card_state === 'WAITING_SPARE_PARTS'">
+            <button mat-button (click)="components_purchased_action(row)">
+                <!-- <mat-icon>launch</mat-icon> -->
+                Components Purchased
+            </button>
+        </ng-container>
+        </mat-cell>
+    </ng-container>
+
+    
+
     <ng-container matColumnDef="updatedAt">
         <mat-header-cell *matHeaderCellDef>Last Modified Date</mat-header-cell>
         <mat-cell *matCellDef="let row">{{ row.updated_at }}</mat-cell>

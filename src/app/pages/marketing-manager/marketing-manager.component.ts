@@ -50,6 +50,7 @@ export class MarketingManagerComponent {
     'no_of_card_pieces',
     'component_image',
     'deliver',
+    'components_purchased',
     'createdAt',
     'actions'
   ];
@@ -82,6 +83,28 @@ export class MarketingManagerComponent {
     this.selectedCardStatuses = event.value;
   }
 
+  components_purchased_action(row: any): void {
+
+    this.dialogService.openConfirmDialog('Are You Sure?')
+    .afterClosed().subscribe((res: any) => {
+      if (res) {
+
+        this.userRepairActionService.components_purchased_action(row.id).subscribe(
+          (data) => {
+            this.notificationService.success('Saved Successfully');
+            this.loadData();
+          },
+          error => {
+            this.notificationService.warn(error.message);
+          }
+        );
+        
+      }
+    });
+
+
+
+  }
 
   markDelivered(row: any): void {
 

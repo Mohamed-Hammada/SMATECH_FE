@@ -178,6 +178,16 @@ export class UserRepairActionService {
       })
     );
   }
+
+  components_purchased_action(id: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/components-purchased/${id}`,this.storageService.getUser()).pipe(
+      catchError(error => {
+        console.error('Error Message: ', error);
+        return throwError(error);
+      })
+    );
+  }
+
   markDelivered(id: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/mark-delivered/${id}`,this.storageService.getUser()).pipe(
       catchError(error => {

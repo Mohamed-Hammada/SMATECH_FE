@@ -1,0 +1,50 @@
+<app-custom-toolbar title="Technical State"></app-custom-toolbar>
+
+<div class="search-div" style="display: flex; align-items: center;">
+    <mat-form-field style="flex: 1;" appearance="outline">
+        <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keydown.enter)="applyFilter()">
+        <button mat-button matSuffix aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <!-- Search Button -->
+    <button mat-raised-button (click)="applyFilter()" style="height: 55px; margin-right: 5px;">
+        <mat-icon>search</mat-icon>Search
+    </button>
+    <span style="flex: 1 1 auto;"></span>
+
+</div>
+<div class="search-div flex">
+    <mat-form-field appearance="outline" class="multi-select flex-grow">
+        <mat-select multiple [(value)]="selectedCardStatuses" placeholder="Select Tech States"
+            [(ngModel)]="selectedCardStatuses">
+            <mat-option *ngFor="let cardStatus of cardStatuses" [value]="cardStatus">{{ cardStatus }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button mat-raised-button (click)="loadData()">
+        <mat-icon>add</mat-icon>Load Data
+    </button>
+    <span class="flex-space"></span>
+
+</div>
+
+<div class="card-container" *ngFor="let row of dataArray.data">
+    <mat-card (click)="onCardClick(row)">
+        <mat-card-header>
+            <mat-card-title>{{ row.card.serial_no }}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image style='height: 300px; width: 300px;' [src]="row.card.component_image" alt="Card Image">
+        <mat-card-content>
+            <p>{{ row.card.issue_description }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="onEdit(row)">Edit</button>
+            <button mat-button (click)="onViewImage(row.card.component_image)">View</button>
+            <!-- Add other actions here -->
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+<mat-paginator showFirstLastButtons [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent($event)"
+    [length]="totalRecords">
+</mat-paginator>

@@ -18,6 +18,7 @@ import { TechStateComponent } from './pages/tech-state/tech-state.component';
 import { CardStatusLifeCycleMatrixRolesComponent } from './pages/card-status-life-cycle-matrix-roles/card-status-life-cycle-matrix-roles.component';
 import { MarketingManagerComponent } from './pages/marketing-manager/marketing-manager.component';
 import { MainProductsComponent } from './pages/main-products/main-products.component';
+import { TechStateCardsComponent } from './pages/tech-state-cards/tech-state-cards.component';
 
 
 const routes: Routes = [
@@ -28,7 +29,9 @@ const routes: Routes = [
   { path: 'card', component: CardComponent,canActivate: [AuthGuardService], data: { requiredRoles:[ ERole.ROLE_ADMIN] } },
   { path: 'app-offer-state', component: OfferStateComponent,canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN,ERole.ROLE_ACCOUNTANT,ERole.ROLE_ACCOUNTANT_HEAD]  } },
   { path: 'app-tech-state', component: TechStateComponent,canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN,ERole.ROLE_REPAIR_TECHNICIAN_HEAD,ERole.ROLE_REPAIR_TECHNICIAN]  } },
+  { path: 'app-tech-state-cards', component: TechStateCardsComponent,canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN,ERole.ROLE_REPAIR_TECHNICIAN_HEAD,ERole.ROLE_REPAIR_TECHNICIAN]  } },
 
+  
   { path: 'users', component: UsersComponent, canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN] } },
   { path: 'companies', component: CompaniesComponent, canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN] } },
   { path: 'components', component: ComponentsComponent, canActivate: [AuthGuardService], data: { requiredRoles: [ERole.ROLE_ADMIN] } },

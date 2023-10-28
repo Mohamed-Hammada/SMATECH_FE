@@ -69,6 +69,14 @@
             Technical State
           </a>
         </div>
+
+        <div
+        *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN') || storageService.hasRole('ROLE_REPAIR_TECHNICIAN_HEAD') || storageService.hasRole('ROLE_REPAIR_TECHNICIAN')">
+        <a mat-list-item routerLink="/app-tech-state-cards" routerLinkActive="active" (click)="drawer.toggle()">
+          Technical State Cards
+        </a>
+      </div>
+
         <div
           *ngIf="storageService.isLoggedIn() && storageService.hasRole('ROLE_ADMIN') || storageService.hasRole('ROLE_MARKETING_HEAD') || storageService.hasRole('ROLE_MARKETING')">
           <a mat-list-item routerLink="/app-marketing-manager" routerLinkActive="active" (click)="drawer.toggle()">

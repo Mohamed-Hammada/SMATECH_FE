@@ -65,6 +65,8 @@ import { MarketingManagerComponent } from './pages/marketing-manager/marketing-m
 import { CreateUpdateMarketingManagerComponent } from './pages/marketing-manager/create-update-marketing-manager/create-update-marketing-manager.component';
 import { MainProductsComponent } from './pages/main-products/main-products.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { TechStateCardsComponent } from './pages/tech-state-cards/tech-state-cards.component';
+import { TechStateCardDetailsComponent } from './pages/tech-state-cards/tech-state-card-details/tech-state-card-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -94,7 +96,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     CreateUpdateCardStatusLifeCycleMatrixRolesComponent,
     MarketingManagerComponent,
     CreateUpdateMarketingManagerComponent,
-    MainProductsComponent
+    MainProductsComponent,
+    TechStateCardsComponent,
+    TechStateCardDetailsComponent
   ],
   imports: [
     BrowserModule,
